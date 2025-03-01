@@ -11,8 +11,8 @@ const LowerNav = () => {
     { name: "Blogs", path: "/blogs" },
   ];
   return (
-    <div className="w-full bg-green-500 h-full md:h-16">
-      <div className="items flex flex-col md:flex-row gap-3 md:gap0 justify-between h-full items-center w-full max-w-screen-xl mx-auto bg-black text-white p-4">
+    <div className="w-full bg-green-500 h-full hidden md:block">
+      <div className="items flex flex-col md:flex-row gap-3 md:gap-0 justify-between h-full items-center w-full max-w-screen-xl mx-auto bg-black text-white p-4">
         <ul className="flex gap-3 items-center">
           {navItems.map((item) => (
             <li key={item.path} className="group">

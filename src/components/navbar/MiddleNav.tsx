@@ -1,6 +1,7 @@
 import { FaShoppingCart } from "react-icons/fa";
 import { FiPhoneCall } from "react-icons/fi";
-const MiddleNav = () => {
+import { CiMenuKebab } from "react-icons/ci";
+const MiddleNav = ({ setIsDrawerOpen }) => {
   return (
     <div className="w-full h-24 flex justify-between items-center px-4 md:px-14 bg-gray-100">
       <div className="logo">
@@ -17,11 +18,15 @@ const MiddleNav = () => {
             <FiPhoneCall className="h-5 w-5" />
             <span className="font-semibold text-black">Call Us Now</span>
           </div>
-          <span>Toll Free : 0123456789</span>
+          <span className="text-xs md:text-lg">Toll Free : 0123456789</span>
         </div>
         <div className="cart">
           <FaShoppingCart className="h-6 w-6 text-green-500" />
         </div>
+        {/* Menu Button for Mobile */}
+        <button className="md:hidden" onClick={() => setIsDrawerOpen(true)}>
+          <CiMenuKebab className="w-6 h-6" />
+        </button>
       </div>
     </div>
   );
