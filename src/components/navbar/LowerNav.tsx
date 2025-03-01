@@ -1,15 +1,9 @@
 import { NavLink } from "react-router";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import { navItems } from "./NavItems";
 
 const LowerNav = () => {
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Specials", path: "/specials" },
-    { name: "Brands", path: "/brands" },
-    { name: "Contact", path: "/contact" },
-    { name: "Blogs", path: "/blogs" },
-  ];
   return (
     <div className="w-full bg-green-500 h-full hidden md:block">
       <div className="items flex flex-col md:flex-row gap-3 md:gap-0 justify-between h-full items-center w-full max-w-screen-xl mx-auto bg-black text-white p-4">

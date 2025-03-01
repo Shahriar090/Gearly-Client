@@ -3,10 +3,11 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import Language from "./Language";
+import Currency from "./Currency";
 
 const UpperNav = () => {
   return (
@@ -14,26 +15,9 @@ const UpperNav = () => {
       <div className="flex items-center gap-4 w-fit">
         {/* language and currency selector */}
         {/* language */}
-        <DropdownMenu>
-          <DropdownMenuTrigger>🌐Language</DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Select Any Language</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>English</DropdownMenuItem>
-            <DropdownMenuItem>বাংলা (Bengali)</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Language />
         {/* Currency */}
-        <DropdownMenu>
-          <DropdownMenuTrigger>$ Currency</DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuLabel>Select Any Currency</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>BDT</DropdownMenuItem>
-            <DropdownMenuItem>USD</DropdownMenuItem>
-            <DropdownMenuItem>Euro</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <Currency />
       </div>
 
       {/* account wishlist and checkout */}

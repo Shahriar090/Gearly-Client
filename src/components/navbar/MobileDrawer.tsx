@@ -2,15 +2,15 @@ import { NavLink } from "react-router";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { navItems } from "./NavItems";
+import Language from "./Language";
+import Currency from "./Currency";
+type TDrawerProps = {
+  isOpen: boolean;
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-const MobileDrawer = ({ isOpen, setIsOpen }) => {
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "Specials", path: "/specials" },
-    { name: "Brands", path: "/brands" },
-    { name: "Contact", path: "/contact" },
-    { name: "Blogs", path: "/blogs" },
-  ];
+const MobileDrawer = ({ isOpen, setIsOpen }: TDrawerProps) => {
   return (
     <div
       className={`fixed inset-0 z-50 bg-black  bg-opacity-50 transition-transform ${
@@ -25,9 +25,9 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
         </button>
 
         {/* Language and Currency (from UpperNav) */}
-        <div className="space-y-2 border-b pb-3">
-          <p className="font-semibold">🌐 Language: English</p>
-          <p className="font-semibold">$ Currency: USD</p>
+        <div className="flex gap-2 ">
+          <Language />
+          <Currency />
         </div>
 
         {/* Navigation Links (from LowerNav) */}
@@ -51,9 +51,11 @@ const MobileDrawer = ({ isOpen, setIsOpen }) => {
 
         {/* Search Form (from LowerNav) */}
         <form className="mt-auto">
-          <div className="flex w-full max-w-sm items-center space-x-2">
+          <div className="flex w-full max-w-xl items-center space-x-2">
             <Input type="text" placeholder="Search Products..." />
-            <Button type="submit">Search</Button>
+            <Button type="submit" variant="default">
+              Search
+            </Button>
           </div>
         </form>
       </div>
