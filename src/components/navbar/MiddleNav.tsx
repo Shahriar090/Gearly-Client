@@ -2,9 +2,9 @@ import { FaShoppingCart } from "react-icons/fa";
 import { FiPhoneCall } from "react-icons/fi";
 const MiddleNav = () => {
   return (
-    <div className="w-full h-24 flex justify-between items-center px-14 bg-gray-100">
+    <div className="w-full h-24 flex justify-between items-center px-4 md:px-14 bg-gray-100">
       <div className="logo">
-        <h1 className="text-5xl font-semibold text-black">
+        <h1 className="text-3xl md:text-5xl font-semibold text-black">
           <span className="text-green-500 inline-block -rotate-15">G</span>
           early
         </h1>

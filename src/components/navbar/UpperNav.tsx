@@ -9,7 +9,7 @@ import {
 
 const UpperNav = () => {
   return (
-    <div className="bg-green-500 text-white flex justify-between items-center px-14 py-2">
+    <div className="bg-green-500 text-white hidden  md:flex justify-between items-center px-14 py-2">
       <div className="flex items-center gap-4 w-fit">
         {/* language and currency selector */}
         {/* language */}
