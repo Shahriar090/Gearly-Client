@@ -35,7 +35,7 @@ const Carousel = () => {
         </div>
 
         {/* Navigation Arrows */}
-        <div className="absolute right-2 bottom-1 space-x-1 hidden md:block">
+        <div className="absolute left-2 bottom-1 space-x-1 hidden md:block z-50">
           <Button variant="outline" onClick={goToPrevImage}>
             {" "}
             {"<"}
@@ -47,7 +47,7 @@ const Carousel = () => {
         </div>
 
         {/* Thumbnail Image Carousel */}
-        <div className="thumbnail-carousel absolute  md:bottom-[-120px] left-1/2 transform -translate-x-1/2 flex gap-2 w-[70%] justify-center">
+        <div className="thumbnail-carousel absolute  md:bottom-0 right-0  flex gap-2 w-full justify-center md:justify-end">
           {images.map((image, index) => (
             <div
               key={index}
@@ -57,7 +57,7 @@ const Carousel = () => {
               <img
                 src={image}
                 alt={`Thumbnail ${index}`}
-                className={`thumbnail-image w-full h-full border-2 md:w-36 md:h-36 object-cover rounded-lg ${
+                className={`thumbnail-image w-full h-full border-2 md:w-24 md:h-24 object-cover rounded-lg ${
                   selectedImage === index ? "border-green-500" : "border-2"
                 }`}
               />
