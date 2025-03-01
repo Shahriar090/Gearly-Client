@@ -30,7 +30,7 @@ const Carousel = () => {
           <img
             src={images[selectedImage]}
             alt={`Main Image ${selectedImage}`}
-            className="main-image w-full h-full md:h-[580px] mx-auto object-cover "
+            className="main-image w-full h-full md:h-[580px] mx-auto object-cover object-center "
           />
         </div>
 
@@ -57,7 +57,7 @@ const Carousel = () => {
               <img
                 src={image}
                 alt={`Thumbnail ${index}`}
-                className={`thumbnail-image w-full h-full border-2 md:w-24 md:h-24 object-cover rounded-lg ${
+                className={`thumbnail-image border-2 w-24 h-24 object-cover rounded-lg ${
                   selectedImage === index ? "border-green-500" : "border-2"
                 }`}
               />
