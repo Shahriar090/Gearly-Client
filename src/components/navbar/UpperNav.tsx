@@ -1,3 +1,4 @@
+import { NavLink } from "react-router";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,8 +43,12 @@ const UpperNav = () => {
             <DropdownMenuTrigger>My Account</DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Register</DropdownMenuItem>
-              <DropdownMenuItem>Login</DropdownMenuItem>
+              <DropdownMenuItem>
+                <NavLink to="/register">Register</NavLink>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <NavLink to="/login">Login</NavLink>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
