@@ -5,12 +5,13 @@ const MiddleNav = () => {
     <div className="w-full h-24 flex justify-between items-center px-14 bg-gray-100">
       <div className="logo">
         <h1 className="text-5xl font-semibold text-black">
-          <span className="text-green-500">G</span>early
+          <span className="text-green-500 inline-block -rotate-15">G</span>
+          early
         </h1>
       </div>
 
       {/* phone and cart */}
-      <div className="flex items-start gap-5">
+      <div className="flex items-start gap-2">
         <div>
           <div className="flex items-center gap-2">
             <FiPhoneCall className="h-5 w-5" />
