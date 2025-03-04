@@ -47,7 +47,7 @@ const Carousel = () => {
         </div>
 
         {/* Thumbnail Image Carousel */}
-        <div className="thumbnail-carousel absolute  md:bottom-0 right-0  flex gap-2 w-full justify-center md:justify-end">
+        <div className="thumbnail-carousel absolute  md:bottom-0 right-2  flex gap-2 w-full justify-end">
           {images.map((image, index) => (
             <div
               key={index}
@@ -57,7 +57,7 @@ const Carousel = () => {
               <img
                 src={image}
                 alt={`Thumbnail ${index}`}
-                className={`thumbnail-image border-2 w-24 h-24 object-cover rounded-lg ${
+                className={`thumbnail-image border-2 w-10 md:w-20 h-10 md:h-20 object-cover rounded-lg ${
                   selectedImage === index ? "border-green-500" : "border-2"
                 }`}
               />
