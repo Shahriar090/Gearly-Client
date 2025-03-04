@@ -5,6 +5,7 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { navItems } from "./NavItems";
 import Language from "./Language";
 import Currency from "./Currency";
+import AuthInfo from "./AuthInfo";
 type TDrawerProps = {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -25,9 +26,10 @@ const MobileDrawer = ({ isOpen, setIsOpen }: TDrawerProps) => {
         </button>
 
         {/* Language and Currency (from UpperNav) */}
-        <div className="flex gap-2 ">
+        <div className="flex gap-2 items-center overflow-x-scroll">
           <Language />
           <Currency />
+          <AuthInfo />
         </div>
 
         {/* Navigation Links (from LowerNav) */}

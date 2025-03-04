@@ -1,25 +1,33 @@
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { useState } from "react";
 
 const Currency = () => {
+  const [currency, setCurrency] = useState<string>("");
+
+  const handleCurrencyChange = (value: string) => {
+    setCurrency(value);
+
+    console.log("Selected currency:", value);
+    console.log(currency);
+  };
   return (
     <div>
-      <DropdownMenu>
-        <DropdownMenuTrigger>$ Currency</DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuLabel>Select Any Currency</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>BDT</DropdownMenuItem>
-          <DropdownMenuItem>USD</DropdownMenuItem>
-          <DropdownMenuItem>Euro</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+      <Select onValueChange={handleCurrencyChange}>
+        <SelectTrigger className="w-[150px]">
+          <SelectValue placeholder="$ Currency" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="BDT">BDT</SelectItem>
+          <SelectItem value="USD">USD</SelectItem>
+          <SelectItem value="Euro">Euro</SelectItem>
+        </SelectContent>
+      </Select>
     </div>
   );
 };

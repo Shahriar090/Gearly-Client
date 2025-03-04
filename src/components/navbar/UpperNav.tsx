@@ -1,13 +1,6 @@
-import { NavLink } from "react-router";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
 import Language from "./Language";
 import Currency from "./Currency";
+import AuthInfo from "./AuthInfo";
 
 const UpperNav = () => {
   return (
@@ -23,18 +16,7 @@ const UpperNav = () => {
       {/* account wishlist and checkout */}
       <div className="flex items-center gap-4">
         <div>
-          <DropdownMenu>
-            <DropdownMenuTrigger>My Account</DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <NavLink to="/register">Register</NavLink>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <NavLink to="/login">Login</NavLink>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <AuthInfo />
         </div>
 
         {/* wish list */}
