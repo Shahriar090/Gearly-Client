@@ -19,8 +19,8 @@ const Language = () => {
   return (
     <div>
       <Select onValueChange={handleLanguageChange}>
-        <SelectTrigger className="w-full">
-          <SelectValue placeholder="🌐 Language" />
+        <SelectTrigger className="w-[150px] data-[placeholder]:text-white">
+          <SelectValue className="" placeholder="🌐 Language" />
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="en">English</SelectItem>

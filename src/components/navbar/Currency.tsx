@@ -19,7 +19,7 @@ const Currency = () => {
   return (
     <div>
       <Select onValueChange={handleCurrencyChange}>
-        <SelectTrigger className="w-[150px]">
+        <SelectTrigger className="w-[150px] data-[placeholder]:text-white">
           <SelectValue placeholder="$ Currency" />
         </SelectTrigger>
         <SelectContent>

@@ -16,7 +16,7 @@ const AuthInfo = () => {
 
   return (
     <Select onValueChange={handleNavigation}>
-      <SelectTrigger className="w-[150px]">
+      <SelectTrigger className="w-[150px] data-[placeholder]:text-white">
         <SelectValue placeholder="My Account" />
       </SelectTrigger>
       <SelectContent>
