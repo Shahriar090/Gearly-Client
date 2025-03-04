@@ -29,8 +29,10 @@ const FormWrapper = <T extends ZodSchema>({
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* render prop pattern */}
         {children(form)}
-        <div>
-          <Button type="submit">{submitButtonLabel}</Button>
+        <div className="pt-4">
+          <Button className="w-full" type="submit" variant="default">
+            {submitButtonLabel}
+          </Button>
         </div>
       </form>
     </Form>
