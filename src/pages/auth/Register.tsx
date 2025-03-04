@@ -2,6 +2,7 @@ import FormWrapper from "@/components/form/FormWrapper";
 import { registerUserDefaultValues, USER_GENDER } from "./auth.constants";
 import { registerUserSchema, TRegisterUserForm } from "./register.validation";
 import InputField from "@/components/form/InputField";
+import { Link } from "react-router";
 
 const Register = () => {
   const handleRegister = (values: TRegisterUserForm) => {
@@ -113,6 +114,15 @@ const Register = () => {
             </div>
           )}
         </FormWrapper>
+        <div className="pt-4">
+          <p className="text-xs text-blue-500">
+            Already have an account?{" "}
+            <Link to="/login">
+              {" "}
+              <span className="font-semibold">Login</span>
+            </Link>
+          </p>
+        </div>
       </div>
     </section>
   );

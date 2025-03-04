@@ -2,6 +2,7 @@ import {} from "@/components/form/form.validation";
 import FormWrapper from "@/components/form/FormWrapper";
 import InputField from "@/components/form/InputField";
 import { loginValidationSchema, TLoginUserForm } from "./login.validation";
+import { Link } from "react-router";
 
 const Login = () => {
   const handleSubmit = (values: TLoginUserForm) => {
@@ -38,6 +39,15 @@ const Login = () => {
             </div>
           )}
         </FormWrapper>
+        <div className="pt-4">
+          <p className="text-xs text-blue-500">
+            New Here?{" "}
+            <Link to="/register">
+              {" "}
+              <span className="font-semibold">Register</span>
+            </Link>
+          </p>
+        </div>
       </div>
     </section>
   );
