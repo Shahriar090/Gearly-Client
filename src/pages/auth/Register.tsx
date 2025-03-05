@@ -5,9 +5,55 @@ import InputField from "@/components/form/InputField";
 import { Link } from "react-router";
 
 const Register = () => {
-  const handleRegister = (values: TRegisterUserForm) => {
-    console.log("Registering user:", values);
-    // Handle form submission logic, such as calling an API
+  const handleRegister = async (userData: TRegisterUserForm) => {
+    const formData = new FormData();
+
+    // excluding profile image because it is sent separately
+    const { profileImage, ...remainingUserData } = userData;
+
+    // attach user data as a stringified JSON object
+
+    formData.append(
+      "data",
+      JSON.stringify({
+        user: remainingUserData,
+      })
+    );
+
+    // attach file
+    if (profileImage) {
+      if (Array.isArray(profileImage)) {
+        profileImage.forEach((file, index) => {
+          formData.append(`files[${index}]`, file);
+        });
+      } else {
+        formData.append("file", profileImage);
+      }
+    }
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/users/create-user`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Failed to register user:", errorData);
+        alert(`Registration failed: ${errorData.message}`);
+        return;
+      }
+
+      const responseData = await response.json();
+      console.log("User registered successfully:", responseData);
+      alert("User registered successfully!");
+    } catch (error) {
+      console.error("Error registering user:", error);
+      alert("An error occurred during registration.");
+    }
   };
 
   return (

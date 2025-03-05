@@ -128,17 +128,29 @@ const InputField = <T extends FieldValues>({
           </div>
         );
 
+      case "number":
+        return (
+          <Input
+            type="number"
+            {...field}
+            placeholder={placeholder}
+            value={field.value === undefined ? "" : field.value}
+            onChange={(e) => {
+              const newValue =
+                e.target.value === "" ? "" : Number(e.target.value);
+
+              field.onChange(newValue);
+            }}
+          />
+        );
+
       default: // text, number, email, password
         return (
           <Input
             type={type}
             {...field}
             placeholder={placeholder}
-            value={
-              type === "number" && field.value === undefined
-                ? ""
-                : field.value ?? ""
-            }
+            value={field.value ?? ""}
           />
         );
     }

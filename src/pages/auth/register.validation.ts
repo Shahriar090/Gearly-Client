@@ -22,12 +22,13 @@ const registerUserSchema = z.object({
   gender: z.enum([USER_GENDER.Male, USER_GENDER.Female, USER_GENDER.Others], {
     required_error: "Gender is required",
   }),
-  profileImage: imageSchema.optional(),
+  profileImage: z.union([imageSchema, z.array(imageSchema)]).optional(),
   age: z
     .number({
       required_error: "Age is required",
       invalid_type_error: "Age must be a number",
     })
+    .positive()
     .min(18, "Age must be at least 18"),
   contactNo: z.string().min(1, "Contact Number is required").trim(),
   address: z.string().min(1, "Address is required").trim(),
