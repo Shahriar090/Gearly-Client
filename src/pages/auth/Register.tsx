@@ -3,8 +3,14 @@ import { registerUserDefaultValues, USER_GENDER } from "./auth.constants";
 import { registerUserSchema, TRegisterUserForm } from "./register.validation";
 import InputField from "@/components/form/InputField";
 import { Link } from "react-router";
+import axios from "axios";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const Register = () => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // handling registration logic
   const handleRegister = async (userData: TRegisterUserForm) => {
     const formData = new FormData();
 
@@ -32,27 +38,23 @@ const Register = () => {
     }
 
     try {
-      const response = await fetch(
+      setIsSubmitting(true);
+      const response = await axios.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/users/create-user`,
-        {
-          method: "POST",
-          body: formData,
-        }
+        formData
       );
+      toast.success("User Registered Successfully");
+      console.log("User Registered", response.data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error("User Registration Failed", error);
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Failed to register user:", errorData);
-        alert(`Registration failed: ${errorData.message}`);
-        return;
-      }
-
-      const responseData = await response.json();
-      console.log("User registered successfully:", responseData);
-      alert("User registered successfully!");
-    } catch (error) {
-      console.error("Error registering user:", error);
-      alert("An error occurred during registration.");
+      const errorMessage =
+        error.response?.data?.message ||
+        "An Error Occurred During Registration";
+      toast.error(errorMessage);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -65,7 +67,8 @@ const Register = () => {
           schema={registerUserSchema}
           defaultValues={registerUserDefaultValues}
           onSubmit={handleRegister}
-          submitButtonLabel="Register"
+          submitButtonLabel={isSubmitting ? "Registering..." : "Register"}
+          // submitButtonIsDisabled={isSubmitting}
         >
           {(form) => (
             <div className="space-y-4">
