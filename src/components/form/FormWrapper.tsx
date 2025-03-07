@@ -11,6 +11,7 @@ type TFormWrapperProps<T extends ZodSchema> = {
   onSubmit: (values: z.infer<T>) => void;
   children: (form: ReturnType<typeof useForm<z.infer<T>>>) => React.ReactNode;
   submitButtonLabel?: string;
+  submitButtonIsDisabled?: boolean;
 };
 
 const FormWrapper = <T extends ZodSchema>({
@@ -19,18 +20,27 @@ const FormWrapper = <T extends ZodSchema>({
   onSubmit,
   children,
   submitButtonLabel = "Submit",
+  submitButtonIsDisabled,
 }: TFormWrapperProps<T>) => {
   const form = useForm<z.infer<T>>({
     resolver: zodResolver(schema),
     defaultValues,
   });
+
+  // tracking form submission status
+  const { isSubmitting } = form.formState;
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* render prop pattern */}
         {children(form)}
-        <div className="pt-4">
-          <Button className="w-full" type="submit" variant="default">
+        <div className="pt-4  flex justify-center md:justify-end">
+          <Button
+            className="w-full md:w-fit"
+            type="submit"
+            variant="default"
+            disabled={submitButtonIsDisabled ?? isSubmitting}
+          >
             {submitButtonLabel}
           </Button>
         </div>

@@ -1,12 +1,15 @@
 import { FaShoppingCart } from "react-icons/fa";
 import { FiPhoneCall } from "react-icons/fi";
 import { CiMenuKebab } from "react-icons/ci";
+import { useAuth } from "@/hooks/useAuth";
 
 type TDrawerProps = {
   setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const MiddleNav = ({ setIsDrawerOpen }: TDrawerProps) => {
+  const { auth } = useAuth();
+  console.log(auth, "from middle nav");
   return (
     <div className="w-full h-24 flex justify-between items-center px-4 md:px-14 bg-gray-100">
       <div className="logo">

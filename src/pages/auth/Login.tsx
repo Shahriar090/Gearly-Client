@@ -2,11 +2,59 @@ import {} from "@/components/form/form.validation";
 import FormWrapper from "@/components/form/FormWrapper";
 import InputField from "@/components/form/InputField";
 import { loginValidationSchema, TLoginUserForm } from "./login.validation";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
+import { useState } from "react";
+import axios from "axios";
+import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
-  const handleSubmit = (values: TLoginUserForm) => {
-    console.log("Submitted values", values);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
+  const { setAuth } = useAuth();
+
+  const handleSubmit = async (loginInfos: TLoginUserForm) => {
+    setIsSubmitting(true);
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/auth/login`,
+        loginInfos
+      );
+      const { user, tokens } = response?.data?.data || {};
+      console.log(user, tokens);
+      setAuth({
+        user,
+        accessToken: tokens.accessToken,
+        refreshToken: tokens.refreshTOken,
+      });
+      toast.success("Login Successful", {
+        duration: 3000,
+        position: "top-right",
+      });
+
+      // redirect based on user role
+      if (user?.role === "Admin") {
+        navigate("/admin");
+      } else if (user?.role === "Customer") {
+        navigate("/users");
+      } else {
+        navigate("/");
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.error("Login Failed", error);
+
+      const errorMessage =
+        error.response?.data?.message || "An Error Occurred During Login";
+
+      toast.error(errorMessage, {
+        duration: 3000,
+        position: "top-right",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
   return (
     <section className="p-4 md:p-20">
@@ -16,7 +64,8 @@ const Login = () => {
           schema={loginValidationSchema}
           defaultValues={{ email: "", password: "" }}
           onSubmit={handleSubmit}
-          submitButtonLabel="Login"
+          submitButtonLabel={isSubmitting ? "Logging In..." : "Login"}
+          submitButtonIsDisabled={isSubmitting}
         >
           {(form) => (
             <div className="grid grid-cols-1 gap-4">

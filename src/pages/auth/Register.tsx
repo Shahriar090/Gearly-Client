@@ -43,7 +43,10 @@ const Register = () => {
         `${import.meta.env.VITE_SERVER_BASE_URL}/users/create-user`,
         formData
       );
-      toast.success("User Registered Successfully");
+      toast.success("User Registered Successfully", {
+        duration: 3000,
+        position: "top-right",
+      });
       console.log("User Registered", response.data);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -52,7 +55,10 @@ const Register = () => {
       const errorMessage =
         error.response?.data?.message ||
         "An Error Occurred During Registration";
-      toast.error(errorMessage);
+      toast.error(errorMessage, {
+        duration: 3000,
+        position: "top-right",
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -68,7 +74,7 @@ const Register = () => {
           defaultValues={registerUserDefaultValues}
           onSubmit={handleRegister}
           submitButtonLabel={isSubmitting ? "Registering..." : "Register"}
-          // submitButtonIsDisabled={isSubmitting}
+          submitButtonIsDisabled={isSubmitting}
         >
           {(form) => (
             <div className="space-y-4">

@@ -3,8 +3,10 @@ import PublicLayout from "../layouts/PublicLayout";
 import Home from "../pages/home/Home";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
-import AdminDashboard from "../pages/dashboard/admin/AdminDashboard";
-import UserDashboard from "../pages/dashboard/user/UserDashboard";
+
+import ProtectedRoutes from "./ProtectedRoutes";
+import AdminLayout from "@/layouts/AdminLayout";
+import UserLayout from "@/layouts/UserLayout";
 
 const routes: RouteObject[] = [
   {
@@ -27,11 +29,19 @@ const routes: RouteObject[] = [
   },
   {
     path: "/admin",
-    element: <AdminDashboard />,
+    element: (
+      <ProtectedRoutes>
+        <AdminLayout />
+      </ProtectedRoutes>
+    ),
   },
   {
     path: "/users",
-    element: <UserDashboard />,
+    element: (
+      <ProtectedRoutes>
+        <UserLayout />
+      </ProtectedRoutes>
+    ),
   },
 ];
 
