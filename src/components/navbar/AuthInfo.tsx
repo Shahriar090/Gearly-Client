@@ -6,24 +6,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { useAuth } from "@/hooks/useAuth";
+import LogOut from "@/pages/auth/LogOut";
 
 const AuthInfo = () => {
   const navigate = useNavigate();
+  const { auth } = useAuth();
 
   const handleNavigation = (value: string) => {
     navigate(value);
   };
 
   return (
-    <Select onValueChange={handleNavigation}>
-      <SelectTrigger className="w-[150px] data-[placeholder]:text-white">
-        <SelectValue placeholder="My Account" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="/register">Register</SelectItem>
-        <SelectItem value="/login">Login</SelectItem>
-      </SelectContent>
-    </Select>
+    <>
+      <Select onValueChange={handleNavigation}>
+        <SelectTrigger className="w-[150px] data-[placeholder]:text-white">
+          <SelectValue placeholder="My Account" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="/register">Register</SelectItem>
+          <SelectItem value="/login">Login</SelectItem>
+          {auth.user && <LogOut />}
+        </SelectContent>
+      </Select>
+    </>
   );
 };
 

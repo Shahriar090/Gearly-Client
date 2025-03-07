@@ -12,36 +12,19 @@ const Register = () => {
 
   // handling registration logic
   const handleRegister = async (userData: TRegisterUserForm) => {
-    const formData = new FormData();
-
-    // excluding profile image because it is sent separately
-    const { profileImage, ...remainingUserData } = userData;
-
-    // attach user data as a stringified JSON object
-
-    formData.append(
-      "data",
-      JSON.stringify({
-        user: remainingUserData,
-      })
-    );
-
-    // attach file
-    if (profileImage) {
-      if (Array.isArray(profileImage)) {
-        profileImage.forEach((file, index) => {
-          formData.append(`files[${index}]`, file);
-        });
-      } else {
-        formData.append("file", profileImage);
-      }
-    }
-
     try {
       setIsSubmitting(true);
+
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/users/create-user`,
-        formData
+        {
+          user: userData,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       );
       toast.success("User Registered Successfully", {
         duration: 3000,
@@ -54,7 +37,7 @@ const Register = () => {
 
       const errorMessage =
         error.response?.data?.message ||
-        "An Error Occurred During Registration";
+        "An error occurred during registration";
       toast.error(errorMessage, {
         duration: 3000,
         position: "top-right",
@@ -99,9 +82,39 @@ const Register = () => {
                   label="Last Name"
                   placeholder="Enter last name"
                 />
-              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                {/* Email Field */}
+                <InputField
+                  control={form.control}
+                  name="email"
+                  label="Email"
+                  type="email"
+                  placeholder="Enter your email"
+                />
+
+                {/* Password Field */}
+                <InputField
+                  control={form.control}
+                  name="password"
+                  label="Password"
+                  type="password"
+                  placeholder="Enter your password"
+                />
+                {/* Contact Number */}
+                <InputField
+                  control={form.control}
+                  name="contactNo"
+                  label="Contact Number"
+                  placeholder="Enter contact number"
+                />
+                {/* Address Field */}
+                <InputField
+                  control={form.control}
+                  name="address"
+                  label="Address"
+                  placeholder="Enter your address"
+                />
+
                 {/* Gender Field */}
                 <InputField
                   control={form.control}
@@ -121,49 +134,6 @@ const Register = () => {
                   label="Age"
                   type="number"
                   placeholder="Enter your age"
-                />
-                {/* Profile Image Field */}
-                <InputField
-                  control={form.control}
-                  name="profileImage"
-                  label="Profile Image"
-                  type="file"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {/* Contact Number */}
-                <InputField
-                  control={form.control}
-                  name="contactNo"
-                  label="Contact Number"
-                  placeholder="Enter contact number"
-                />
-
-                {/* Address Field */}
-                <InputField
-                  control={form.control}
-                  name="address"
-                  label="Address"
-                  placeholder="Enter your address"
-                />
-
-                {/* Email Field */}
-                <InputField
-                  control={form.control}
-                  name="email"
-                  label="Email"
-                  type="email"
-                  placeholder="Enter your email"
-                />
-
-                {/* Password Field */}
-                <InputField
-                  control={form.control}
-                  name="password"
-                  label="Password"
-                  type="password"
-                  placeholder="Enter your password"
                 />
               </div>
             </div>
