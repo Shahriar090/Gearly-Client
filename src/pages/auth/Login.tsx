@@ -20,7 +20,8 @@ const Login = () => {
     try {
       const { data } = await axios.post(
         `${import.meta.env.VITE_LOCAL_SERVER_URL}/auth/login`,
-        loginInfos
+        loginInfos,
+        { withCredentials: true }
       );
 
       if (!data?.data) throw new Error("Invalid Response Format");
