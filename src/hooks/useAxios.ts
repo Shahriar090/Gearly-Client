@@ -29,11 +29,10 @@ const useAxios = () => {
           originalRequest._retry = true;
 
           try {
-            const refreshToken = auth?.refreshToken;
-
+            // refresh token is being sent to the backend from the cookies.
             const response = await axios.post(
               `${import.meta.env.VITE_SERVER_BASE_URL}/auth/refresh-token`,
-              { refreshToken },
+              {},
               { withCredentials: true }
             );
 
