@@ -26,6 +26,10 @@ const AuthInfo = () => {
         <SelectContent>
           <SelectItem value="/register">Register</SelectItem>
           <SelectItem value="/login">Login</SelectItem>
+          {auth.user && (
+            <SelectItem value="/users/user-profile">My Profile</SelectItem>
+          )}
+
           {auth.user && <LogOut />}
         </SelectContent>
       </Select>

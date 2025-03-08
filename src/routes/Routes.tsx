@@ -7,6 +7,8 @@ import Register from "../pages/auth/Register";
 import ProtectedRoutes from "./ProtectedRoutes";
 import AdminLayout from "@/layouts/AdminLayout";
 import UserLayout from "@/layouts/UserLayout";
+import UserProfile from "@/pages/dashboard/user/UserProfile";
+import UserDashboard from "@/pages/dashboard/user/UserDashboard";
 
 const routes: RouteObject[] = [
   {
@@ -39,9 +41,19 @@ const routes: RouteObject[] = [
     path: "/users",
     element: (
       <ProtectedRoutes>
-        <UserLayout />
+        <UserLayout />,
       </ProtectedRoutes>
     ),
+    children: [
+      {
+        index: true,
+        element: <UserDashboard />,
+      },
+      {
+        path: "user-profile",
+        element: <UserProfile />,
+      },
+    ],
   },
 ];
 
