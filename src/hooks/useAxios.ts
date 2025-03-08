@@ -32,7 +32,7 @@ const useAxios = () => {
             const refreshToken = auth?.refreshToken;
 
             const response = await axios.post(
-              `${import.meta.env.VITE_SERVER_BASE_UR}/auth/refresh-token`,
+              `${import.meta.env.VITE_SERVER_BASE_URL}/auth/refresh-token`,
               { refreshToken },
               { withCredentials: true }
             );
