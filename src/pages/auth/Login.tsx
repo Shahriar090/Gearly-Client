@@ -7,6 +7,7 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/useAuth";
+import { getErrorMessage } from "./auth.utils";
 
 const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,40 +16,35 @@ const Login = () => {
 
   const handleSubmit = async (loginInfos: TLoginUserForm) => {
     setIsSubmitting(true);
+
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/auth/login`,
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_LOCAL_SERVER_URL}/auth/login`,
         loginInfos
       );
-      const { user, tokens } = response?.data?.data || {};
-      console.log(user, tokens);
+
+      if (!data?.data) throw new Error("Invalid Response Format");
+      const { user, tokens } = data.data;
+      console.log(user, tokens, "from login");
       setAuth({
         user,
         accessToken: tokens.accessToken,
-        refreshToken: tokens.refreshTOken,
+        refreshToken: tokens.refreshToken,
       });
-      toast.success("Login Successful", {
+      toast.success("Login Successful!", {
         duration: 3000,
         position: "top-right",
       });
-
-      // redirect based on user role
-      if (user?.role === "Admin") {
-        navigate("/admin");
-      } else if (user?.role === "Customer") {
-        navigate("/users");
-      } else {
-        navigate("/");
-      }
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
+      navigate(
+        user?.role === "Admin"
+          ? "/admin"
+          : user?.role === "Customer"
+          ? "/users"
+          : "/"
+      );
+    } catch (error) {
       console.error("Login Failed", error);
-
-      const errorMessage =
-        error.response?.data?.message || "An Error Occurred During Login";
-
-      toast.error(errorMessage, {
+      toast.error(getErrorMessage(error), {
         duration: 3000,
         position: "top-right",
       });
