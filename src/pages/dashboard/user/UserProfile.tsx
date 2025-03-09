@@ -13,7 +13,7 @@ const UserProfile = () => {
       try {
         setLoading(true);
         const response = await api.get(
-          `${import.meta.env.VITE_LOCAL_SERVER_URL}/users/profile`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/users/profile`
         );
 
         console.log(response.data?.data?.name?.firstName, "From profile");

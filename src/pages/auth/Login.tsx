@@ -26,7 +26,6 @@ const Login = () => {
 
       if (!data?.data) throw new Error("Invalid Response Format");
       const { user, tokens } = data.data;
-      console.log(user, tokens, "from login");
       setAuth({
         user,
         accessToken: tokens.accessToken,
