@@ -37,9 +37,9 @@ const Login = () => {
       });
       navigate(
         user?.role === "Admin"
-          ? "/admin"
+          ? "/admin/dashboard"
           : user?.role === "Customer"
-          ? "/users"
+          ? "/users/dashboard"
           : "/"
       );
     } catch (error) {

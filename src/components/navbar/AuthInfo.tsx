@@ -27,7 +27,15 @@ const AuthInfo = () => {
           <SelectItem value="/register">Register</SelectItem>
           <SelectItem value="/login">Login</SelectItem>
           {auth.user && (
-            <SelectItem value="/users/user-profile">My Profile</SelectItem>
+            <SelectItem
+              value={
+                auth?.user?.role === "Admin"
+                  ? "/admin/dashboard"
+                  : "/users/dashboard"
+              }
+            >
+              My Profile
+            </SelectItem>
           )}
 
           {auth.user && <LogOut />}
