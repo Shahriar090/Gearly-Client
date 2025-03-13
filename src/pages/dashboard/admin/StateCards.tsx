@@ -51,7 +51,9 @@ const StateCards = () => {
             <h3 className="text-lg font-semibold text-gray-700">
               {stat.title}
             </h3>
-            <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+            <p className="text-xl md:text-2xl font-bold text-gray-900">
+              {stat.value}
+            </p>
             <div
               className={`flex items-center text-sm ${
                 stat.increase ? "text-green-500" : "text-red-500"

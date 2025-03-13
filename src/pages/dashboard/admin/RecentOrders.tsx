@@ -73,44 +73,46 @@ const RecentOrders = () => {
       <h2 className="text-lg font-semibold text-gray-700 mb-4">
         Recent Orders
       </h2>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            <TableHead>Order ID</TableHead>
-            <TableHead>Date</TableHead>
-            <TableHead>Product</TableHead>
-            <TableHead>Customer</TableHead>
-            <TableHead>Email</TableHead>
-            <TableHead>Phone</TableHead>
-            <TableHead>Address</TableHead>
-            <TableHead>Payment</TableHead>
-            <TableHead>Status</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {currentOrders.map((order, index) => (
-            <TableRow key={index}>
-              <TableCell>{order.id}</TableCell>
-              <TableCell>{order.date}</TableCell>
-              <TableCell>{order.product}</TableCell>
-              <TableCell>{order.customer}</TableCell>
-              <TableCell>{order.email}</TableCell>
-              <TableCell>{order.phone}</TableCell>
-              <TableCell>{order.address}</TableCell>
-              <TableCell>{order.payment}</TableCell>
-              <TableCell>
-                <Badge
-                  variant={
-                    order.status === "Completed" ? "default" : "secondary"
-                  }
-                >
-                  {order.status}
-                </Badge>
-              </TableCell>
+      <div className=" ">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Order ID</TableHead>
+              <TableHead>Date</TableHead>
+              <TableHead>Product</TableHead>
+              <TableHead>Customer</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Phone</TableHead>
+              <TableHead>Address</TableHead>
+              <TableHead>Payment</TableHead>
+              <TableHead>Status</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {currentOrders.map((order, index) => (
+              <TableRow key={index}>
+                <TableCell>{order.id}</TableCell>
+                <TableCell>{order.date}</TableCell>
+                <TableCell>{order.product}</TableCell>
+                <TableCell>{order.customer}</TableCell>
+                <TableCell>{order.email}</TableCell>
+                <TableCell>{order.phone}</TableCell>
+                <TableCell>{order.address}</TableCell>
+                <TableCell>{order.payment}</TableCell>
+                <TableCell>
+                  <Badge
+                    variant={
+                      order.status === "Completed" ? "default" : "secondary"
+                    }
+                  >
+                    {order.status}
+                  </Badge>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </div>
 
       {/* Pagination Controls */}
       <div className="flex justify-between items-center mt-4">
