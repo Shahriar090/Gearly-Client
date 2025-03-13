@@ -69,11 +69,12 @@ const RecentOrders = () => {
   const currentOrders = orders.slice(indexOfFirstRow, indexOfLastRow);
   const totalPages = Math.ceil(orders.length / rowsPerPage);
   return (
-    <div className="bg-white shadow-lg rounded-lg p-4">
+    <div className="bg-white shadow-lg rounded-lg p-4 ">
       <h2 className="text-lg font-semibold text-gray-700 mb-4">
         Recent Orders
       </h2>
-      <div className=" ">
+      <div className="max-w-[300px] sm:max-w-full">
+        {" "}
         <Table>
           <TableHeader>
             <TableRow>
