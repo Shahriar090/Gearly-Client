@@ -18,6 +18,7 @@ import TotalOrders from "@/pages/dashboard/admin/TotalOrders";
 import Products from "@/pages/dashboard/admin/Products";
 import Sales from "@/pages/dashboard/admin/Sales";
 import Customers from "@/pages/dashboard/admin/Customers";
+import AddProduct from "@/pages/dashboard/admin/AddProduct";
 
 const routes: RouteObject[] = [
   {
@@ -61,6 +62,10 @@ const routes: RouteObject[] = [
       {
         path: "products",
         element: <Products />,
+      },
+      {
+        path: "add-product",
+        element: <AddProduct />,
       },
       {
         path: "total-sales",
