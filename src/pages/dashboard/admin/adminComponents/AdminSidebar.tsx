@@ -8,6 +8,7 @@ import {
   DollarSign,
   Settings,
   Home,
+  Ratio,
 } from "lucide-react";
 import { Link } from "react-router";
 
@@ -41,6 +42,11 @@ const adminSidebarOptions = [
     name: "Customers",
     path: "/admin/total-customers",
     icon: <Users size={20} />,
+  },
+  {
+    name: "Categories",
+    path: "/admin/categories",
+    icon: <Ratio size={20} />,
   },
   {
     name: "Products",

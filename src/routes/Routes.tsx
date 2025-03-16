@@ -15,10 +15,12 @@ import AdminDashboard from "@/pages/dashboard/admin/AdminDashboard";
 import Analytics from "@/pages/dashboard/admin/Analytics";
 import Orders from "@/pages/dashboard/user/Orders";
 import TotalOrders from "@/pages/dashboard/admin/TotalOrders";
-import Products from "@/pages/dashboard/admin/Products";
+import Products from "@/pages/dashboard/admin/products/Products";
 import Sales from "@/pages/dashboard/admin/Sales";
 import Customers from "@/pages/dashboard/admin/Customers";
-import AddProduct from "@/pages/dashboard/admin/AddProduct";
+import AddProduct from "@/pages/dashboard/admin/products/AddProduct";
+import Categories from "@/pages/dashboard/admin/categories/Categories";
+import AddCategory from "@/pages/dashboard/admin/categories/AddCategory";
 
 const routes: RouteObject[] = [
   {
@@ -58,6 +60,14 @@ const routes: RouteObject[] = [
       {
         path: "total-orders",
         element: <TotalOrders />,
+      },
+      {
+        path: "categories",
+        element: <Categories />,
+      },
+      {
+        path: "add-category",
+        element: <AddCategory />,
       },
       {
         path: "products",

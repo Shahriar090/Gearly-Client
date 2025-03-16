@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import { Checkbox } from "../ui/checkbox";
 
 type TOption = {
   label: string;
@@ -104,10 +105,9 @@ const InputField = <T extends FieldValues>({
 
       case "checkbox":
         return (
-          <Input
-            type="checkbox"
+          <Checkbox
             checked={field.value ?? false}
-            onChange={(e) => field.onChange(e.target.checked)}
+            onCheckedChange={(checked) => field.onChange(checked)}
           />
         );
 
