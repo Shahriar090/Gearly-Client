@@ -1,9 +1,9 @@
-import { Link } from "react-router";
+import CategoriesList from "./CategoriesList";
 
 const Categories = () => {
   return (
     <div>
-      <Link to="/admin/add-category">Add Categories</Link>
+      <CategoriesList />
     </div>
   );
 };
