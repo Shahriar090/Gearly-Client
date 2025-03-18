@@ -9,6 +9,7 @@ import {
   Settings,
   Home,
   Ratio,
+  Dices,
 } from "lucide-react";
 import { Link } from "react-router";
 
@@ -47,6 +48,11 @@ const adminSidebarOptions = [
     name: "Categories",
     path: "/admin/categories",
     icon: <Ratio size={20} />,
+  },
+  {
+    name: "Brands",
+    path: "/admin/brands",
+    icon: <Dices size={20} />,
   },
   {
     name: "Products",

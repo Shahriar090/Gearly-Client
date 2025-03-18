@@ -21,6 +21,8 @@ import Customers from "@/pages/dashboard/admin/Customers";
 import AddProduct from "@/pages/dashboard/admin/products/AddProduct";
 import Categories from "@/pages/dashboard/admin/categories/Categories";
 import AddCategory from "@/pages/dashboard/admin/categories/AddCategory";
+import Brands from "@/pages/dashboard/admin/brands/Brands";
+import AddBrand from "@/pages/dashboard/admin/brands/AddBrand";
 
 const routes: RouteObject[] = [
   {
@@ -68,6 +70,14 @@ const routes: RouteObject[] = [
       {
         path: "add-category",
         element: <AddCategory />,
+      },
+      {
+        path: "brands",
+        element: <Brands />,
+      },
+      {
+        path: "add-brand",
+        element: <AddBrand />,
       },
       {
         path: "products",

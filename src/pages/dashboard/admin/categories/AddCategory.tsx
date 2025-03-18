@@ -121,7 +121,7 @@ const AddCategory = () => {
               Add Necessary Specifications A Product Could Have Under This
               Category
             </h3>
-            {specifications.map((spec, index) => (
+            {specifications.map((_, index) => (
               <div
                 key={index}
                 className="flex justify-between p-2 rounded-lg items-center shadow-lg space-x-4 mt-4"
