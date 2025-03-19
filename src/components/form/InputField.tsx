@@ -25,7 +25,7 @@ type TOption = {
 type TInputFieldProps<T extends FieldValues> = {
   control: Control<T>;
   name: FieldPath<T>;
-  label: string;
+  label?: string;
   placeholder?: string;
   type?:
     | "text"
