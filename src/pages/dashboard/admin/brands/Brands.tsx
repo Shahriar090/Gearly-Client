@@ -19,6 +19,7 @@ import {
 import useAxios from "@/hooks/useAxios";
 import { Edit, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import { toast } from "sonner";
 
 // NOTE: In this project, "Brands" and "Sub Categories" refer to the same concept. I am using "Brands" on the front end for clarity. On the back end, I refer to each brand as a "Sub Category." A "Sub Category" represents a brand under a main category (e.g., "Smart Phones" as the category, and "Apple" as the sub category or brand under the Smart Phones category).
@@ -78,6 +79,7 @@ const Brands = () => {
   };
   return (
     <div className="max-w-[300px] sm:max-w-full">
+      <Link to="/admin/add-brand">Add New brand</Link>
       <Table>
         <TableHeader>
           <TableRow className="bg-gray-200 text-black font-semibold text-center">

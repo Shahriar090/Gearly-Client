@@ -30,6 +30,7 @@ const FormWrapper = <T extends ZodSchema>({
   // tracking form submission status
   const { isSubmitting } = form.formState;
   return (
+    // here form is the return value of useForm which contains objects and functions.(example: handleSubmit, errors, formState, register etc.)
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
         {/* render prop pattern */}

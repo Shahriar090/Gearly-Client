@@ -40,6 +40,9 @@ type TInputFieldProps<T extends FieldValues> = {
   options?: TOption[]; // for select/dropdown
   isVisible?: boolean; // optional visibility flag for dynamic forms
   multipleFiles?: boolean; // support multiple file upload
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  onChange?: (value: any) => void;
+  required?: boolean;
 };
 
 const InputField = <T extends FieldValues>({
@@ -51,6 +54,8 @@ const InputField = <T extends FieldValues>({
   options = [],
   isVisible = true,
   multipleFiles = false,
+  onChange,
+  required = false,
 }: TInputFieldProps<T>) => {
   if (!isVisible) return null; // Hide if not visible
 
@@ -58,10 +63,14 @@ const InputField = <T extends FieldValues>({
     <FormField
       control={control}
       name={name}
+      rules={{ required: required ? `${label} is required` : false }}
       render={({ field }) => (
         <FormItem>
           <FormLabel>{label}</FormLabel>
-          <FormControl>{renderInput(field)}</FormControl>
+
+          <FormControl>
+            {renderInput({ ...field, onChange: onChange || field.onChange })}
+          </FormControl>
           <FormMessage />
         </FormItem>
       )}
@@ -79,17 +88,40 @@ const InputField = <T extends FieldValues>({
           <Input
             type="file"
             multiple={multipleFiles}
-            onChange={(e) =>
-              field.onChange(
-                multipleFiles ? e.target.files : e.target.files?.[0]
-              )
-            }
+            onChange={(e) => {
+              if (e.target && e.target.files) {
+                const files = e.target.files;
+                const fileArray = multipleFiles
+                  ? Array.from(files)
+                  : [files[0]];
+
+                // Get existing files from the form field value
+                const existingFiles = field.value || [];
+
+                // Append new files to the existing files
+                const updatedFiles = [...existingFiles, ...fileArray];
+
+                // Update the form field value
+                field.onChange(updatedFiles);
+
+                // Pass the updated files array to the parent's onChange handler
+                if (onChange) {
+                  onChange(updatedFiles);
+                }
+              }
+            }}
           />
         );
 
       case "select":
         return (
-          <Select onValueChange={field.onChange} defaultValue={field.value}>
+          <Select
+            onValueChange={(value) => {
+              field.onChange(value);
+              if (onChange) onChange(value);
+            }}
+            defaultValue={field.value}
+          >
             <SelectTrigger>
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
