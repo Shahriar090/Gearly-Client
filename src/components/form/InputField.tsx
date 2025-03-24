@@ -122,7 +122,7 @@ const InputField = <T extends FieldValues>({
             }}
             defaultValue={field.value}
           >
-            <SelectTrigger>
+            <SelectTrigger className="border">
               <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent>
@@ -179,6 +179,7 @@ const InputField = <T extends FieldValues>({
       default: // text, number, email, password
         return (
           <Input
+            className=""
             type={type}
             {...field}
             placeholder={placeholder}

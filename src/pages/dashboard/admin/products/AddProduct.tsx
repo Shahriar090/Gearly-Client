@@ -165,7 +165,7 @@ const AddProduct = () => {
     >
       {(form) => {
         return (
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5 shadow-lg p-4">
             {/* Category Selection */}
             <InputField
               control={form.control}
@@ -231,7 +231,7 @@ const AddProduct = () => {
               control={form.control}
               name="brandName"
               label="Brand Name"
-              placeholder="Enter model name"
+              placeholder="Enter brand name"
             />
 
             {/* Description */}
