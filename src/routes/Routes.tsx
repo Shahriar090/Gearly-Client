@@ -23,6 +23,7 @@ import Categories from "@/pages/dashboard/admin/categories/Categories";
 import AddCategory from "@/pages/dashboard/admin/categories/AddCategory";
 import Brands from "@/pages/dashboard/admin/brands/Brands";
 import AddBrand from "@/pages/dashboard/admin/brands/AddBrand";
+import AdminProfile from "@/pages/dashboard/admin/admin-profile/AdminProfile";
 
 const routes: RouteObject[] = [
   {
@@ -94,6 +95,10 @@ const routes: RouteObject[] = [
       {
         path: "total-customers",
         element: <Customers />,
+      },
+      {
+        path: "admin-profile",
+        element: <AdminProfile />,
       },
     ],
   },

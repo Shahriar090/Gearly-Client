@@ -10,6 +10,7 @@ import {
   Home,
   Ratio,
   Dices,
+  UserRoundPen,
 } from "lucide-react";
 import { Link } from "react-router";
 
@@ -35,16 +36,6 @@ const adminSidebarOptions = [
     icon: <BarChart3 size={20} />,
   },
   {
-    name: "Total Orders",
-    path: "/admin/total-orders",
-    icon: <ShoppingCart size={20} />,
-  },
-  {
-    name: "Customers",
-    path: "/admin/total-customers",
-    icon: <Users size={20} />,
-  },
-  {
     name: "Categories",
     path: "/admin/categories",
     icon: <Ratio size={20} />,
@@ -60,6 +51,17 @@ const adminSidebarOptions = [
     icon: <Package size={20} />,
   },
   {
+    name: "Total Orders",
+    path: "/admin/total-orders",
+    icon: <ShoppingCart size={20} />,
+  },
+  {
+    name: "Customers",
+    path: "/admin/total-customers",
+    icon: <Users size={20} />,
+  },
+
+  {
     name: "Sales",
     path: "/admin/total-sales",
     icon: <DollarSign size={20} />,
@@ -68,6 +70,11 @@ const adminSidebarOptions = [
     name: "Settings",
     path: "/admin/settings",
     icon: <Settings size={20} />,
+  },
+  {
+    name: "Profile",
+    path: "/admin/admin-profile",
+    icon: <UserRoundPen size={20} />,
   },
 ];
 
