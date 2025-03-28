@@ -9,6 +9,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -17,7 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import useAxios from "@/hooks/useAxios";
-import { Edit, Trash } from "lucide-react";
+import { Edit, Plus, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import { toast } from "sonner";
@@ -79,7 +80,17 @@ const Brands = () => {
   };
   return (
     <div className="max-w-[300px] sm:max-w-full">
-      <Link to="/admin/add-brand">Add New brand</Link>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">Available Brands</h2>
+        <Link to="/admin/add-brand">
+          {" "}
+          <Button variant="default" size="sm">
+            <Plus className="w-4 h-4 mr-2" />
+            Add New Brand
+          </Button>
+        </Link>
+      </div>
+
       <Table>
         <TableHeader>
           <TableRow className="bg-gray-200 text-black font-semibold text-center">

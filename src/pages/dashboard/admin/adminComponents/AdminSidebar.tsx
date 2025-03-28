@@ -84,7 +84,7 @@ const AdminSidebar: React.FC<TAdminSidebarProps> = ({
 }) => {
   return (
     <div
-      className={`fixed top-0 left-0 h-full bg-gray-900 text-white w-64 p-5 transition-transform duration-300 ${
+      className={`fixed top-0 left-0 h-full bg-gray-900 text-white w-64 p-5 transition-transform duration-300 z-50 ${
         isOpen ? "translate-x-0" : "-translate-x-full"
       } md:translate-x-0 md:w-64`}
     >
