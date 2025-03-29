@@ -7,9 +7,7 @@ const TopCategories = () => {
     <div className="main-container mt-16 md:mt-6 px-4">
       <div className="bg-white shadow-lg">
         <div className="flex justify-between items-center  px-4">
-          <h1 className="text-xl md:text-2xl font-semibold text-black">
-            Top Categories
-          </h1>
+          <h1 className="text-xl  font-semibold text-black">Top Categories</h1>
           <Button variant="outline" size="sm">
             View All Categories
           </Button>

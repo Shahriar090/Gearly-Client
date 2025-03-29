@@ -6,10 +6,9 @@ import { Badge } from "@/components/ui/badge";
 const FlashSale = () => {
   return (
     <div className="main-container mt-16 md:mt-6 px-4">
-      <h1 className="text-2xl font-semibold text-black">Flash Sale</h1>
       <div className="bg-white shadow-lg">
         <div className="flex justify-between items-center px-4">
-          <h3 className="text-green-500 font-medium text-sm">On Sell Now</h3>
+          <h1 className="text-xl font-semibold text-black">Flash Sale</h1>
 
           <Button variant="outline" size="sm">
             Shop All Products
