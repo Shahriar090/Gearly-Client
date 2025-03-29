@@ -3,6 +3,7 @@ import FlashSale from "./flash-sale/FlashSale";
 import TopCategories from "./top-categories/TopCategories";
 import BestSellingProducts from "./best-selling/BestSellingProducts";
 import NewArrivals from "./new-arrivals/NewArrivals";
+import ExclusiveDeals from "./exclusive-deals/ExclusiveDeals";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <TopCategories />
       <BestSellingProducts />
       <NewArrivals />
+      <ExclusiveDeals />
     </div>
   );
 };
