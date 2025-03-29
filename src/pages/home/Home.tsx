@@ -2,6 +2,7 @@ import Carousel from "@/components/carousel/Carousel";
 import FlashSale from "./flash-sale/FlashSale";
 import TopCategories from "./top-categories/TopCategories";
 import BestSellingProducts from "./best-selling/BestSellingProducts";
+import NewArrivals from "./new-arrivals/NewArrivals";
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       <FlashSale />
       <TopCategories />
       <BestSellingProducts />
+      <NewArrivals />
     </div>
   );
 };
