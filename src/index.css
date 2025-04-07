@@ -119,11 +119,32 @@ body {
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/* custom colors */
+:root {
+  --color-blue: #3742fa;
+  --color-black: #1d1a27;
+  --color-yellow: #facc15;
+  --color-red: #e00005;
+  --color-text: #fbf8ff;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .primary-bg {
+    background-color: var(--color-4);
+  }
+  .secondary-bg {
+    background-color: var(--color-5);
+  }
+  .primary-text {
+    color: var(--color-5);
   }
 }

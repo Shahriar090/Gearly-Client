@@ -19,7 +19,7 @@ const Language = () => {
   return (
     <div>
       <Select onValueChange={handleLanguageChange}>
-        <SelectTrigger className="w-[150px] data-[placeholder]:text-white">
+        <SelectTrigger className="w-[150px] data-[placeholder]:text-[var(--color-text)] text-sm font-medium">
           <SelectValue className="" placeholder="🌐 Language" />
         </SelectTrigger>
         <SelectContent>

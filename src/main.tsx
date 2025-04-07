@@ -7,10 +7,12 @@ import { Toaster } from "./components/ui/sonner.tsx";
 import AuthProvider from "./providers/AuthProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-      <Toaster />
-    </AuthProvider>
-  </StrictMode>
+  <div className="">
+    <StrictMode>
+      <AuthProvider>
+        <RouterProvider router={router} />
+        <Toaster />
+      </AuthProvider>
+    </StrictMode>
+  </div>
 );

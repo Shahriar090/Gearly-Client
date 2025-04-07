@@ -5,7 +5,7 @@ import { TExclusiveDeals } from "./exclusiveDeals.types";
 
 const ProductCard = ({ product }: { product: TExclusiveDeals }) => {
   return (
-    <Card className="p-4 text-center relative shadow-lg cursor-pointer hover:bg-gray-100 h-full flex flex-col">
+    <Card className="relative p-4 text-center relative shadow-lg cursor-pointer hover:bg-gray-100 h-full flex flex-col">
       {product.discount > 0 && (
         <Badge className="absolute top-2 left-2 bg-green-500 text-white">
           {product.discount}% OFF

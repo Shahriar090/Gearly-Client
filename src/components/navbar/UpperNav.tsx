@@ -4,7 +4,7 @@ import AuthInfo from "./AuthInfo";
 
 const UpperNav = () => {
   return (
-    <div className="bg-green-500 text-white hidden  md:flex justify-between items-center px-14 py-2">
+    <div className="bg-[var(--color-blue)] hidden  md:flex justify-between items-center px-14 py-1 w-full h-10">
       <div className="flex items-center gap-4 w-fit">
         {/* language and currency selector */}
         {/* language */}
@@ -21,11 +21,11 @@ const UpperNav = () => {
 
         {/* wish list */}
         <div>
-          <p>Wish List</p>
+          <p className="text-[var(--color-text)] font-medium">Wish List</p>
         </div>
         {/* checkout */}
         <div>
-          <p>Checkout</p>
+          <p className="text-[var(--color-text)] font-medium">Checkout</p>
         </div>
       </div>
     </div>

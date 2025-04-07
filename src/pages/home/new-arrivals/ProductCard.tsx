@@ -7,7 +7,7 @@ const ProductCard = ({ product }: { product: TNewArrivals }) => {
   return (
     <Card
       key={product.id}
-      className="p-4 text-center shadow-lg h-full flex flex-col"
+      className="relative p-4 text-center shadow-lg h-full flex flex-col"
     >
       {/* Discount Badge */}
       {product.discount > 0 && (

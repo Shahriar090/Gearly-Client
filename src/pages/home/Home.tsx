@@ -1,14 +1,14 @@
-import Carousel from "@/components/carousel/Carousel";
 import FlashSale from "./flash-sale/FlashSale";
 import TopCategories from "./top-categories/TopCategories";
 import BestSellingProducts from "./best-selling/BestSellingProducts";
 import NewArrivals from "./new-arrivals/NewArrivals";
 import ExclusiveDeals from "./exclusive-deals/ExclusiveDeals";
+import HeroSlider from "@/components/carousel/HeroSlider";
 
 const Home = () => {
   return (
     <div>
-      <Carousel />
+      <HeroSlider />
       <FlashSale />
       <TopCategories />
       <BestSellingProducts />
