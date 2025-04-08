@@ -5,10 +5,10 @@ import { TExclusiveDeals } from "./exclusiveDeals.types";
 
 const ProductCard = ({ product }: { product: TExclusiveDeals }) => {
   return (
-    <Card className="relative p-4 text-center relative shadow-lg cursor-pointer hover:bg-gray-100 h-full flex flex-col">
+    <Card className="relative p-4 text-center shadow-none cursor-pointer hover:bg-gray-100 h-full flex flex-col">
       {product.discount > 0 && (
-        <Badge className="absolute top-2 left-2 bg-green-500 text-white">
-          {product.discount}% OFF
+        <Badge className="absolute top-2 right-2 bg-[var(--color-blue)] text-[var(--color-text)]">
+          -{product.discount}%
         </Badge>
       )}
 
@@ -18,35 +18,36 @@ const ProductCard = ({ product }: { product: TExclusiveDeals }) => {
         className="w-full h-32 object-cover mb-3"
       />
 
-      {/* Product Name: This ensures all names take up equal space */}
-      <h3 className="text-lg font-semibold flex-grow flex items-center justify-center">
-        {product.name}
-      </h3>
-
       {/* Spacer to push the bottom section down */}
-      <div className="flex-grow"></div>
+      {/* <div className="flex-grow"></div> */}
 
       {/* Price Section */}
       <div>
-        <div className="flex flex-col items-center">
-          <span className="text-lg font-bold text-green-500">
+        <div className="flex flex-col items-start gap-1">
+          {/* Product Name: This ensures all names take up equal space */}
+          <h3 className="text-sm font-semibold flex-grow flex items-start">
+            {product.name}
+          </h3>
+          <span className="text-sm font-semibold text-[var(--color-blue)]">
             ${product.price - (product.price * product.discount) / 100}
           </span>
           {product.discount > 0 && (
-            <span className="text-sm line-through text-gray-500">
+            <span className="text-sm line-through text-[var(--color-red)]">
               ${product.price}
             </span>
           )}
         </div>
 
         {/* Rating & Reviews */}
-        <div className="flex items-center justify-center mt-2 space-x-1">
+        <div className="flex items-start mt-1 space-x-1">
           {Array.from({ length: 5 }, (_, index) => (
             <Star
               key={index}
               size={16}
               className={
-                index < product.rating ? "text-green-500" : "text-gray-300"
+                index < product.rating
+                  ? "text-[var(--color-yellow)]"
+                  : "text-gray-300"
               }
             />
           ))}

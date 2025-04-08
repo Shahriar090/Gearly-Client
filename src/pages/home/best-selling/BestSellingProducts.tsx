@@ -5,15 +5,25 @@ import ProductCard from "./ProductCard";
 const BestSellingProducts = () => {
   return (
     <div className="main-container mt-16 md:mt-6 px-4">
-      <div className="bg-white shadow-lg">
-        <div className="flex justify-between items-center px-4">
-          <h1 className="text-xl font-semibold text-black">
-            Best Selling Products
-          </h1>
+      <div className="bg-white">
+        {/* top categories */}
+        <div className="flex flex-col gap-2 md:flex-row md:justify-between md:items-center md:gap-0 px-4">
+          <div className="section-heading">
+            {/* design div and heading */}
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-4 bg-[var(--color-blue)] rounded-sm"></div>
+              <p className="text-sm font-semibold text-[var(--color-black)]">
+                This Month
+              </p>
+            </div>
+            <h1 className="text-xl md:text-2xl font-semibold text-[var(--color-black)] ">
+              Best Selling Products
+            </h1>
+          </div>
 
-          <Button variant="outline" size="sm">
-            Shop All Products
-          </Button>
+          <div className="">
+            <Button className="bg-[var(--color-blue)]">View All</Button>
+          </div>
         </div>
         {/* divider div */}
         <div className="w-full h-0.5 bg-gray-100 mt-2"></div>

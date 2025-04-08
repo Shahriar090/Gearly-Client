@@ -6,7 +6,7 @@ const TopCategories = () => {
   return (
     <div className="main-container mt-16 md:mt-6 px-4">
       <div className="bg-white">
-        {/* flash sales */}
+        {/* top categories */}
         <div className="flex flex-col gap-2 md:flex-row md:justify-between md:items-center md:gap-0 px-4">
           <div className="section-heading">
             {/* design div and heading */}

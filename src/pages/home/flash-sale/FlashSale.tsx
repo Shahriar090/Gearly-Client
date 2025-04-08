@@ -43,7 +43,7 @@ const FlashSale = () => {
           {flashSaleProducts.map((product) => (
             <Card
               key={product.id}
-              className="relative p-4 text-center cursor-pointer border shadow-none"
+              className="relative p-4 cursor-pointer shadow-none"
             >
               <Badge className="absolute top-2 left-2 bg-[var(--color-blue)] text-[var(--color-text)]">
                 -{product.discount}%
@@ -61,8 +61,8 @@ const FlashSale = () => {
                 alt={product.name}
                 className="w-32 h-32 mx-auto  mb-3"
               />
-              <h3 className="text-sm font-medium">{product.name}</h3>
-              <div className="flex flex-col items-center mt-2">
+              <div className="flex flex-col items-start gap-1">
+                <h3 className="text-sm font-medium">{product.name}</h3>
                 <span className="text-sm font-medium text-[var(--color-blue)]">
                   ${product.price - (product.price * product.discount) / 100}
                 </span>
