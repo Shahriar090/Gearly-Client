@@ -9,18 +9,20 @@ const FlashSale = () => {
   return (
     <div className="main-container mt-16 md:mt-6 px-4">
       <div className="bg-white">
-        {/* design div */}
-        <div className="flex items-center gap-2 px-4">
-          <div className="h-8 w-4 bg-[var(--color-blue)] rounded-sm"></div>
-          <p className="text-sm font-semibold text-[var(--color-black)]">
-            Today's
-          </p>
-        </div>
         {/* flash sales */}
-        <div className="flex justify-between items-center px-4">
-          <h1 className="text-2xl font-semibold text-[var(--color-black)] ">
-            Flash Sales
-          </h1>
+        <div className="flex flex-col gap-2 md:flex-row md:justify-between md:items-center md:gap-0 px-4">
+          <div className="section-heading">
+            {/* design div and heading */}
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-4 bg-[var(--color-blue)] rounded-sm"></div>
+              <p className="text-sm font-semibold text-[var(--color-black)]">
+                Today's
+              </p>
+            </div>
+            <h1 className="text-xl md:text-2xl font-semibold text-[var(--color-black)] ">
+              Flash Sales
+            </h1>
+          </div>
 
           {/* timer */}
           <div className="">
@@ -41,7 +43,7 @@ const FlashSale = () => {
           {flashSaleProducts.map((product) => (
             <Card
               key={product.id}
-              className="relative p-4 text-center cursor-pointer border"
+              className="relative p-4 text-center cursor-pointer border shadow-none"
             >
               <Badge className="absolute top-2 left-2 bg-[var(--color-blue)] text-[var(--color-text)]">
                 -{product.discount}%
