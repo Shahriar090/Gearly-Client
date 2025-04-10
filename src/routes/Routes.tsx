@@ -24,6 +24,7 @@ import AddCategory from "@/pages/dashboard/admin/categories/AddCategory";
 import Brands from "@/pages/dashboard/admin/brands/Brands";
 import AddBrand from "@/pages/dashboard/admin/brands/AddBrand";
 import AdminProfile from "@/pages/dashboard/admin/admin-profile/AdminProfile";
+import FlashSales from "@/pages/dashboard/admin/flash-sales/FlashSales";
 
 const routes: RouteObject[] = [
   {
@@ -83,6 +84,10 @@ const routes: RouteObject[] = [
       {
         path: "products",
         element: <Products />,
+      },
+      {
+        path: "flash-sales",
+        element: <FlashSales />,
       },
       {
         path: "add-product",

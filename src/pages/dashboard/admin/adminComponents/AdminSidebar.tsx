@@ -11,6 +11,7 @@ import {
   Ratio,
   Dices,
   UserRoundPen,
+  Zap,
 } from "lucide-react";
 import { Link } from "react-router";
 
@@ -49,6 +50,11 @@ const adminSidebarOptions = [
     name: "Products",
     path: "/admin/products",
     icon: <Package size={20} />,
+  },
+  {
+    name: "Flash Sales",
+    path: "/admin/flash-sales",
+    icon: <Zap size={20} />,
   },
   {
     name: "Total Orders",
