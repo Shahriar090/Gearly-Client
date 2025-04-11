@@ -1,14 +1,15 @@
-import useAxios from "@/hooks/useAxios";
 import { useEffect, useState } from "react";
-import FlashSalesHeader from "./FlashSalesHeader";
-import FlashSalesList from "./FlashSalesList";
-import CreateFlashSaleForm from "./CreateFlashSaleForm";
 import {
   TCreateFlashSalePayload,
   TFlashSaleItem,
   TLoadingState,
   TProduct,
 } from "./flashSales.types";
+import useAxios from "@/hooks/useAxios";
+import FlashSalesHeader from "./FlashSalesHeader";
+import { Button } from "@/components/ui/button";
+import FlashSalesList from "./FlashSalesList";
+import CreateFlashSaleForm from "./CreateFlashSaleForm";
 
 const FlashSales = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -22,14 +23,16 @@ const FlashSales = () => {
 
   const { api } = useAxios();
 
-  // Fetch all products for the create flash sale form
+  // fetch all products for create flash sale form
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading((prev) => ({ ...prev, products: true }));
-        const response = await api.get<{
-          data: { products: TProduct[] };
-        }>(`${import.meta.env.VITE_LOCAL_SERVER_URL}/products`);
+
+        const response = await api.get<{ data: { products: TProduct[] } }>(
+          `${import.meta.env.VITE_LOCAL_SERVER_URL}/products`
+        );
         setProducts(response.data?.data?.products || []);
       } catch (error) {
         setError("Failed To Fetch Products");
@@ -41,13 +44,13 @@ const FlashSales = () => {
     fetchProducts();
   }, [api]);
 
-  // Fetch all flash sales data
+  // fetch all flash sales data
   const fetchAllFlashSales = async (): Promise<void> => {
     try {
       setLoading((prev) => ({ ...prev, flashSales: true }));
-      const response = await api.get<{
-        data: TFlashSaleItem[];
-      }>(`${import.meta.env.VITE_LOCAL_SERVER_URL}/flash-sales`);
+      const response = await api.get<{ data: TFlashSaleItem[] }>(
+        `${import.meta.env.VITE_LOCAL_SERVER_URL}/flash-sales`
+      );
       setFlashSales(response.data?.data || []);
     } catch (error) {
       setError("Failed To Fetch Flash Sales");
@@ -57,28 +60,30 @@ const FlashSales = () => {
     }
   };
 
-  // Initial fetch of flash sales
+  // initial fetch of flash sales
   useEffect(() => {
     fetchAllFlashSales();
   }, []);
 
-  // Handle create flash sales
+  // handle create flash sale
   const handleCreateFlashSale = async (
     newSale: TCreateFlashSalePayload
   ): Promise<void> => {
     try {
       setLoading((prev) => ({ ...prev, flashSales: true }));
+
       await api.post(
         `${
           import.meta.env.VITE_LOCAL_SERVER_URL
         }/flash-sales/create-flash-sales`,
         newSale
       );
-      // Refresh the flash sales list after creation
+
+      // refresh the flash sales list after new flash sale item added
       await fetchAllFlashSales();
     } catch (error) {
       const errorMessage =
-        error instanceof Error ? error.message : "Failed to create flash sale";
+        error instanceof Error ? error.message : "Failed To Create Flash Sale";
       setError(errorMessage);
       console.error(error);
     } finally {
@@ -86,26 +91,24 @@ const FlashSales = () => {
     }
   };
 
-  // Handle delete flash sale
-  const handleDelete = async (id: string): Promise<void> => {
-    console.log(id);
+  // handle delete flash sale
+  const handleDeleteFlashSale = async (id: string): Promise<void> => {
     try {
       setLoading((prev) => ({ ...prev, flashSales: true }));
-      const response = await api.delete(
+
+      await api.delete(
         `${import.meta.env.VITE_LOCAL_SERVER_URL}/flash-sales/delete/${id}`
       );
 
-      console.log(response);
-      // Refresh the list after deletion
+      // refresh the list after deletion
       await fetchAllFlashSales();
     } catch (error) {
-      setError("Failed to delete flash sale");
+      setError("Failed To Delete Flash Sale");
       console.error(error);
     } finally {
       setLoading((prev) => ({ ...prev, flashSales: false }));
     }
   };
-
   return (
     <div className="p-4">
       <FlashSalesHeader onAddClick={() => setOpen(true)} />
@@ -113,12 +116,12 @@ const FlashSales = () => {
       {error && (
         <div className="mb-4 p-4 bg-red-100 text-red-700 rounded">
           {error}
-          <button
+          <Button
             onClick={() => setError(null)}
             className="float-right font-bold"
           >
-            ×
-          </button>
+            X
+          </Button>
         </div>
       )}
 
@@ -130,7 +133,7 @@ const FlashSales = () => {
         <FlashSalesList
           sales={flashSales}
           onEdit={() => {}}
-          onDelete={handleDelete}
+          onDelete={handleDeleteFlashSale}
         />
       )}
 

@@ -61,3 +61,7 @@ export type TCreateFlashSaleFromProps = {
   products: { _id: string; modelName: string }[];
   loading?: boolean;
 };
+
+export type TFlashSalesHeaderProps = {
+  onAddClick: () => void;
+};
