@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   TCreateFlashSalePayload,
   TFlashSaleItem,
@@ -44,10 +44,11 @@ const FlashSales = () => {
     fetchProducts();
   }, [api]);
 
-  // fetch all flash sales data
-  const fetchAllFlashSales = async (): Promise<void> => {
+  // fetch all flash sales data with useCallback
+  const fetchAllFlashSales = useCallback(async (): Promise<void> => {
     try {
       setLoading((prev) => ({ ...prev, flashSales: true }));
+
       const response = await api.get<{ data: TFlashSaleItem[] }>(
         `${import.meta.env.VITE_LOCAL_SERVER_URL}/flash-sales`
       );
@@ -58,12 +59,12 @@ const FlashSales = () => {
     } finally {
       setLoading((prev) => ({ ...prev, flashSales: false }));
     }
-  };
+  }, [api, setLoading, setFlashSales, setError]);
 
   // initial fetch of flash sales
   useEffect(() => {
     fetchAllFlashSales();
-  }, []);
+  }, [fetchAllFlashSales]);
 
   // handle create flash sale
   const handleCreateFlashSale = async (
