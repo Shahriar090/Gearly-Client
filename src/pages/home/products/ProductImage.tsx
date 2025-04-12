@@ -1,7 +1,11 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import React, { useRef, useState } from "react";
 
-const ProductImage = ({ productImages }) => {
+const ProductImage = ({
+  productImages,
+}: {
+  productImages: string[] | null;
+}) => {
   console.log(productImages);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [zoomPos, setZoomPos] = useState({ x: 0, y: 0 });
@@ -57,14 +61,14 @@ const ProductImage = ({ productImages }) => {
           <img
             src={productImages[currentIndex]}
             alt="Product"
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110 cursor-zoom-in"
+            className="w-full h-full object-cover transition-transform duration-300  cursor-zoom-in"
           />
         </div>
 
         {/* zoomed preview box */}
         {isHovering && (
           <div
-            className="fixed top-36 left-[30%] w-[600px] h-[500px] bg-no-repeat z-[999] rounded-lg "
+            className="fixed top-36 left-[30%] w-[600px] h-[500px] bg-no-repeat z-[999]"
             style={{
               backgroundImage: `url(${productImages[currentIndex]})`,
               backgroundSize: "1000px 1000px",
