@@ -1,11 +1,11 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Eye, Heart } from "lucide-react";
 import Timer from "./Timer";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { TFlashSaleItem } from "@/pages/dashboard/admin/flash-sales/flashSales.types";
 import useAxios from "@/hooks/useAxios";
+import { Link } from "react-router";
 
 const FlashSale = () => {
   const [flashSales, setFlashSales] = useState<TFlashSaleItem[]>([]);
@@ -74,41 +74,39 @@ const FlashSale = () => {
         ) : (
           <div className="products grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3 mt-4 p-4">
             {flashSales.map((item) => (
-              <Card
-                key={item._id}
-                className="relative p-4 cursor-pointer shadow-none md:border-none md:hover:shadow-md transition-all duration-500"
-              >
-                <Badge className="absolute top-2 left-2 bg-[var(--color-blue)] text-[var(--color-text)]">
-                  -{item.discount}%
-                </Badge>
-                <div className="absolute right-2 top-2 space-y-1">
-                  <Heart className="h-9 w-9 bg-[var(--color-text)] p-2 rounded-full" />
-                  <Eye className="h-9 w-9 bg-[var(--color-text)] p-2 rounded-full" />
-                </div>
+              <Link to={`product/${item.product._id}`}>
+                <Card
+                  key={item._id}
+                  className="relative p-4 cursor-pointer shadow-none md:border-none md:hover:shadow-md transition-all duration-500"
+                >
+                  <Badge className="absolute top-2 right-2 bg-[var(--color-blue)] text-[var(--color-text)]">
+                    -{item.discount}%
+                  </Badge>
 
-                <img
-                  src={item.product.images?.[0]}
-                  alt={item.product.modelName}
-                  className="w-full h-32 mx-auto"
-                />
+                  <img
+                    src={item.product.images?.[0]}
+                    alt={item.product.modelName}
+                    className="w-full h-32 mx-auto"
+                  />
 
-                <div className="flex flex-col items-start gap-1">
-                  <h3 className="text-sm font-medium line-clamp-1 text-[var(--color-black)]">
-                    {item.product.modelName}
-                  </h3>
-                  <span className="text-sm font-medium text-[var(--color-blue)]">
-                    $
-                    {(
-                      item.product.price -
-                      (item.product.price * item.discount) / 100
-                    ).toFixed(2)}
-                  </span>
+                  <div className="flex flex-col items-start gap-1">
+                    <h3 className="text-sm font-medium line-clamp-1 text-[var(--color-black)]">
+                      {item.product.modelName}
+                    </h3>
+                    <span className="text-sm font-medium text-[var(--color-blue)]">
+                      $
+                      {(
+                        item.product.price -
+                        (item.product.price * item.discount) / 100
+                      ).toFixed(2)}
+                    </span>
 
-                  <span className="text-sm line-through text-[var(--color-red)]">
-                    ${item.product.price}
-                  </span>
-                </div>
-              </Card>
+                    <span className="text-sm line-through text-[var(--color-red)]">
+                      ${item.product.price}
+                    </span>
+                  </div>
+                </Card>
+              </Link>
             ))}
           </div>
         )}

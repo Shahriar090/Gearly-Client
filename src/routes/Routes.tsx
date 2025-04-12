@@ -25,6 +25,8 @@ import Brands from "@/pages/dashboard/admin/brands/Brands";
 import AddBrand from "@/pages/dashboard/admin/brands/AddBrand";
 import AdminProfile from "@/pages/dashboard/admin/admin-profile/AdminProfile";
 import FlashSales from "@/pages/dashboard/admin/flash-sales/FlashSales";
+import AllProducts from "@/pages/home/products/AllProducts";
+import ProductDetails from "@/pages/home/products/ProductDetails";
 
 const routes: RouteObject[] = [
   {
@@ -42,6 +44,14 @@ const routes: RouteObject[] = [
       {
         path: "register",
         element: <Register />,
+      },
+      {
+        path: "all-products",
+        element: <AllProducts />,
+      },
+      {
+        path: "product/:id",
+        element: <ProductDetails />,
       },
     ],
   },
