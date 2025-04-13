@@ -38,13 +38,13 @@ const ProductDetails = () => {
   if (loading) return <p className="text-center py-10">Loading...</p>;
   if (error) return <p className="text-center py-10 text-red-500">{error}</p>;
 
-  // transforming specifications object into array of object before sending it to Specifications component.
+  // transforming specifications object into array of object before sending it to Specifications component. {}
 
   const transformedSpecifications: TSpecifications[] = Object.entries(
     product?.specifications || {}
   ).map(([key, value], index) => {
     return {
-      _id: String(index),
+      _id: String(index), //temporary unique key for each item.
       name: key,
       value: value,
     };
