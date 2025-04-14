@@ -1,6 +1,7 @@
 import { Star } from "lucide-react";
+import { TStarRating } from "./products.types";
 
-const StarRatings = ({ averageRating }: { averageRating: number }) => {
+const StarRatings = ({ averageRating, showLabel = true }: TStarRating) => {
   const totalStars = 5;
 
   // if avg rating is 3.6 then Math.floor(3.6)= 3
@@ -33,9 +34,16 @@ const StarRatings = ({ averageRating }: { averageRating: number }) => {
           return <Star size={20} key={i} className="text-gray-300" />;
         }
       })}
-      <span className="text-xs text-gray-600 ml-2">
-        Average Rating: {averageRating}
-      </span>
+
+      {showLabel && (
+        <span className="text-xs text-gray-600 ml-2">
+          Average Rating:{" "}
+          <span className="text-[var(--color-black)] font-semibold text-sm">
+            {averageRating}
+          </span>
+          <span className="text-[var(--color-gray)]">/5</span>
+        </span>
+      )}
     </div>
   );
 };

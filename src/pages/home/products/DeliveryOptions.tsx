@@ -10,17 +10,17 @@ import {
 
 const DeliveryOptions = () => {
   return (
-    <div className="bg-gray-100/50">
+    <div className="w-full bg-white p-4">
       {/* section head */}
-      <div className="flex justify-between items-center my-4 px-4">
+      <div className="flex justify-between items-center my-4 px-6">
         <h3 className="text-sm text-gray-700 font-medium">Delivery Options</h3>
         <CircleAlert className="w-4 h-4 text-gray-700" />
       </div>
 
       {/* delivery details */}
-      <div className="space-y-4 ">
+      <div className="space-y-4">
         {/* address */}
-        <div className="flex justify-between items-center px-4">
+        <div className="flex justify-between items-center px-6">
           <div className="flex items-center gap-1">
             <MapPinHouse className="w-5 h-5 text-gray-700" />
             <p className="text-sm font-semibold">
@@ -31,10 +31,10 @@ const DeliveryOptions = () => {
         </div>
 
         {/* divider div */}
-        <div className="w-full h-0.5 bg-gray-100"></div>
+        <div className="w-full h-0.5 bg-gray-100/50"></div>
 
         {/* date and delivery charge */}
-        <div className="flex justify-between items-center px-4">
+        <div className="flex justify-between items-center px-6">
           <div>
             <div className="flex items-center gap-1">
               <Truck className="w-5 h-5 text-gray-700" />
@@ -50,26 +50,25 @@ const DeliveryOptions = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-1 px-4">
+        <div className="flex items-center gap-1 px-6">
           <HandCoins className="w-5 h-5 text-gray-700" />
           <p className="text-sm font-semibold">Cash On Delivery Available</p>
         </div>
+        {/* divider div */}
+        <div className="w-full h-0.5 bg-gray-100/50"></div>
       </div>
-
-      {/* divider div */}
-      <div className="w-full h-0.5 bg-gray-100"></div>
 
       {/* return and warranty */}
       <div className="space-y-4">
-        <div className="flex justify-between items-center my-4 px-4">
+        <div className="flex justify-between items-center my-4 px-6">
           <p className="text-sm text-gray-700 font-medium">Return & Warranty</p>
           <CircleAlert className="w-4 h-4 text-gray-700" />
         </div>
-        <div className="flex items-center gap-1 px-4">
+        <div className="flex items-center gap-1 px-6">
           <Rotate3D className="w-5 h-5 text-gray-700" />
           <p className="text-sm font-semibold">7 Days Returns</p>
         </div>
-        <div className="flex items-center gap-1 px-4">
+        <div className="flex items-center gap-1 px-6">
           <ShieldOff className="w-5 h-5 text-gray-700" />
           <p className="text-sm font-semibold">Warranty Not Available</p>
         </div>

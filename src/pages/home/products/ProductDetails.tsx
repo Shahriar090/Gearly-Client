@@ -8,6 +8,7 @@ import Reviews from "./Reviews";
 import { useEffect, useState } from "react";
 import useAxios from "@/hooks/useAxios";
 import { TProduct, TSpecifications } from "./products.types";
+import ProductHeader from "./ProductHeader";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState<TProduct | null>(null);
@@ -50,16 +51,20 @@ const ProductDetails = () => {
     };
   });
   return (
-    <div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-5  border ">
+    <div className="wrapper bg-white">
+      {/* header */}
+      <div className="p-4">
+        <ProductHeader />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 gap-4 p-4 shadow">
         <ProductImage productImages={product && product.images} />
         {product && <ProductInfo product={product} />}
         <DeliveryOptions />
       </div>
-      <div className="grid grid-cols-1 gap-3">
+      <div className="grid grid-cols-1 gap-3 p-4">
         <Specifications specifications={transformedSpecifications} />
         {product && <Descriptions description={product?.description} />}
-        {product && <Reviews reviews={product?.reviews} />}
+        {product && <Reviews product={product} />}
       </div>
     </div>
   );

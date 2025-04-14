@@ -18,6 +18,8 @@ export type TReview = {
   product: string;
   rating: number;
   comment: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type TSpecifications = {
@@ -69,4 +71,9 @@ export type TProduct = {
   saved: number;
   slug: string;
   averageRating: number;
+};
+
+export type TStarRating = {
+  averageRating: number;
+  showLabel?: boolean;
 };

@@ -1,7 +1,8 @@
-import { Heart, PackageCheck, CheckCircle, XCircle } from "lucide-react";
-import ProductActions from "./ProductActions";
-import StarRatings from "./StarRatings";
+import { HandCoins } from "lucide-react";
 import { TProduct } from "./products.types";
+import StarRatings from "./StarRatings";
+import { Badge } from "@/components/ui/badge";
+import ProductActions from "./ProductActions";
 
 const ProductInfo = ({ product }: { product: TProduct }) => {
   const {
@@ -16,58 +17,59 @@ const ProductInfo = ({ product }: { product: TProduct }) => {
   } = product;
 
   return (
-    <div className="p-6 space-y-4 bg-gray-200">
-      {/* Product Name */}
-      <h1 className="text-2xl font-bold">{modelName}</h1>
+    <div className="w-full bg-white p-4">
+      <div className="space-y-4">
+        {/* product name */}
+        <h1 className="text-2xl font-semibold text-[var(--color-blue)]">
+          {modelName}
+        </h1>
 
-      {/* Ratings */}
-      <StarRatings averageRating={averageRating} />
+        {/* ratings */}
+        <StarRatings averageRating={averageRating} />
 
-      {/* Brand */}
-      <h3 className="text-sm text-gray-500">
-        <span className="font-medium text-gray-700">Brand: </span>
-        {brandName || "No Brand"}
-      </h3>
+        {/* brand */}
+        <h3 className="text-sm text-[var(--color-blue)] capitalize">
+          <span className="font-medium text-[var(--color-gray)]">Brand: </span>
+          {brandName || "No Brand"}
+        </h3>
 
-      {/* Pricing */}
-      <div className="space-y-1">
-        <div className="flex items-center text-xl font-semibold text-green-600">
-          <span>${discountPrice}</span>
+        {/* pricing */}
+        <div className="space-y-1">
+          <div className="flex items-center text-xl font-semibold text-[var(--color-black)]">
+            <span>${discountPrice}</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-[var(--color-gray)]">
+            <p className="line-through">${price}</p>
+            <p className="text-[var(--color-black)] font-medium ">
+              -{discount}%
+            </p>
+          </div>
         </div>
-        <div className="flex items-center gap-2 text-sm text-gray-500 line-through">
-          <p>${price}</p>
-          <p className="text-red-500 font-medium">-{discount}%</p>
+
+        {/* saved info */}
+        <div className="flex items-center text-xs text-[var(--color-black)] gap-1">
+          <HandCoins size={20} className="text-[var(--color-gray)]" />
+          <span>You Saved ${saved}</span>
+        </div>
+
+        {/* availability status */}
+        <div className="flex items-center text-sm text-[var(--color-black)] gap-1">
+          Stock:{" "}
+          {availabilityStatus === "In Stock" ? (
+            <>
+              <Badge variant="secondary" className="text-[var(--color-blue)]">
+                Available
+              </Badge>
+            </>
+          ) : (
+            <>
+              <Badge variant="destructive">Out Of Stock</Badge>
+            </>
+          )}
         </div>
       </div>
 
-      {/* Saved Info */}
-      <div className="flex items-center text-sm text-gray-600 gap-1">
-        <Heart className="w-4 h-4 text-pink-500" />
-        <span>You saved ${saved}</span>
-      </div>
-
-      {/* Stock Info */}
-      <div className="flex items-center text-sm text-gray-600 gap-1">
-        <PackageCheck className="w-4 h-4 text-blue-500" />
-        <span>{availabilityStatus}</span>
-      </div>
-
-      {/* Availability Status */}
-      <div className="flex items-center text-sm text-gray-600 gap-1">
-        {availabilityStatus === "In Stock" ? (
-          <>
-            <CheckCircle className="w-4 h-4 text-green-500" />
-            <span>Available</span>
-          </>
-        ) : (
-          <>
-            <XCircle className="w-4 h-4 text-red-500" />
-            <span>Not Available</span>
-          </>
-        )}
-      </div>
-
-      {/* Actions */}
+      {/* action buttons */}
       <ProductActions />
     </div>
   );

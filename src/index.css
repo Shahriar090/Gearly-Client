@@ -126,6 +126,8 @@ body {
   --color-yellow: #facc15;
   --color-red: #e00005;
   --color-text: #fbf8ff;
+  --color-gray: #4a4a4a;
+  --color-bg-gray: #f2f4f8;
 }
 
 @layer base {
@@ -137,14 +139,11 @@ body {
   }
 }
 
-@layer utilities {
-  .primary-bg {
-    background-color: var(--color-4);
+@layer base {
+  .padding {
+    @apply px-6 py-4;
   }
-  .secondary-bg {
-    background-color: var(--color-5);
-  }
-  .primary-text {
-    color: var(--color-5);
+  .margin {
+    @apply my-6;
   }
 }

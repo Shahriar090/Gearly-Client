@@ -47,7 +47,7 @@ const ProductImage = ({
     }
   };
   return (
-    <div className="w-full bg-gray-300">
+    <div className="w-full bg-white p-4">
       {/* image and zoom preview container */}
       <div className="flex items-center justify-center">
         {/* main image with zoom tracking */}
@@ -56,12 +56,12 @@ const ProductImage = ({
           onMouseMove={handleMouseMove}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
-          className="relative overflow-hidden group p-4 w-[400px] h-[400px]"
+          className="relative overflow-hidden group w-full h-[400px]"
         >
           <img
             src={productImages[currentIndex]}
             alt="Product"
-            className="w-full h-full object-cover transition-transform duration-300  cursor-zoom-in"
+            className="w-full h-full  transition-transform duration-300  cursor-zoom-in"
           />
         </div>
 
@@ -84,8 +84,11 @@ const ProductImage = ({
 
       <div className="flex gap-2 mt-3 justify-center items-center">
         {/* left arrow */}
-        <button onClick={prevImg} className="bg-white shadow p-2 rounded-full">
-          <ArrowLeft />
+        <button
+          onClick={prevImg}
+          className="bg-[var(--color-bg-gray)] shadow p-2 rounded-full"
+        >
+          <ArrowLeft size={20} />
         </button>
 
         {/* thumbnails */}
@@ -96,15 +99,20 @@ const ProductImage = ({
               src={img}
               onClick={() => handleThumbnailClick(index)}
               className={`w-20 h-20 object-cover border ${
-                currentIndex === index ? "border-blue-500" : "border-gray-300"
+                currentIndex === index
+                  ? "border-[var(--color-blue)]"
+                  : "border-[var(--color-gray)]"
               } cursor-pointer rounded`}
             />
           ))}
         </div>
 
         {/* right arrow */}
-        <button onClick={nextImg} className="bg-white shadow p-2 rounded-full">
-          <ArrowRight />
+        <button
+          onClick={nextImg}
+          className="bg-[var(--color-bg-gray)] shadow p-2 rounded-full"
+        >
+          <ArrowRight size={20} />
         </button>
       </div>
     </div>
