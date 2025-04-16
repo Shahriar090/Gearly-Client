@@ -39,7 +39,7 @@ const AllFlashSales = () => {
       try {
         setLoading(true);
         const response = await api.get<{ data: TFlashSaleItem[] }>(
-          `${import.meta.env.VITE_LOCAL_SERVER_URL}/flash-sales`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/flash-sales`
         );
         setFlashSales(response.data?.data || []);
       } catch (error) {

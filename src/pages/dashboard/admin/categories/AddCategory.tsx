@@ -64,7 +64,7 @@ const AddCategory = () => {
       if (image) formData.append("image", image);
 
       const response = await api.post(
-        `${import.meta.env.VITE_LOCAL_SERVER_URL}/categories/create-category`,
+        `${import.meta.env.VITE_SERVER_BASE_URL}/categories/create-category`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },

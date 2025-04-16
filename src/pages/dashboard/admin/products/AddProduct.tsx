@@ -23,7 +23,7 @@ const AddProduct = () => {
     const fetchCategories = async () => {
       try {
         const response = await api.get(
-          `${import.meta.env.VITE_LOCAL_SERVER_URL}/categories`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/categories`
         );
         setCategories(response.data?.data || []);
       } catch (error) {
@@ -41,7 +41,7 @@ const AddProduct = () => {
       try {
         const response = await api.get(
           `${
-            import.meta.env.VITE_LOCAL_SERVER_URL
+            import.meta.env.VITE_SERVER_BASE_URL
           }/sub-categories/sub-category-by-category?category=${selectedCategory}`
         );
         setSubCategories(response.data?.data || []);
@@ -60,7 +60,7 @@ const AddProduct = () => {
       try {
         const response = await api.get(
           `${
-            import.meta.env.VITE_LOCAL_SERVER_URL
+            import.meta.env.VITE_SERVER_BASE_URL
           }/categories/${selectedCategory}`
         );
         setSpecifications(response.data?.data?.specifications || []);
@@ -112,7 +112,7 @@ const AddProduct = () => {
 
       // Submit the form data
       const response = await api.post(
-        `${import.meta.env.VITE_LOCAL_SERVER_URL}/products/create-product`,
+        `${import.meta.env.VITE_SERVER_BASE_URL}/products/create-product`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
