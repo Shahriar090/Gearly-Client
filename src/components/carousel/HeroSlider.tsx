@@ -1,5 +1,5 @@
 import { useState } from "react";
-import sliderImg1 from "../../assets/banner-1.png";
+import sliderImg1 from "../../assets/banner-1 .png";
 import sliderImg2 from "../../assets/banner-2.png";
 import sliderImg3 from "../../assets/banner-3.png";
 // mobile slider images

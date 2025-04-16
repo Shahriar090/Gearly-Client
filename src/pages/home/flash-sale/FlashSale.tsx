@@ -56,9 +56,11 @@ const FlashSale = () => {
           </div>
 
           <div className="">
-            <Button className="bg-[var(--color-blue)]">
-              Shop All Products
-            </Button>
+            <Link to="/all-flash-sales">
+              <Button className="bg-[var(--color-blue)]">
+                Shop All Products
+              </Button>
+            </Link>
           </div>
         </div>
         {/* divider div */}
@@ -73,7 +75,7 @@ const FlashSale = () => {
           <div className="p-4">No Flash Sales Available</div>
         ) : (
           <div className="products grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-3 mt-4 p-4">
-            {flashSales.map((item) => (
+            {flashSales.slice(0, 6).map((item) => (
               <Link to={`product/${item.product._id}`}>
                 <Card
                   key={item._id}

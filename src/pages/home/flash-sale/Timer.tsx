@@ -33,7 +33,9 @@ const Timer = ({ endTime }: TCountdownTimerProps) => {
     <div className="flex items-center gap-3">
       {/* days */}
       <div className="days flex flex-col items-center">
-        <h2 className="text-xs font-medium text-[var(--color-black)]">Days</h2>
+        <h2 className="text-xs font-semibold text-[var(--color-black)]">
+          Days
+        </h2>
         <p className="text-sm md:text-xl font-bold text-[var(--color-black)]">
           {" "}
           {timeLeft.days}
@@ -43,7 +45,9 @@ const Timer = ({ endTime }: TCountdownTimerProps) => {
       <div className="h-8 w-0.5 bg-[var(--color-blue)]"></div>
       <div className="hours flex flex-col items-center">
         {/* hours */}
-        <h2 className="text-xs font-medium text-[var(--color-black)]">Hours</h2>
+        <h2 className="text-xs font-semibold text-[var(--color-black)]">
+          Hours
+        </h2>
         <p className="text-sm md:text-xl font-bold text-[var(--color-black)]">
           {" "}
           {timeLeft.hours}
@@ -53,7 +57,7 @@ const Timer = ({ endTime }: TCountdownTimerProps) => {
       <div className="h-8 w-0.5 bg-[var(--color-blue)]"></div>
       <div className="minutes flex flex-col items-center">
         {/* minutes */}
-        <h2 className="text-xs font-medium text-[var(--color-black)]">
+        <h2 className="text-xs font-semibold text-[var(--color-black)]">
           Minutes
         </h2>
         <p className="text-sm md:text-xl font-bold text-[var(--color-black)]">
@@ -65,7 +69,7 @@ const Timer = ({ endTime }: TCountdownTimerProps) => {
       <div className="h-8 w-0.5 bg-[var(--color-blue)]"></div>
       <div className="seconds flex flex-col items-center">
         {/* seconds */}
-        <h2 className="text-xs font-medium text-[var(--color-black)]">
+        <h2 className="text-xs font-semibold text-[var(--color-black)]">
           Seconds
         </h2>
         <p className="text-sm md:text-xl font-bold text-[var(--color-black)]">

@@ -121,11 +121,12 @@ body {
 
 /* custom colors */
 :root {
-  --color-blue: #3742fa;
-  --color-black: #1d1a27;
-  --color-yellow: #facc15;
-  --color-red: #e00005;
-  --color-text: #fbf8ff;
+  --color-blue: #0046be;
+  --color-black: #161616;
+  --color-yellow: #fde74c;
+  --color-red: #f50000;
+  --color-white: #ffffff;
+  --color-text: #ffffff;
   --color-gray: #4a4a4a;
   --color-bg-gray: #f2f4f8;
 }

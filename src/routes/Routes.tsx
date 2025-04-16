@@ -27,6 +27,7 @@ import AdminProfile from "@/pages/dashboard/admin/admin-profile/AdminProfile";
 import FlashSales from "@/pages/dashboard/admin/flash-sales/FlashSales";
 import AllProducts from "@/pages/home/products/AllProducts";
 import ProductDetails from "@/pages/home/products/ProductDetails";
+import AllFlashSales from "@/pages/home/flash-sale/AllFlashSales";
 
 const routes: RouteObject[] = [
   {
@@ -52,6 +53,10 @@ const routes: RouteObject[] = [
       {
         path: "product/:id",
         element: <ProductDetails />,
+      },
+      {
+        path: "all-flash-sales",
+        element: <AllFlashSales />,
       },
     ],
   },
