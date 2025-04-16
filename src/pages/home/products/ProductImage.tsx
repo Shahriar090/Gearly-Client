@@ -6,9 +6,8 @@ const ProductImage = ({
 }: {
   productImages: string[] | null;
 }) => {
-  console.log(productImages);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [zoomPos, setZoomPos] = useState({ x: 0, y: 0 });
+  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
   const [isHovering, setIsHovering] = useState(false);
   const imageRef = useRef<HTMLDivElement>(null);
 
@@ -40,44 +39,37 @@ const ProductImage = ({
     const bounds = imageRef.current?.getBoundingClientRect();
     if (!bounds) return;
 
-    const x = e.clientX - bounds.left;
-    const y = e.clientY - bounds.top;
-    if (zoomPos.x !== x || zoomPos.y !== y) {
-      setZoomPos({ x, y });
-    }
+    const x = ((e.clientX - bounds.left) / bounds.width) * 100;
+    const y = ((e.clientY - bounds.top) / bounds.height) * 100;
+
+    setZoomPos({ x, y });
   };
   return (
-    <div className="w-full bg-white p-4">
-      {/* image and zoom preview container */}
-      <div className="flex items-center justify-center">
-        {/* main image with zoom tracking */}
-        <div
-          ref={imageRef}
-          onMouseMove={handleMouseMove}
-          onMouseEnter={() => setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
-          className="relative overflow-hidden group w-full h-[400px]"
-        >
-          <img
-            src={productImages[currentIndex]}
-            alt="Product"
-            className="w-full h-full  transition-transform duration-300  cursor-zoom-in"
-          />
-        </div>
-
-        {/* zoomed preview box */}
-        {isHovering && (
-          <div
-            className="fixed top-36 left-[30%] w-[600px] h-[500px] bg-no-repeat z-[999]"
-            style={{
-              backgroundImage: `url(${productImages[currentIndex]})`,
-              backgroundSize: "1000px 1000px",
-              backgroundPosition: `-${zoomPos.x * 2 - 250}px -${
-                zoomPos.y * 2 - 250
-              }px`,
-            }}
-          />
-        )}
+    <div className="w-full bg-white p-4 shadow">
+      {/* main image with internal zoom effect */}
+      <div
+        ref={imageRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={() => setIsHovering(true)}
+        onMouseLeave={() => setIsHovering(false)}
+        className="relative overflow-hidden group w-full h-[400px] cursor-zoom-in"
+        style={{
+          backgroundImage: `url(${productImages[currentIndex]})`,
+          backgroundSize: isHovering ? "200%" : "100%",
+          backgroundPosition: isHovering
+            ? `${zoomPos.x}% ${zoomPos.y}%`
+            : "center",
+          backgroundRepeat: "no-repeat",
+          transition:
+            "background-size 0.3s ease, background-position 0.1s ease",
+        }}
+      >
+        {/* fallback image for SEO and accessibility*/}
+        <img
+          src={productImages[currentIndex]}
+          alt="Product"
+          className="w-full h-full opacity-0 pointer-events-none"
+        />
       </div>
 
       {/* thumbnails and arrow buttons */}

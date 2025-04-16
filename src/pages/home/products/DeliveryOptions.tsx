@@ -9,7 +9,7 @@ import {
 
 const DeliveryOptions = () => {
   return (
-    <div className="w-full bg-white p-4">
+    <div className="w-full bg-white p-4 shadow">
       {/* section head */}
       <div className="flex justify-between items-center my-4 px-6">
         <h3 className="text-sm text-[var(--color-gray)] font-medium">

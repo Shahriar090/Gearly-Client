@@ -17,7 +17,7 @@ const ProductInfo = ({ product }: { product: TProduct }) => {
   } = product;
 
   return (
-    <div className="w-full bg-white p-4">
+    <div className="w-full bg-white p-4 shadow">
       <div className="space-y-4">
         {/* product name */}
         <h1 className="text-2xl font-semibold text-[var(--color-blue)]">
