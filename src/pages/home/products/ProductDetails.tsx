@@ -4,11 +4,11 @@ import ProductInfo from "./ProductInfo";
 import DeliveryOptions from "./DeliveryOptions";
 import Specifications from "./Specifications";
 import Descriptions from "./Descriptions";
-import Reviews from "./Reviews";
 import { useEffect, useState } from "react";
 import useAxios from "@/hooks/useAxios";
 import { TProduct, TSpecifications } from "./products.types";
 import ProductHeader from "./ProductHeader";
+import Reviews from "./reviews/Reviews";
 
 const ProductDetails = () => {
   const [product, setProduct] = useState<TProduct | null>(null);

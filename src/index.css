@@ -141,7 +141,7 @@ body {
 
 @layer base {
   .padding {
-    @apply px-6 py-4;
+    @apply px-2 md:px-6 py-4;
   }
   .margin {
     @apply my-6;

@@ -77,3 +77,9 @@ export type TStarRating = {
   averageRating: number;
   showLabel?: boolean;
 };
+
+export type TAddReview = {
+  open: boolean;
+  onClose: () => void;
+  product: TProduct;
+};

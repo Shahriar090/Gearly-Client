@@ -11,7 +11,7 @@ import { getErrorMessage } from "./auth.utils";
 const Login = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { setAuth } = useAuth();
+  const { setAuthData } = useAuth();
 
   const handleSubmit = async (loginInfos: TLoginUserForm) => {
     setIsSubmitting(true);
@@ -25,7 +25,7 @@ const Login = () => {
 
       if (!data?.data) throw new Error("Invalid Response Format");
       const { user, tokens } = data.data;
-      setAuth({
+      setAuthData({
         user,
         accessToken: tokens.accessToken,
         refreshToken: tokens.refreshToken,

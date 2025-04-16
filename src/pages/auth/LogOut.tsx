@@ -3,11 +3,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { useNavigate } from "react-router";
 
 const LogOut = () => {
-  const { setAuth } = useAuth();
+  const { setAuthData } = useAuth();
   const navigate = useNavigate();
 
   const handleLogOut = () => {
-    setAuth({ user: null, accessToken: null, refreshToken: null });
+    setAuthData({ user: null, accessToken: null, refreshToken: null });
+    localStorage.removeItem("auth");
     navigate("/login");
   };
   return (

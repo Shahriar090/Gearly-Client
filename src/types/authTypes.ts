@@ -12,5 +12,5 @@ export type TAuthData = {
 
 export type TAuthContext = {
   auth: TAuthData;
-  setAuth: (auth: TAuthData) => void;
+  setAuthData: (authData: TAuthData) => void;
 };

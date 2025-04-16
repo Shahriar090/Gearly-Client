@@ -1,8 +1,26 @@
 import { Button } from "@/components/ui/button";
-import { TProduct, TReview } from "./products.types";
-import StarRatings from "./StarRatings";
+import { TProduct, TReview } from "../products.types";
+import StarRatings from "../StarRatings";
+import { useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
+import AddReview from "./AddReview";
 
 const Reviews = ({ product }: { product: TProduct }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { auth } = useAuth();
+
+  const handleWriteReview = () => {
+    if (!auth.user || !auth.accessToken) {
+      toast.error("You Need To Login First To Write A Review", {
+        position: "top-right",
+        duration: 3000,
+      });
+      return;
+    }
+
+    setIsModalOpen(true);
+  };
   return (
     <div className="bg-white p-4 shadow">
       <div className="flex items-center justify-between">
@@ -21,6 +39,7 @@ const Reviews = ({ product }: { product: TProduct }) => {
         {/* add review button */}
         <div className="">
           <Button
+            onClick={handleWriteReview}
             variant="outline"
             className="border-[var(--color-blue)] text-[var(--color-blue)]"
           >
@@ -59,10 +78,18 @@ const Reviews = ({ product }: { product: TProduct }) => {
                 </span>
                 <span className="space-x-1">On {formattedDate}</span>
               </p>
+              {/* divider div */}
+              <div className="w-full h-0.5 bg-gray-100/50 my-2"></div>
             </div>
           );
         })}
       </div>
+      {/* modal */}
+      <AddReview
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        product={product}
+      />
     </div>
   );
 };

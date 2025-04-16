@@ -120,9 +120,9 @@ const routes: RouteObject[] = [
   {
     path: "/users",
     element: (
-      <UserLayout />
-      // <ProtectedRoutes>
-      // </ProtectedRoutes>
+      <ProtectedRoutes>
+        <UserLayout />
+      </ProtectedRoutes>
     ),
     children: [
       {
