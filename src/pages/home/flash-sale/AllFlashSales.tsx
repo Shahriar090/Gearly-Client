@@ -1,8 +1,3 @@
-import { useEffect, useState } from "react";
-
-import Timer from "./Timer";
-import { TFlashSaleItem } from "@/pages/dashboard/admin/flash-sales/flashSales.types";
-import useAxios from "@/hooks/useAxios";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -11,6 +6,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import useAxios from "@/hooks/useAxios";
+import { TFlashSaleItem } from "@/pages/dashboard/admin/flash-sales/flashSales.types";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import Timer from "./Timer";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
@@ -23,9 +23,10 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+
 const AllFlashSales = () => {
   const [flashSales, setFlashSales] = useState<TFlashSaleItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("discount-desc");
@@ -42,9 +43,13 @@ const AllFlashSales = () => {
           `${import.meta.env.VITE_SERVER_BASE_URL}/flash-sales`
         );
         setFlashSales(response.data?.data || []);
-      } catch (error) {
-        setError("Failed To Fetch Flash Sales");
-        console.error(error);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        const errorMessage =
+          error?.response?.data?.message || "Failed To Fetch Flash Sale Items";
+        setError(errorMessage);
+        toast.error(errorMessage, { position: "top-right", duration: 3000 });
+        console.error(errorMessage);
       } finally {
         setLoading(false);
       }
@@ -52,23 +57,25 @@ const AllFlashSales = () => {
     fetchFlashSales();
   }, [api]);
 
-  // filter and sort products
+  // filter and sort logic
   const filteredProducts = flashSales
     .filter((item) =>
-      item.product.modelName
-        .toLocaleLowerCase()
-        .includes(searchTerm.toLocaleLowerCase())
+      item.product.modelName.toLowerCase().includes(searchTerm.toLowerCase())
     )
     .sort((a, b) => {
       switch (sortOption) {
         case "price-asc":
           return a.product.price - b.product.price;
+
         case "price-desc":
           return b.product.price - a.product.price;
+
         case "discount-asc":
           return a.discount - b.discount;
+
         case "discount-desc":
           return b.discount - a.discount;
+
         default:
           return 0;
       }
@@ -79,10 +86,11 @@ const AllFlashSales = () => {
   const paginatedProducts = filteredProducts.slice(
     (currentPage - 1) * itemsPerPage
   );
+
   return (
     <div className="main-container p-6">
       <div className="bg-[var(--color-white)]">
-        {/* header */}
+        {/* header section */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
           <div>
             <h1 className="text-2xl font-bold text-[var(--color-black)]">
@@ -99,6 +107,7 @@ const AllFlashSales = () => {
               value={searchTerm}
               onChange={(e) => {
                 setSearchTerm(e.target.value);
+                // it will avoid empty pages after search if filtered results only have 1 page of items.
                 setCurrentPage(1);
               }}
               className="max-w-[300px]"
@@ -110,17 +119,14 @@ const AllFlashSales = () => {
                 setCurrentPage(1);
               }}
             >
-              <SelectTrigger className="w-[180pxS]">
-                <SelectValue
-                  placeholder="
-Sort By"
-                />
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Sort By" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="discount-desc">Highest Discount</SelectItem>
                 <SelectItem value="discount-asc">Lowest Discount</SelectItem>
                 <SelectItem value="price-desc">Highest Price</SelectItem>
-                <SelectItem value="price-asc">Lowest Price</SelectItem>
+                <SelectItem value="discount-asc">Lowest Discount</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -136,12 +142,12 @@ Sort By"
 
         {/* products */}
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
             {Array.from({ length: 8 }).map((_, index) => (
-              <Card key={index} className="p-4 animate-pulse">
+              <Card key={index} className="animate-pulse">
                 <div className="h-48 bg-[var(--color-bg-gray)] rounded-md"></div>
                 <div className="mt-4 space-y-0">
-                  <div className="h-4 bg-[var(--color-bg-gray)] rounded"></div>
+                  <div className="h-4 bg-[var(--color-gray)] rounded"></div>
                   <div className="h-4 bg-[var(--color-bg-gray)] rounded w-3/4"></div>
                 </div>
               </Card>
@@ -160,7 +166,7 @@ Sort By"
           </div>
         ) : filteredProducts.length === 0 ? (
           <div className="text-center py-10">
-            <p className="text-gray-500">No Flash Sale Products Found</p>
+            <p className="text-[var(--color-gray)]">No Flash Sale Item Found</p>
             {searchTerm && (
               <Button
                 variant="ghost"
@@ -173,25 +179,28 @@ Sort By"
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4  gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-5">
               {paginatedProducts.map((item) => (
                 <Link to={`/product/${item.product._id}`} key={item._id}>
                   <Card className="relative p-0 hover:shadow-md transition-shadow duration-300 h-full flex flex-col border shadow-none">
                     <Badge className="absolute top-3 right-3 bg-[var(--color-blue)] text-[var(--color-text)]">
                       -{item.discount}%
                     </Badge>
+                    {/* image */}
                     <div>
                       <img
                         src={item.product.images?.[0]}
                         alt={item.product.modelName}
-                        className="w-full h-[200px] object-cover "
+                        className="w-full h-[200px] object-cover"
                       />
                     </div>
 
+                    {/* product infos */}
                     <div className="flex flex-col gap-1 p-2">
                       <h3 className="font-medium text-lg line-clamp-2 text-[var(--color-black)]">
                         {item.product.modelName}
                       </h3>
+
                       <div className="flex items-center gap-2">
                         <span className="font-semibold text-[var(--color-blue)]">
                           ${item.flashSaleDiscountedPrice?.toFixed(2)}
