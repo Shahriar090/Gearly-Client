@@ -126,7 +126,7 @@ const AllFlashSales = () => {
                 <SelectItem value="discount-desc">Highest Discount</SelectItem>
                 <SelectItem value="discount-asc">Lowest Discount</SelectItem>
                 <SelectItem value="price-desc">Highest Price</SelectItem>
-                <SelectItem value="discount-asc">Lowest Discount</SelectItem>
+                <SelectItem value="discount-asc">Lowest Price</SelectItem>
               </SelectContent>
             </Select>
           </div>
