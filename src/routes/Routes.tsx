@@ -10,7 +10,7 @@ import UserLayout from "@/layouts/UserLayout";
 import UserProfile from "@/pages/dashboard/user/UserProfile";
 import UserDashboard from "@/pages/dashboard/user/UserDashboard";
 import WishList from "@/pages/dashboard/user/WishList";
-import Cart from "@/pages/dashboard/user/Cart";
+import Cart from "@/pages/dashboard/user/cart/Cart";
 import AdminDashboard from "@/pages/dashboard/admin/AdminDashboard";
 import Analytics from "@/pages/dashboard/admin/Analytics";
 import Orders from "@/pages/dashboard/user/Orders";
@@ -28,6 +28,7 @@ import FlashSales from "@/pages/dashboard/admin/flash-sales/FlashSales";
 import AllProducts from "@/pages/home/products/AllProducts";
 import ProductDetails from "@/pages/home/products/ProductDetails";
 import AllFlashSales from "@/pages/home/flash-sale/AllFlashSales";
+import Checkout from "@/pages/dashboard/user/Checkout";
 
 const routes: RouteObject[] = [
   {
@@ -149,6 +150,10 @@ const routes: RouteObject[] = [
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "checkout",
+        element: <Checkout />,
       },
     ],
   },

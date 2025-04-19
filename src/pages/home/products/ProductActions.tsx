@@ -1,10 +1,12 @@
 import { Button } from "@/components/ui/button";
+import AddToCartModal from "@/pages/dashboard/user/cart/AddToCartModal";
 import { Minus, Plus } from "lucide-react";
 import { useState } from "react";
+import { TProduct } from "./products.types";
 
-const ProductActions = () => {
+const ProductActions = ({ product }: { product: TProduct }) => {
   const [quantity, setQuantity] = useState(0);
-
+  const [modalOpen, setModalOpen] = useState(false);
   const increase = () => setQuantity((prev) => prev + 1);
   const decrease = () => setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   return (
@@ -32,9 +34,18 @@ const ProductActions = () => {
 
       {/* action button */}
       <div className="flex items-center gap-2">
-        <Button className="bg-[var(--color-blue)] px-10 py-5 rounded-sm text-sm font-semibold text-[var(--color-text)]">
+        <Button
+          onClick={() => setModalOpen(true)}
+          className="bg-[var(--color-blue)] px-10 py-5 rounded-sm text-sm font-semibold text-[var(--color-text)]"
+        >
           Buy Now
         </Button>
+
+        <AddToCartModal
+          open={modalOpen}
+          onOpenChange={setModalOpen}
+          product={product}
+        />
       </div>
     </div>
   );

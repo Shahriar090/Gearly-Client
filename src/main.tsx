@@ -4,14 +4,16 @@ import "./index.css";
 import { Toaster } from "./components/ui/sonner.tsx";
 import AuthProvider from "./providers/AuthProvider.tsx";
 import App from "./App.tsx";
+import CartProvider from "./providers/CartProvider.tsx";
 
 createRoot(document.getElementById("root")!).render(
   <div className="">
     <StrictMode>
       <AuthProvider>
-        {/* <RouterProvider router={router} /> */}
-        <App />
-        <Toaster />
+        <CartProvider>
+          <App />
+          <Toaster />
+        </CartProvider>
       </AuthProvider>
     </StrictMode>
   </div>

@@ -70,7 +70,7 @@ const ProductInfo = ({ product }: { product: TProduct }) => {
       </div>
 
       {/* action buttons */}
-      <ProductActions />
+      <ProductActions product={product} />
     </div>
   );
 };
