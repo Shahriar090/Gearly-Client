@@ -9,7 +9,7 @@ export type TCartItem = {
   discount?: number;
   saved?: number;
   totalPrice: number;
-  itemImg?: string;
+  images?: string[];
   variant: string;
 };
 
@@ -48,4 +48,5 @@ export type TAddToCartModalProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   product: TProduct;
+  quantity: number;
 };

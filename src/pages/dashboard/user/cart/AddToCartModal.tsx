@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
 import { TAddToCartModalProps } from "./cart.types";
 import { useCart } from "@/hooks/useCart";
-import { toast } from "sonner";
+
 import {
   Dialog,
   DialogContent,
@@ -9,7 +9,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
 
 const AddToCartModal = ({
   open,
@@ -17,21 +16,21 @@ const AddToCartModal = ({
   product,
 }: TAddToCartModalProps) => {
   const navigate = useNavigate();
-  const { addToCart, getCartCount, getCartTotal } = useCart();
+  const { getCartCount, getCartTotal } = useCart();
 
-  const handleAddToCart = async () => {
-    const { success } = await addToCart(product._id);
-    if (!success) {
-      toast.error("Failed To Add To Cart");
-      console.error("Failed to add to cart");
-    }
-  };
+  // const handleAddToCart = async () => {
+  //   const { success } = await addToCart(product._id, quantity);
+  //   if (!success) {
+  //     toast.error("Failed To Add To Cart");
+  //     console.error("Failed to add to cart");
+  //   }
+  // };
 
-  useEffect(() => {
-    if (open) {
-      handleAddToCart();
-    }
-  }, [open]);
+  // useEffect(() => {
+  //   if (open) {
+  //     handleAddToCart();
+  //   }
+  // }, [open]);
 
   //  view cart
   const handleViewCart = () => {

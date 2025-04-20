@@ -1,6 +1,7 @@
 import { FiPhoneCall } from "react-icons/fi";
 import { CiMenuKebab } from "react-icons/ci";
 import { ShoppingCart } from "lucide-react";
+import { Link } from "react-router";
 
 type TDrawerProps = {
   setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -35,9 +36,11 @@ const MiddleNav = ({ setIsDrawerOpen }: TDrawerProps) => {
             : 0123456789
           </span>
         </div>
-        <div className="cart">
-          <ShoppingCart className="h-6 w-6 text-[var(--color-yellow)]" />
-        </div>
+        <Link to="/users/cart">
+          <div className="cart">
+            <ShoppingCart className="h-6 w-6 text-[var(--color-yellow)]" />
+          </div>
+        </Link>
         {/* Menu Button for Mobile */}
         <button className="md:hidden" onClick={() => setIsDrawerOpen(true)}>
           <CiMenuKebab className="w-6 h-6 text-[var(--color-yellow)]" />

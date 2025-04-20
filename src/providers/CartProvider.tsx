@@ -39,8 +39,8 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
           },
         }
       );
-      console.log(response);
       setCart(response.data?.data);
+      await fetchCart();
       return { success: true };
     } catch (error) {
       const message =
@@ -53,9 +53,11 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const removeFromCart = async (productId: string) => {
     try {
       const response = await api.delete(
-        `${import.meta.env.VITE_SERVER_LOCAL_URL}/cart/remove/${productId}`
+        `${import.meta.env.VITE_SERVER_LOCAL_URL}/cart/remove-item/${productId}`
       );
+      console.log(response);
       setCart(response.data?.data);
+      await fetchCart();
     } catch (error) {
       setError(
         error instanceof Error ? error.message : "Failed To Remove From Cart"
@@ -73,6 +75,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
         { quantity }
       );
       setCart(response.data?.data);
+      await fetchCart();
     } catch (error) {
       setError(
         error instanceof Error ? error.message : "Failed To Update Quantity"
