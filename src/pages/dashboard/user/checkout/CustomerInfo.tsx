@@ -20,7 +20,8 @@ const CustomerInfo = () => {
           </span>
           Customer Information
         </h1>
-
+        {/* divider */}
+        <div className="w-full h-0.5 bg-gray-100 my-2"></div>
         <div className="space-y-4">
           <div>
             <label className="block mb-1">First Name</label>

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import {
   Menu,
-  X,
   Home,
   ShoppingBag,
   Heart,
@@ -50,12 +49,14 @@ const Sidebar = () => {
     <>
       {/* Mobile Menu Button */}
       <div className="p-4 bg-[var(--color-white)] border-b flex items-center justify-between lg:hidden">
-        <h1 className="text-3xl md:text-5xl font-semibold text-black">
-          <span className="text-green-500 inline-block -rotate-15">G</span>
+        <h1 className="text-3xl text-center font-semibold text-[var(--color-black)]">
+          <span className="text-[var(--color-blue)] inline-block -rotate-15">
+            G
+          </span>
           early
         </h1>
-        <Button variant="ghost" onClick={() => setIsOpen(!isOpen)}>
-          <Menu className="w-6 h-6 text-black" />
+        <Button variant="outline" onClick={() => setIsOpen(!isOpen)}>
+          <Menu className="text-black border" />
         </Button>
       </div>
 
@@ -66,18 +67,17 @@ const Sidebar = () => {
         }`}
       >
         {/* Close Button for Mobile */}
-        <div className="flex items-center justify-between p-4 lg:hidden">
-          <h2 className="text-xl font-bold text-black">Menu</h2>
+        {/* <div className="flex items-center justify-between p-4 lg:hidden">
           <Button variant="ghost" onClick={() => setIsOpen(false)}>
-            <X className="w-6 h-6 text-black" />
+            <X className="text-[var(--color-black)]" />
           </Button>
-        </div>
+        </div> */}
 
         {/* Sidebar Content */}
         <div>
           {/* logo */}
           <div className="">
-            <h1 className="text-3xl md:text-5xl font-semibold py-5 px-2 text-[var(--color-black)]">
+            <h1 className="text-3xl md:text-4xl text-center bg-[var(--color-bg-gray)] font-semibold py-5 px-2 text-[var(--color-black)]">
               <span className="text-[var(--color-blue)] inline-block -rotate-15">
                 G
               </span>
@@ -96,7 +96,7 @@ const Sidebar = () => {
               >
                 <li
                   key={index}
-                  className="flex items-center gap-3 p-2 hover:bg-[var(--color-blue)] hover:text-[var(--color-text)] cursor-pointer text-lg font-normal"
+                  className="flex items-center gap-3 px-4 py-2 hover:bg-[var(--color-blue)] hover:text-[var(--color-text)] cursor-pointer text-lg font-normal border "
                 >
                   {item.icon}
                   <span>{item.name}</span>

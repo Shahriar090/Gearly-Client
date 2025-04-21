@@ -3,7 +3,7 @@ import { Outlet } from "react-router";
 
 const UserLayout = () => {
   return (
-    <div className="flex flex-col md:flex-row w-full full">
+    <div className="flex flex-col md:flex-row">
       {/* sidebar */}
       <div className="sidebar w-full sm:w-[20%]">
         <Sidebar />
