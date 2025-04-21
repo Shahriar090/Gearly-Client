@@ -47,6 +47,25 @@ const ProductActions = ({ product }: { product: TProduct }) => {
 
   const increase = () => handleQuantityChange(quantity + 1);
   const decrease = () => handleQuantityChange(Math.max(1, quantity - 1));
+
+  // handle buy now
+  const handleBuyNow = async () => {
+    if (!auth.user) {
+      toast.error("Please Login To Proceed");
+      return;
+    }
+
+    try {
+      // if product not in cart, add it with current quantity default 1
+      if (!cartItem) {
+        await addToCart(product._id, localQuantity);
+      }
+      setModalOpen(true);
+    } catch (error) {
+      console.error("Failed To Add To Cart", error);
+      toast.error("Failed to add to cart");
+    }
+  };
   return (
     <div className="flex flex-col md:flex-row gap-4 mt-4">
       {/* quantity selector */}
@@ -78,7 +97,7 @@ const ProductActions = ({ product }: { product: TProduct }) => {
       {/* action button */}
       <div className="flex items-center gap-2">
         <Button
-          onClick={() => setModalOpen(true)}
+          onClick={handleBuyNow}
           disabled={loading}
           className="bg-[var(--color-blue)] px-10 py-5 rounded-sm text-sm font-semibold text-[var(--color-text)]"
         >
