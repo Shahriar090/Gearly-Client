@@ -129,6 +129,7 @@ body {
   --color-text: #ffffff;
   --color-gray: #4a4a4a;
   --color-bg-gray: #f2f4f8;
+  --color-heading-text-bg: #ddedec;
 }
 
 @layer base {

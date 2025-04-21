@@ -28,7 +28,7 @@ import FlashSales from "@/pages/dashboard/admin/flash-sales/FlashSales";
 import AllProducts from "@/pages/home/products/AllProducts";
 import ProductDetails from "@/pages/home/products/ProductDetails";
 import AllFlashSales from "@/pages/home/flash-sale/AllFlashSales";
-import Checkout from "@/pages/dashboard/user/Checkout";
+import Checkout from "@/pages/dashboard/user/checkout/Checkout";
 
 const routes: RouteObject[] = [
   {

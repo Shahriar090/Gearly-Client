@@ -10,37 +10,37 @@ import {
   Settings,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
+import { NavLink } from "react-router";
 const sidebarItems = [
   {
     name: "Home",
     path: "/",
-    icon: <Home className="w-5 h-5" />,
+    icon: <Home className="w-6 h-6" />,
   },
   {
     name: "Orders",
     path: "/users/orders",
-    icon: <ShoppingBag className="w-5 h-5" />,
+    icon: <ShoppingBag className="w-6 h-6" />,
   },
   {
     name: "Wishlist",
     path: "/users/wishlist",
-    icon: <Heart className="w-5 h-5" />,
+    icon: <Heart className="w-6 h-6" />,
   },
   {
     name: "Cart",
     path: "/users/cart",
-    icon: <ShoppingCart className="w-5 h-5" />,
+    icon: <ShoppingCart className="w-6 h-6" />,
   },
   {
     name: "Profile",
     path: "/users/user-profile",
-    icon: <User className="w-5 h-5" />,
+    icon: <User className="w-6 h-6" />,
   },
   {
     name: "Settings",
     path: "/users/settings",
-    icon: <Settings className="w-5 h-5" />,
+    icon: <Settings className="w-6 h-6" />,
   },
 ];
 const Sidebar = () => {
@@ -49,7 +49,7 @@ const Sidebar = () => {
   return (
     <>
       {/* Mobile Menu Button */}
-      <div className="p-4 bg-white border-b flex items-center justify-between lg:hidden">
+      <div className="p-4 bg-[var(--color-white)] border-b flex items-center justify-between lg:hidden">
         <h1 className="text-3xl md:text-5xl font-semibold text-black">
           <span className="text-green-500 inline-block -rotate-15">G</span>
           early
@@ -61,7 +61,7 @@ const Sidebar = () => {
 
       {/* Sidebar - Responsive */}
       <div
-        className={`fixed inset-y-0  left-0 z-50  bg-white shadow text-black transition-transform transform lg:relative lg:translate-x-0 ${
+        className={`fixed inset-y-0 h-full  left-0 z-50  bg-[var(--color-white)] shadow transition-transform transform lg:relative lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -74,22 +74,34 @@ const Sidebar = () => {
         </div>
 
         {/* Sidebar Content */}
-        <div className="p-5">
-          <h1 className="text-3xl md:text-5xl font-semibold text-black">
-            <span className="text-green-500 inline-block -rotate-15">G</span>
-            early
-          </h1>
-          <ul className="mt-5 space-y-4">
+        <div>
+          {/* logo */}
+          <div className="">
+            <h1 className="text-3xl md:text-5xl font-semibold py-5 px-2 text-[var(--color-black)]">
+              <span className="text-[var(--color-blue)] inline-block -rotate-15">
+                G
+              </span>
+              early
+            </h1>
+          </div>
+          <ul className="mt-5 space-y-2">
             {sidebarItems.map((item, index) => (
-              <Link to={item.path}>
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  isActive
+                    ? "block bg-[var(--color-blue)] text-[var(--color-text)] rounded"
+                    : "block"
+                }
+              >
                 <li
                   key={index}
-                  className="flex items-center gap-3 p-2 rounded bg-white text-black hover:bg-green-500 hover:text-white cursor-pointer"
+                  className="flex items-center gap-3 p-2 hover:bg-[var(--color-blue)] hover:text-[var(--color-text)] cursor-pointer text-lg font-normal"
                 >
                   {item.icon}
                   <span>{item.name}</span>
                 </li>
-              </Link>
+              </NavLink>
             ))}
           </ul>
         </div>

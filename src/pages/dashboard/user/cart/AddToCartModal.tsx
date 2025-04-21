@@ -9,28 +9,31 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 const AddToCartModal = ({
   open,
   onOpenChange,
   product,
+  quantity,
 }: TAddToCartModalProps) => {
   const navigate = useNavigate();
-  const { getCartCount, getCartTotal } = useCart();
+  const { getCartCount, getCartTotal, addToCart } = useCart();
 
-  // const handleAddToCart = async () => {
-  //   const { success } = await addToCart(product._id, quantity);
-  //   if (!success) {
-  //     toast.error("Failed To Add To Cart");
-  //     console.error("Failed to add to cart");
-  //   }
-  // };
+  const handleAddToCart = async () => {
+    const { success } = await addToCart(product._id, quantity);
+    if (!success) {
+      toast.error("Failed To Add To Cart");
+      console.error("Failed to add to cart");
+    }
+  };
 
-  // useEffect(() => {
-  //   if (open) {
-  //     handleAddToCart();
-  //   }
-  // }, [open]);
+  useEffect(() => {
+    if (open) {
+      handleAddToCart();
+    }
+  }, [open]);
 
   //  view cart
   const handleViewCart = () => {

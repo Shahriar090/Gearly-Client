@@ -208,7 +208,9 @@ const Cart = () => {
           <Button variant="outline" onClick={() => navigate("/all-products")}>
             Continue Shopping
           </Button>
-          <Button onClick={() => navigate("/checkout")}>Confirm Order</Button>
+          <Button onClick={() => navigate("/users/checkout")}>
+            Confirm Order
+          </Button>
         </div>
       </div>
     </div>
