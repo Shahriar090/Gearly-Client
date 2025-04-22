@@ -1,6 +1,7 @@
 import { RouterProvider } from "react-router-dom";
 import { useAuthInitializer } from "./hooks/useAuthInitializer";
 import router from "./routes/Routes";
+import Loader from "./components/loader/Loader";
 
 const App = () => {
   const loading = useAuthInitializer();
@@ -8,7 +9,7 @@ const App = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading...
+        <Loader />
       </div>
     );
   }
