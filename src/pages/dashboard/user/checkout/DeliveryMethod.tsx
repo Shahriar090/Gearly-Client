@@ -1,6 +1,8 @@
 import { Input } from "@/components/ui/input";
+import { useFormContext } from "react-hook-form";
 
 const DeliveryMethod = () => {
+  const { register } = useFormContext();
   return (
     <div className="bg-[var(--color-white)] p-2">
       <h1 className="text-sm text-[var(--color-black)] font-medium flex items-center">
@@ -17,15 +19,25 @@ const DeliveryMethod = () => {
         </h1>
         <div className="space-y-2">
           <div className="flex items-center space-x-3">
-            <Input type="radio" className="w-4 h-4" />
+            <Input
+              value="Home Delivery"
+              {...register("deliveryMethod")}
+              type="radio"
+              className="w-4 h-4"
+            />
             <span>Home Delivery - $30</span>
           </div>
           <div className="flex items-center space-x-3">
-            <Input type="radio" className="w-4 h-4" />
+            <Input
+              value="Store Pickup"
+              {...register("deliveryMethod")}
+              type="radio"
+              className="w-4 h-4"
+            />
             <span>Store Pickup - $00</span>
           </div>
           <div className="flex items-center space-x-3">
-            <Input type="radio" className="w-4 h-4" />
+            <Input value="Request Express" type="radio" className="w-4 h-4" />
             <span>Request Express - Charge Applicable</span>
           </div>
         </div>

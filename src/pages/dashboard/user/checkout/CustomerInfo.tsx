@@ -8,8 +8,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Controller, useFormContext } from "react-hook-form";
 
 const CustomerInfo = () => {
+  const { register, control } = useFormContext();
   return (
     <div className="bg-[var(--color-white)] p-2">
       {/* Left Column - Customer Information (Full width on mobile, 1/3 on desktop) */}
@@ -25,61 +27,98 @@ const CustomerInfo = () => {
         <div className="space-y-4">
           <div>
             <label className="block mb-1">First Name</label>
-            <Input type="text" placeholder="First Name" />
+            <Input
+              {...register("customerInfo.firstName")}
+              type="text"
+              placeholder="First Name"
+            />
           </div>
 
           <div>
             <label className="block mb-1">Middle Name (Optional)</label>
-            <Input type="text" placeholder="Middle Name" />
+            <Input
+              {...register("customerInfo.middleName")}
+              type="text"
+              placeholder="Middle Name"
+            />
           </div>
 
           <div>
             <label className="block mb-1">Last Name</label>
-            <Input type="text" placeholder="Last Name" />
+            <Input
+              {...register("customerInfo.lastName")}
+              type="text"
+              placeholder="Last Name"
+            />
           </div>
 
           <div>
             <label className="block mb-1">Address</label>
-            <Input type="text" placeholder="Address" />
+            <Input
+              {...register("customerInfo.address")}
+              type="text"
+              placeholder="Address"
+            />
           </div>
 
           <div>
             <label className="block mb-1">Mobile</label>
-            <Input type="tel" placeholder="Mobile Number" />
+            <Input
+              {...register("customerInfo.mobile")}
+              type="tel"
+              placeholder="Mobile Number"
+            />
           </div>
 
           <div>
             <label className="block mb-1">Email</label>
-            <Input type="email" placeholder="Email" />
+            <Input
+              {...register("customerInfo.email")}
+              type="email"
+              placeholder="Email"
+            />
           </div>
 
           <div>
             <label className="block mb-1">City</label>
-            <Input type="text" placeholder="City" />
+            <Input
+              {...register("customerInfo.city")}
+              type="text"
+              placeholder="City"
+            />
           </div>
 
           <div>
             <label className="block mb-1">Zone</label>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Select your zone" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="dhaka">Dhaka City</SelectItem>
-                <SelectItem value="khulna">Khulna City</SelectItem>
-                <SelectItem value="rajshahi">Rajshahi City</SelectItem>
-                <SelectItem value="rangpur">Rangpur City</SelectItem>
-                <SelectItem value="chattogram">Chattogram City</SelectItem>
-                <SelectItem value="gazipur">Gazipur City</SelectItem>
-                <SelectItem value="mymensing">Mymensing City</SelectItem>
-                <SelectItem value="others">Others</SelectItem>
-              </SelectContent>
-            </Select>
+            <Controller
+              name="customerInfo.zone"
+              control={control}
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select your zone" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="dhaka">Dhaka City</SelectItem>
+                    <SelectItem value="khulna">Khulna City</SelectItem>
+                    <SelectItem value="rajshahi">Rajshahi City</SelectItem>
+                    <SelectItem value="rangpur">Rangpur City</SelectItem>
+                    <SelectItem value="chattogram">Chattogram City</SelectItem>
+                    <SelectItem value="gazipur">Gazipur City</SelectItem>
+                    <SelectItem value="mymensing">Mymensing City</SelectItem>
+                    <SelectItem value="others">Others</SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
+            />
           </div>
 
           <div>
             <label className="block mb-1">Additional Comments</label>
-            <Textarea placeholder="Any special instructions?" />
+            <Textarea
+              {...register("customerInfo.comment")}
+              placeholder="Any special instructions?"
+            />
           </div>
         </div>
       </div>

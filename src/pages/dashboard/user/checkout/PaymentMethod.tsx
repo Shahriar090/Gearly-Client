@@ -1,7 +1,9 @@
 import { Input } from "@/components/ui/input";
 import paymentImg from "../../../../assets/payment-methods.png";
+import { useFormContext } from "react-hook-form";
 
 const PaymentMethod = () => {
+  const { register } = useFormContext();
   return (
     <div className="bg-[var(--color-white)] p-2">
       <h1 className="text-sm text-[var(--color-black)] font-medium flex items-center">
@@ -18,15 +20,30 @@ const PaymentMethod = () => {
         </h1>
         <div className="space-y-2">
           <div className="flex items-center space-x-3">
-            <Input type="radio" className="w-4 h-4" />
+            <Input
+              value="Cash On Delivery"
+              {...register("paymentMethod")}
+              type="radio"
+              className="w-4 h-4"
+            />
             <span>Cash On Delivery</span>
           </div>
           <div className="flex items-center space-x-3">
-            <Input type="radio" className="w-4 h-4" />
+            <Input
+              value="Online Payment"
+              {...register("paymentMethod")}
+              type="radio"
+              className="w-4 h-4"
+            />
             <span>Online Payment</span>
           </div>
           <div className="flex items-center space-x-3">
-            <Input type="radio" className="w-4 h-4" />
+            <Input
+              value="POS On Delivery"
+              {...register("paymentMethod")}
+              type="radio"
+              className="w-4 h-4"
+            />
             <span>POS On Delivery</span>
           </div>
         </div>
