@@ -1,13 +1,16 @@
 import { FiPhoneCall } from "react-icons/fi";
 import { CiMenuKebab } from "react-icons/ci";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { Link } from "react-router";
+import { useCart } from "@/hooks/useCart";
 
 type TDrawerProps = {
   setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const MiddleNav = ({ setIsDrawerOpen }: TDrawerProps) => {
+  const { cart } = useCart();
+
   return (
     <div className="w-full h-16 flex justify-between items-center px-4 md:px-14 bg-[var(--color-black)]">
       <div className="logo">
@@ -37,8 +40,13 @@ const MiddleNav = ({ setIsDrawerOpen }: TDrawerProps) => {
           </span>
         </div>
         <Link to="/users/cart">
-          <div className="cart">
-            <ShoppingCart className="h-6 w-6 text-[var(--color-yellow)]" />
+          <div className="cart relative">
+            <ShoppingBag className="h-7 w-7 stroke-1 text-[var(--color-yellow)]" />
+            <div className="absolute w-5 h-5 bg-[var(--color-blue)] -top-1 -right-1 rounded-full flex items-center justify-center">
+              <span className=" text-[var(--color-text)] text-sm">
+                {cart?.items?.length || 0}
+              </span>
+            </div>
           </div>
         </Link>
         {/* Menu Button for Mobile */}
