@@ -18,69 +18,45 @@ const Checkout = () => {
   const { api } = useAxios();
 
   const onSubmit = async (data: TCheckoutFormValues) => {
-    console.log("Form submitted with data:", data);
     const payload = {
       items: cart?.items?.map((item) => ({
         product:
-          typeof item.product === "string" ? item.product : item.product?._id,
+          typeof item.product === "string" ? item.product : item.product?._id, //checking if the product is a string (_id) or entire product object.
         quantity: item.quantity,
       })),
       customerInfo: data.customerInfo,
       paymentMethod: data.paymentMethod,
     };
 
-    console.log("Payload to create order:", payload);
-
     try {
-      // Step - 1: Create the order
+      // step - 1 create the order
       const response = await api.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/orders/create-order`,
-        { order: payload }
+        {
+          order: payload,
+        }
       );
-
-      console.log("Order creation response:", response);
-
       const trackingId = response.data?.data?.trackingId;
       const totalAmount = response.data?.data?.grandTotal;
 
-      if (!trackingId || !totalAmount) {
-        console.error(
-          "Missing trackingId or totalAmount from order creation response"
-        );
-        toast.error("Failed to create order. Missing data.");
-        return;
-      }
-
-      // Step - 2: Initiate payment
-      const paymentPayload = {
-        trackingId,
-        totalAmount,
-        customerInfo: data.customerInfo,
-        products: cart?.items,
-        deliveryMethod: data.deliveryMethod,
-      };
-
-      console.log("Payment initiation payload:", paymentPayload);
-
+      // step - 2 initiate payment with order tracking id
       const paymentResponse = await api.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/payment/init`,
-        paymentPayload
+        {
+          trackingId,
+          totalAmount,
+          customerInfo: data.customerInfo,
+          products: cart?.items,
+          deliveryMethod: data.deliveryMethod,
+        }
       );
-
-      console.log("Payment initiation response:", paymentResponse);
-
-      const gatewayUrl = paymentResponse.data?.data?.gatewayUrl;
-      if (!gatewayUrl) {
-        console.error("Payment gateway URL not found in response");
-        toast.error("Payment gateway URL missing. Try again.");
-        return;
-      }
-
-      console.log("Redirecting to payment gateway URL:", gatewayUrl);
-      window.location.replace(gatewayUrl);
+      console.log(paymentResponse, "payment response");
+      console.log(paymentResponse.data?.data?.gatewayUrl, "payment response");
+      window.location.replace(paymentResponse.data?.data?.gatewayUrl);
+      // window.location.href = paymentResponse.data?.data?.gatewayUrl;
     } catch (error) {
-      console.error("Error during checkout process:", error);
-      toast.error("Failed To Place Order", {
+      console.error("Order Failed", error);
+      toast.success("Failed To Place Order", {
         duration: 3000,
         position: "top-right",
       });
