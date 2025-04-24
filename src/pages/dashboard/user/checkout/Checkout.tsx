@@ -21,7 +21,7 @@ const Checkout = () => {
     const payload = {
       items: cart?.items?.map((item) => ({
         product:
-          typeof item.product === "string" ? item.product : item.product?._id, //checking if the product is a string (_id) or entire product object.
+          typeof item.product === "string" ? item.product : item.product?._id,
         quantity: item.quantity,
       })),
       customerInfo: data.customerInfo,
@@ -29,17 +29,22 @@ const Checkout = () => {
     };
 
     try {
-      // step - 1 create the order
+      console.log("Submitting Order with Payload:", payload);
+
+      // Step 1: Create the order
       const response = await api.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/orders/create-order`,
-        {
-          order: payload,
-        }
+        { order: payload }
       );
+
       const trackingId = response.data?.data?.trackingId;
       const totalAmount = response.data?.data?.grandTotal;
 
-      // step - 2 initiate payment with order tracking id
+      console.log("Order created successfully:");
+      console.log("Tracking ID:", trackingId);
+      console.log("Total Amount:", totalAmount);
+
+      // Step 2: Initiate payment
       const paymentResponse = await api.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/payment/init`,
         {
@@ -50,13 +55,22 @@ const Checkout = () => {
           deliveryMethod: data.deliveryMethod,
         }
       );
-      console.log(paymentResponse, "payment response");
-      console.log(paymentResponse.data?.data?.gatewayUrl, "payment response");
-      window.location.replace(paymentResponse.data?.data?.gatewayUrl);
-      // window.location.href = paymentResponse.data?.data?.gatewayUrl;
+
+      const gatewayUrl = paymentResponse?.data?.data?.gatewayUrl;
+
+      console.log("Payment initiation response:", paymentResponse);
+      console.log("Gateway URL:", gatewayUrl);
+
+      if (gatewayUrl) {
+        console.log("Redirecting to payment gateway...");
+        window.location.href = gatewayUrl;
+      } else {
+        console.error("No gateway URL received from payment response.");
+        toast.error("Payment failed: Invalid gateway URL");
+      }
     } catch (error) {
-      console.error("Order Failed", error);
-      toast.success("Failed To Place Order", {
+      console.error("Order or Payment Failed", error);
+      toast.error("Failed to place order", {
         duration: 3000,
         position: "top-right",
       });
