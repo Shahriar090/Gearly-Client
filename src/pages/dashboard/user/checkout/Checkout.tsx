@@ -51,7 +51,8 @@ const Checkout = () => {
         }
       );
       console.log(paymentResponse.data?.data?.gatewayUrl);
-      window.location.replace(paymentResponse.data?.data?.gatewayUrl);
+      // window.location.replace(paymentResponse.data?.data?.gatewayUrl);
+      window.location.href = paymentResponse.data?.data?.gatewayUrl;
     } catch (error) {
       console.error("Order Failed", error);
       toast.success("Failed To Place Order", {
