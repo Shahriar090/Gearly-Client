@@ -29,6 +29,8 @@ import AllProducts from "@/pages/home/products/AllProducts";
 import ProductDetails from "@/pages/home/products/ProductDetails";
 import AllFlashSales from "@/pages/home/flash-sale/AllFlashSales";
 import Checkout from "@/pages/dashboard/user/checkout/Checkout";
+import PaymentSuccess from "@/pages/dashboard/user/checkout/PaymentSuccess";
+import PaymentFailed from "@/pages/dashboard/user/checkout/PaymentFailed";
 
 const routes: RouteObject[] = [
   {
@@ -154,6 +156,14 @@ const routes: RouteObject[] = [
       {
         path: "checkout",
         element: <Checkout />,
+      },
+      {
+        path: "payment-success/:tranId",
+        element: <PaymentSuccess />,
+      },
+      {
+        path: "payment-failed/:tranId",
+        element: <PaymentFailed />,
       },
     ],
   },

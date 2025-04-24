@@ -29,17 +29,29 @@ const Checkout = () => {
     };
 
     try {
-      await api.post(
+      // step - 1 create the order
+      const response = await api.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/orders/create-order`,
         {
           order: payload,
         }
       );
+      const trackingId = response.data?.data?.trackingId;
+      const totalAmount = response.data?.data?.grandTotal;
 
-      toast.success("Your Order Has Been Placed", {
-        duration: 3000,
-        position: "top-right",
-      });
+      // step - 2 initiate payment with order tracking id
+      const paymentResponse = await api.post(
+        `${import.meta.env.VITE_SERVER_BASE_URL}/payment/init`,
+        {
+          trackingId,
+          totalAmount,
+          customerInfo: data.customerInfo,
+          products: cart?.items,
+          deliveryMethod: data.deliveryMethod,
+        }
+      );
+      console.log(paymentResponse.data?.data?.gatewayUrl);
+      window.location.replace(paymentResponse.data?.data?.gatewayUrl);
     } catch (error) {
       console.error("Order Failed", error);
       toast.success("Failed To Place Order", {
@@ -81,7 +93,7 @@ const Checkout = () => {
           </div>
         </div>
         <div className="flex justify-end mt-5">
-          <Button type="submit">Confirm Order</Button>
+          <Button type="submit">Pay Now</Button>
         </div>
       </form>
     </FormProvider>
