@@ -31,7 +31,7 @@ const Checkout = () => {
     try {
       // step - 1 create the order
       const response = await api.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/orders/create-order`,
+        `${import.meta.env.VITE_SERVER_LOCAL_URL}/orders/create-order`,
         {
           order: payload,
         }
@@ -41,7 +41,7 @@ const Checkout = () => {
 
       // step - 2 initiate payment with order tracking id
       const paymentResponse = await api.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/payment/init`,
+        `${import.meta.env.VITE_SERVER_LOCAL_URL}/payment/init`,
         {
           trackingId,
           totalAmount,

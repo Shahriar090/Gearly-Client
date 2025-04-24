@@ -9,7 +9,7 @@ const UserLayout = () => {
         <Sidebar />
       </div>
       {/* outlet */}
-      <div className="w-full lg:w-[80%] p-5 bg-[var(--color-bg-gray)]">
+      <div className="w-full lg:w-[80%] bg-[var(--color-bg-gray)]">
         <Outlet />
       </div>
     </div>
