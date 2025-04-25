@@ -88,7 +88,6 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
         `${import.meta.env.VITE_SERVER_BASE_URL}/cart/clear-cart`
       );
       setCart(null);
-      await fetchCart();
     } catch (error) {
       setError(error instanceof Error ? error.message : "Failed To Clear Cart");
     }

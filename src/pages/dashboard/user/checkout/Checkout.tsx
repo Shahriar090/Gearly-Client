@@ -66,7 +66,7 @@ const Checkout = () => {
     <FormProvider {...methods}>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="space-y-8 bg-[var(--color-bg-gray)]"
+        className="bg-[var(--color-bg-gray)] p-5"
       >
         {/* Heading remains above the grid for all devices */}
         <Heading />
@@ -93,8 +93,10 @@ const Checkout = () => {
             <OrderOverview />
           </div>
         </div>
-        <div className="flex justify-end mt-5">
-          <Button type="submit">Pay Now</Button>
+        <div className="flex justify-end mt-4 md:mt-0">
+          <Button type="submit" className="w-full md:w-fit">
+            Pay Now
+          </Button>
         </div>
       </form>
     </FormProvider>

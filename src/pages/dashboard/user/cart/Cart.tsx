@@ -9,9 +9,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useCart } from "@/hooks/useCart";
-import { RefreshCcw, Trash } from "lucide-react";
+import { RefreshCcw, ShoppingBag, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import emptyCart from "../../../../assets/empty-cart.png";
 
 const Cart = () => {
   const {
@@ -65,18 +66,29 @@ const Cart = () => {
     return <div className="text-red-500 p-4">Error: {error}</div>;
   }
 
-  if (!cart || cart.items?.length === 0) {
+  if (!cart || !cart.items || cart.items?.length === 0) {
     return (
-      <div className="text-center py-12">
-        <p className="text-lg">Your Cart Is Empty</p>
-        <Button className="mt-4" onClick={() => navigate("/all-products")}>
+      <div className="flex justify-center items-center h-screen flex-col bg-[var(--color-white)] space-y-2">
+        <img src={emptyCart} alt="Empty Cart" className="w-32 h-32" />
+        <h2 className="text-2xl text-[var(--color-black)] font-medium">
+          Your Cart Is <span className="text-[var(--color-red)]">Empty!</span>
+        </h2>
+        <p className="text-[var(--color-gray)] text-sm">
+          Must add items on the cart before you proceed to the checkout
+        </p>
+
+        <Button
+          className="bg-[var(--color-blue)]"
+          onClick={() => navigate("/all-products")}
+        >
+          <ShoppingBag />
           Continue Shopping
         </Button>
       </div>
     );
   }
   return (
-    <div className="main-container">
+    <div className="main-container p-5 bg-[var(--color-white)]">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold mb-6">Your Cart</h1>
         <Button variant="default" onClick={clearCart}>
@@ -85,7 +97,7 @@ const Cart = () => {
       </div>
 
       <div className="overflow-x-auto">
-        <Table className="border-b-2">
+        <Table className="">
           <TableHeader className="bg-[var(--color-bg-gray)] text-[var(--color-gray)]">
             <TableRow>
               <TableHead>Image</TableHead>
@@ -93,7 +105,7 @@ const Cart = () => {
               <TableHead>Unit Price</TableHead>
               <TableHead>Quantity</TableHead>
               <TableHead>Total</TableHead>
-              <TableHead>Action</TableHead>
+              <TableHead>Remove</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -150,7 +162,7 @@ const Cart = () => {
             })}
           </TableBody>
         </Table>
-        <div className="text-right space-y-2">
+        <div className="text-right space-y-2 mr-0 md:mr-6">
           <p className="">
             <span className="text-[var(--color-black)] text-lg font-medium">
               Total Items:
