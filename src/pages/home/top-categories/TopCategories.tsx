@@ -1,8 +1,41 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { topCategoriesData } from "./top-categories-data";
+import { useEffect, useState } from "react";
+import { TTopCategories } from "./topCategories.types";
+import useAxios from "@/hooks/useAxios";
 
 const TopCategories = () => {
+  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState<TTopCategories[] | []>([]);
+  const [error, setError] = useState<string | null>(null);
+  const { api } = useAxios();
+  // fetch all categories
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    try {
+      const fetchCategories = async () => {
+        const response = await api.get(
+          `${import.meta.env.VITE_SERVER_LOCAL_URL}/categories`
+        );
+        setCategories(response.data?.data);
+      };
+      fetchCategories();
+    } catch (error) {
+      setError("Error Fetching Categories");
+      console.error(error);
+    } finally {
+      setLoading(false);
+      setError(null);
+    }
+  }, [api]);
+
+  if (error) {
+    <p>Error Fetching Categories.! Please Try Again</p>;
+  }
+  if (loading) {
+    <p>Fetching Categories... Please Wait</p>;
+  }
   return (
     <div className="main-container mt-16 md:mt-6 px-4">
       <div className="bg-white">
@@ -31,22 +64,24 @@ const TopCategories = () => {
         <div className="w-full h-0.5 bg-gray-100 mt-2"></div>
 
         {/* top categories */}
-        <div className="products grid grid-cols-2 md:grid-cols-6 gap-2 mt-4 p-4">
-          {topCategoriesData.map((category) => (
-            <Card
-              key={category.id}
-              className="text-center border shadow-none cursor-pointer hover:bg-[var(--color-text)]"
-            >
-              <img
-                src={category.image}
-                alt={category.name}
-                className="w-28 h-28 object-cover rounded-sm mx-auto"
-              />
-              <h3 className="text-sm font-medium text-[var(--color-black)]">
-                {category.name}
-              </h3>
-            </Card>
-          ))}
+        <div className="categories grid grid-cols-2 md:grid-cols-6 gap-2 mt-4 p-4">
+          {categories.map((category) => {
+            return (
+              <Card
+                key={category._id}
+                className="text-center shadow-none cursor-pointer py-4 gap-4"
+              >
+                <img
+                  src={category.imageUrl}
+                  alt={category.name}
+                  className="w-28 h-28 object-cover rounded-sm mx-auto"
+                />
+                <h3 className="text-sm font-medium text-[var(--color-black)]">
+                  {category.name}
+                </h3>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </div>
