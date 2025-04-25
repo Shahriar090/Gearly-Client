@@ -22,7 +22,13 @@ const PaymentSuccess = () => {
           Payment Successful!
         </h1>
         <span className="my-2 text-[var(--color-black)]">
-          Tracking Id: {tranId}
+          {tranId ? (
+            <>Tracking Id: {tranId}</>
+          ) : (
+            <>
+              <p>Order Confirmed With Cash On Delivery</p>
+            </>
+          )}
         </span>
         <p className="text-[var(--color-gray)] mb-6">
           Thank you for your payment. A confirmation email has been sent to you.

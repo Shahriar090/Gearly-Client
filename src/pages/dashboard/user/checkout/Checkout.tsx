@@ -10,14 +10,17 @@ import { FormProvider, useForm } from "react-hook-form";
 import { TCheckoutFormValues } from "./checkout.types";
 import useAxios from "@/hooks/useAxios";
 import { toast } from "sonner";
+import { useState } from "react";
 
 const Checkout = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const methods = useForm<TCheckoutFormValues>();
   const { handleSubmit } = methods;
   const { cart } = useCart();
   const { api } = useAxios();
 
   const onSubmit = async (data: TCheckoutFormValues) => {
+    setIsLoading(true);
     const payload = {
       items: cart?.items?.map((item) => ({
         product:
@@ -39,26 +42,35 @@ const Checkout = () => {
       const trackingId = response.data?.data?.trackingId;
       const totalAmount = response.data?.data?.grandTotal;
 
-      // step - 2 initiate payment with order tracking id
-      const paymentResponse = await api.post(
-        `${import.meta.env.VITE_SERVER_LOCAL_URL}/payment/init`,
-        {
-          trackingId,
-          totalAmount,
-          customerInfo: data.customerInfo,
-          products: cart?.items,
-          deliveryMethod: data.deliveryMethod,
-        }
-      );
+      // step - 2 checking payment method
+      if (data.paymentMethod === "Online Payment") {
+        const paymentResponse = await api.post(
+          `${import.meta.env.VITE_SERVER_LOCAL_URL}/payment/init`,
+          {
+            trackingId,
+            totalAmount,
+            customerInfo: data.customerInfo,
+            products: cart?.items,
+            deliveryMethod: data.deliveryMethod,
+          }
+        );
 
-      // window.location.replace(paymentResponse.data?.data?.gatewayUrl);
-      window.location.href = paymentResponse.data?.data?.gatewayUrl;
+        // window.location.replace(paymentResponse.data?.data?.gatewayUrl);
+        window.location.href = paymentResponse.data?.data?.gatewayUrl;
+      } else if (data.paymentMethod === "Cash On Delivery") {
+        toast.success("Your Order Has Been Placed Successfully", {
+          duration: 3000,
+          position: "top-right",
+        });
+        window.location.href = "/users/payment-success";
+      }
     } catch (error) {
       console.error("Order Failed", error);
       toast.success("Failed To Place Order", {
         duration: 3000,
         position: "top-right",
       });
+      setIsLoading(false);
     }
   };
 
@@ -94,8 +106,12 @@ const Checkout = () => {
           </div>
         </div>
         <div className="flex justify-end mt-4 md:mt-0">
-          <Button type="submit" className="w-full md:w-fit">
-            Pay Now
+          <Button
+            type="submit"
+            className="w-full md:w-fit"
+            disabled={isLoading}
+          >
+            {isLoading ? "Processing..." : "Pay Now"}
           </Button>
         </div>
       </form>

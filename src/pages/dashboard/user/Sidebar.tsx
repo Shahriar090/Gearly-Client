@@ -62,7 +62,7 @@ const Sidebar = () => {
 
       {/* Sidebar - Responsive */}
       <div
-        className={`fixed inset-y-0 h-screen left-0 z-50  bg-[var(--color-white)] shadow transition-transform transform lg:relative lg:translate-x-0 ${
+        className={`fixed inset-y-0 h-screen left-0 z-50  bg-[var(--color-white)] transition-transform transform lg:relative lg:translate-x-0 ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -77,7 +77,7 @@ const Sidebar = () => {
         <div>
           {/* logo */}
           <div className="">
-            <h1 className="text-3xl md:text-4xl text-center bg-[var(--color-bg-gray)] font-semibold py-5 px-2 text-[var(--color-black)]">
+            <h1 className="text-3xl md:text-4xl text-center bg-[var(--color-white)] font-semibold py-5 px-2 text-[var(--color-black)]">
               <span className="text-[var(--color-blue)] inline-block -rotate-15">
                 G
               </span>

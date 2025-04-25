@@ -161,6 +161,11 @@ const routes: RouteObject[] = [
         path: "payment-success/:tranId",
         element: <PaymentSuccess />,
       },
+      // This route is for cash on delivery where tranId does not exist
+      {
+        path: "payment-success/",
+        element: <PaymentSuccess />,
+      },
       {
         path: "payment-failed/:tranId",
         element: <PaymentFailed />,
