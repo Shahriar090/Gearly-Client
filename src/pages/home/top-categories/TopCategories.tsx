@@ -11,30 +11,30 @@ const TopCategories = () => {
   const { api } = useAxios();
   // fetch all categories
   useEffect(() => {
-    setLoading(true);
-    setError(null);
-    try {
-      const fetchCategories = async () => {
+    const fetchCategories = async () => {
+      setLoading(true);
+      setError(null);
+
+      try {
         const response = await api.get(
           `${import.meta.env.VITE_SERVER_LOCAL_URL}/categories`
         );
         setCategories(response.data?.data);
-      };
-      fetchCategories();
-    } catch (error) {
-      setError("Error Fetching Categories");
-      console.error(error);
-    } finally {
-      setLoading(false);
-      setError(null);
-    }
+      } catch (error) {
+        setError("Error Fetching Categories");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCategories();
   }, [api]);
 
   if (error) {
-    <p>Error Fetching Categories.! Please Try Again</p>;
+    return <p>Error Fetching Categories.! Please Try Again</p>;
   }
   if (loading) {
-    <p>Fetching Categories... Please Wait</p>;
+    return <p>Fetching Categories... Please Wait</p>;
   }
   return (
     <div className="main-container mt-16 md:mt-6 px-4">
@@ -74,7 +74,7 @@ const TopCategories = () => {
                 <img
                   src={category.imageUrl}
                   alt={category.name}
-                  className="w-28 h-28 object-cover rounded-sm mx-auto"
+                  className="w-32 h-32 object-cover rounded-sm mx-auto"
                 />
                 <h3 className="text-sm font-medium text-[var(--color-black)]">
                   {category.name}
