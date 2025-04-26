@@ -23,6 +23,11 @@ const ProductsByCategory = () => {
   const [sort, setSort] = useState<"low-to-high" | "high-to-low" | "default">(
     "default"
   );
+
+  // states for set price using price range component
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(3000000);
+
   // fetch products
   useEffect(() => {
     const fetchProductsByCategory = async () => {
@@ -71,13 +76,18 @@ const ProductsByCategory = () => {
     <div className="flex items-start gap-4">
       {/* sidebar items */}
       <div className="flex-1 space-y-4">
-        <PriceRange />
+        <PriceRange
+          minPrice={minPrice}
+          maxPrice={maxPrice}
+          setMinPrice={setMinPrice}
+          setMaxPrice={setMaxPrice}
+        />
         <Availability />
         <Brands />
       </div>
 
       {/* contents */}
-      <div className="flex-[4] border border-red-500">
+      <div className="flex-[4]">
         <ProductCategoryHeader
           products={products}
           onLimitChange={setLimit}

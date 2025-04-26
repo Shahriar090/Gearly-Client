@@ -27,3 +27,10 @@ export type TProductsByCategory = {
   saved: number;
   slug: string;
 };
+
+export type TPriceRange = {
+  minPrice: number;
+  maxPrice: number;
+  setMinPrice: (value: number) => void;
+  setMaxPrice: (value: number) => void;
+};
