@@ -22,7 +22,7 @@ const ProductDetails = () => {
       try {
         setLoading(true);
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/products/${id}`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/products/product/${id}`
         );
         setProduct(response.data?.data);
       } catch (error) {
