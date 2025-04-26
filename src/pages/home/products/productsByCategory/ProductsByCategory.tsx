@@ -1,0 +1,92 @@
+import { useParams } from "react-router";
+import ProductCategoryHeader from "./ProductCategoryHeader";
+import PriceRange from "./productsByCategorySidebar/PriceRange";
+import Availability from "./productsByCategorySidebar/Availability";
+import Brands from "./productsByCategorySidebar/Brands";
+import { useEffect, useState } from "react";
+import useAxios from "@/hooks/useAxios";
+import { TProductsByCategory } from "./productsByCategory.types";
+import ProductsByCategoryList from "./ProductsByCategoryList";
+
+const ProductsByCategory = () => {
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState<TProductsByCategory[] | []>([]);
+  const [filteredProducts, setFilteredProducts] = useState<
+    TProductsByCategory[]
+  >([]);
+  const [error, setError] = useState<string | null>(null);
+  const { api } = useAxios();
+  const { slug } = useParams();
+
+  // states for controlling how may products to show by user choice and sort products based on price
+  const [limit, setLimit] = useState<number>(20);
+  const [sort, setSort] = useState<"low-to-high" | "high-to-low" | "default">(
+    "default"
+  );
+  // fetch products
+  useEffect(() => {
+    const fetchProductsByCategory = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await api.get(
+          `${import.meta.env.VITE_SERVER_LOCAL_URL}/products/category/${slug}`
+        );
+        setProducts(response.data?.data);
+      } catch (error) {
+        setError("Error Fetching Products");
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (slug) {
+      fetchProductsByCategory();
+    }
+  }, [api, slug]);
+
+  // whenever products, limit and sort change, updated filtered products
+  useEffect(() => {
+    let updatedProducts = [...products];
+
+    if (sort === "low-to-high") {
+      updatedProducts.sort((a, b) => a.price - b.price);
+    } else if (sort === "high-to-low") {
+      updatedProducts.sort((a, b) => b.price - a.price);
+    }
+
+    // limiting
+    updatedProducts = updatedProducts.slice(0, limit);
+    setFilteredProducts(updatedProducts);
+  }, [limit, products, sort]);
+
+  if (loading) return <p>Loading...</p>;
+
+  if (error) return <p>{error}</p>;
+
+  if (products.length === 0) return <p>No Products Found In This Category</p>;
+
+  return (
+    <div className="flex items-start gap-4">
+      {/* sidebar items */}
+      <div className="flex-1 space-y-4">
+        <PriceRange />
+        <Availability />
+        <Brands />
+      </div>
+
+      {/* contents */}
+      <div className="flex-[4] border border-red-500">
+        <ProductCategoryHeader
+          products={products}
+          onLimitChange={setLimit}
+          onSortChange={setSort}
+        />
+        <ProductsByCategoryList products={filteredProducts} />
+      </div>
+    </div>
+  );
+};
+
+export default ProductsByCategory;

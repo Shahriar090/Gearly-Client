@@ -3,12 +3,14 @@ import { Card } from "@/components/ui/card";
 import { useEffect, useState } from "react";
 import { TTopCategories } from "./topCategories.types";
 import useAxios from "@/hooks/useAxios";
+import { useNavigate } from "react-router";
 
 const TopCategories = () => {
   const [loading, setLoading] = useState(false);
   const [categories, setCategories] = useState<TTopCategories[] | []>([]);
   const [error, setError] = useState<string | null>(null);
   const { api } = useAxios();
+  const navigate = useNavigate();
   // fetch all categories
   useEffect(() => {
     const fetchCategories = async () => {
@@ -69,6 +71,7 @@ const TopCategories = () => {
             return (
               <Card
                 key={category._id}
+                onClick={() => navigate(`/category/${category.slug}`)}
                 className="text-center shadow-none cursor-pointer py-4 gap-4"
               >
                 <img

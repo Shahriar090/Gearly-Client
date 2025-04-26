@@ -10,4 +10,5 @@ export type TTopCategories = {
     required: boolean;
   }[];
   isDeleted: boolean;
+  slug: string;
 };

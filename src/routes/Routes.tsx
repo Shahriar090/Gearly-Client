@@ -31,6 +31,7 @@ import AllFlashSales from "@/pages/home/flash-sale/AllFlashSales";
 import Checkout from "@/pages/dashboard/user/checkout/Checkout";
 import PaymentSuccess from "@/pages/dashboard/user/checkout/PaymentSuccess";
 import PaymentFailed from "@/pages/dashboard/user/checkout/PaymentFailed";
+import ProductsByCategory from "@/pages/home/products/productsByCategory/ProductsByCategory";
 
 const routes: RouteObject[] = [
   {
@@ -60,6 +61,10 @@ const routes: RouteObject[] = [
       {
         path: "all-flash-sales",
         element: <AllFlashSales />,
+      },
+      {
+        path: "category/:slug",
+        element: <ProductsByCategory />,
       },
     ],
   },
