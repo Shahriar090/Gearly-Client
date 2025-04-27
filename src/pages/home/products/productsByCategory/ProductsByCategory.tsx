@@ -55,6 +55,12 @@ const ProductsByCategory = () => {
   useEffect(() => {
     let updatedProducts = [...products];
 
+    // filter based on min and max price
+    updatedProducts = updatedProducts.filter(
+      (product) => product.price >= minPrice && product.price <= maxPrice
+    );
+
+    // sort
     if (sort === "low-to-high") {
       updatedProducts.sort((a, b) => a.price - b.price);
     } else if (sort === "high-to-low") {
@@ -64,7 +70,7 @@ const ProductsByCategory = () => {
     // limiting
     updatedProducts = updatedProducts.slice(0, limit);
     setFilteredProducts(updatedProducts);
-  }, [limit, products, sort]);
+  }, [limit, products, sort, maxPrice, minPrice]);
 
   if (loading) return <p>Loading...</p>;
 
