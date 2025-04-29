@@ -21,7 +21,7 @@ const AddReview = ({ open, onClose, product }: TAddReview) => {
   const handleSubmit = async () => {
     try {
       await api.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/reviews/create-review/${
+        `${import.meta.env.VITE_SERVER_LOCAL_URL}/reviews/create-review/${
           product._id
         }`,
         { review: { rating, comment } }

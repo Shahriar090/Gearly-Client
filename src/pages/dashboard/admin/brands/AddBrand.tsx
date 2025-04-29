@@ -45,7 +45,7 @@ const AddBrand = () => {
 
       const response = await api.post(
         `${
-          import.meta.env.VITE_SERVER_BASE_URL
+          import.meta.env.VITE_SERVER_LOCAL_URL
         }/sub-categories/create-sub-category`,
         formData,
         {

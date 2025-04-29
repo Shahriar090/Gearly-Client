@@ -14,7 +14,7 @@ const UserProfile = () => {
         setLoading(true);
 
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/users/profile`
+          `${import.meta.env.VITE_SERVER_LOCAL_URL}/users/profile`
         );
 
         setUser(response.data.data);

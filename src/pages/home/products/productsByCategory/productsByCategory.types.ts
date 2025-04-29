@@ -18,6 +18,16 @@ export type TProductsByCategory = {
     isDeleted: boolean;
     slug: string;
   };
+  subCategory: {
+    _id: string;
+    brandName: string;
+    categoryName: string;
+    description: string;
+    imageUrl: string;
+    category: string;
+    isDeleted: boolean;
+    slug: string;
+  };
   brand: string;
   images: string[];
   reviews?: string[];

@@ -40,7 +40,7 @@ const Products = () => {
       try {
         setLoading(true);
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/products`
+          `${import.meta.env.VITE_SERVER_LOCAL_URL}/products`
         );
         setProducts(response.data?.data?.products);
         console.log(response.data?.data?.products);
@@ -80,12 +80,18 @@ const Products = () => {
     );
   }
 
+  if (products.length === 0) {
+    return <p>No Product available</p>;
+  }
+
   // delete logic
   const handleProductDelete = async (productId: string) => {
     setLoading(true);
     try {
       const response = await api.delete(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/products/${productId}`
+        `${
+          import.meta.env.VITE_SERVER_LOCAL_URL
+        }/products/delete-product/${productId}`
       );
       if (response.status === 200) {
         setProducts((prevProducts) =>

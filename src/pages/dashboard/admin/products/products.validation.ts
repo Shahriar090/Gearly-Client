@@ -33,8 +33,9 @@ export const createProductValidationSchema = z.object({
   brand: z.string().trim().optional(),
   images: z.array(z.instanceof(File)).optional(),
   specifications: z
-    .record(z.union([z.string(), z.number(), z.boolean()]))
+    .record(z.record(z.union([z.string(), z.number(), z.boolean()])))
     .optional(),
+
   isFeatured: z.boolean().default(false).optional(),
   isDeleted: z.boolean().default(false).optional(),
 });

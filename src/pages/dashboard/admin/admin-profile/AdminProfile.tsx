@@ -64,7 +64,7 @@ const AdminProfile = () => {
 
     try {
       const response = await api.patch(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/users/profile-image`,
+        `${import.meta.env.VITE_SERVER_LOCAL_URL}/users/profile-image`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -115,7 +115,7 @@ const AdminProfile = () => {
       try {
         setLoading(true);
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/users/profile`
+          `${import.meta.env.VITE_SERVER_LOCAL_URL}/users/profile`
         );
         setUserData(response.data?.data);
         setError(null);

@@ -16,7 +16,7 @@ export const useAuthInitializer = () => {
         const { user, refreshToken } = parsedData;
 
         const response = await axios.post(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/auth/refresh-token`,
+          `${import.meta.env.VITE_SERVER_LOCAL_URL}/auth/refresh-token`,
           {},
           { withCredentials: true }
         );

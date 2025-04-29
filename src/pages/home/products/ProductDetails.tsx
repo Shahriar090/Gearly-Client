@@ -6,7 +6,7 @@ import Specifications from "./Specifications";
 import Descriptions from "./Descriptions";
 import { useEffect, useState } from "react";
 import useAxios from "@/hooks/useAxios";
-import { TProduct, TSpecifications } from "./products.types";
+import { TProduct } from "./products.types";
 import ProductHeader from "./ProductHeader";
 import Reviews from "./reviews/Reviews";
 
@@ -16,13 +16,15 @@ const ProductDetails = () => {
   const [error, setError] = useState<null | string>("");
   const { id } = useParams();
   const { api } = useAxios();
+
+  console.log(product);
   // fetch product data
   useEffect(() => {
     const fetchProductData = async () => {
       try {
         setLoading(true);
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/products/product/${id}`
+          `${import.meta.env.VITE_SERVER_LOCAL_URL}/products/product/${id}`
         );
         setProduct(response.data?.data);
       } catch (error) {
@@ -41,15 +43,15 @@ const ProductDetails = () => {
 
   // transforming specifications object into array of object before sending it to Specifications component. {}
 
-  const transformedSpecifications: TSpecifications[] = Object.entries(
-    product?.specifications || {}
-  ).map(([key, value], index) => {
-    return {
-      _id: String(index), //temporary unique key for each item.
-      name: key,
-      value: value,
-    };
-  });
+  // const transformedSpecifications: TSpecifications[] = Object.entries(
+  //   product?.specifications || {}
+  // ).map(([key, value], index) => {
+  //   return {
+  //     _id: String(index), //temporary unique key for each item.
+  //     name: key,
+  //     value: value,
+  //   };
+  // });
   return (
     <div className="wrapper bg-white">
       {/* header */}
@@ -62,7 +64,7 @@ const ProductDetails = () => {
         <DeliveryOptions />
       </div>
       <div className="grid grid-cols-1 gap-3 p-4">
-        <Specifications specifications={transformedSpecifications} />
+        {product && <Specifications specifications={product?.specifications} />}
         {product && <Descriptions description={product?.description} />}
         {product && <Reviews product={product} />}
       </div>

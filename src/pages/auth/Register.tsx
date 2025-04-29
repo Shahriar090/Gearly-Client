@@ -16,7 +16,7 @@ const Register = () => {
       setIsSubmitting(true);
 
       const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/users/create-user`,
+        `${import.meta.env.VITE_SERVER_LOCAL_URL}/users/create-user`,
         {
           user: userData,
         },

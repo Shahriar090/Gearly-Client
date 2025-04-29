@@ -6,34 +6,44 @@ import {
 } from "./products.validation";
 import { toast } from "sonner";
 import FormWrapper from "@/components/form/FormWrapper";
-import InputField from "@/components/form/InputField";
 import { AVAILABILITY_STATUS } from "./products.constants";
+import InputField from "@/components/form/InputField";
 
 const AddProduct = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [specifications, setSpecifications] = useState<[]>([]);
+  const [specGroups, setSpecGroups] = useState<
+    Array<{
+      groupName: string;
+      fields: Array<{
+        name: string;
+        type: "string" | "number" | "boolean";
+        required: boolean;
+        _id: string;
+      }>;
+    }>
+  >([]);
   const [subCategories, setSubCategories] = useState([]);
   const [categories, setCategories] = useState([]);
-
   const { api } = useAxios();
 
-  // Fetch categories
+  // fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/categories`
+          `${import.meta.env.VITE_SERVER_LOCAL_URL}/categories`
         );
         setCategories(response.data?.data || []);
       } catch (error) {
-        console.error(error, "Error fetching categories");
+        console.error(error, "Error Fetching Categories");
       }
     };
     fetchCategories();
   }, [api]);
 
-  // Fetch subcategories when category changes
+  // fetch sub categories (brands) when category changes
+
   useEffect(() => {
     if (!selectedCategory) return;
 
@@ -41,43 +51,61 @@ const AddProduct = () => {
       try {
         const response = await api.get(
           `${
-            import.meta.env.VITE_SERVER_BASE_URL
+            import.meta.env.VITE_SERVER_LOCAL_URL
           }/sub-categories/sub-category-by-category?category=${selectedCategory}`
         );
         setSubCategories(response.data?.data || []);
       } catch (error) {
-        console.error(error, "Error fetching sub categories");
+        console.error(error, "Error Fetching Sub Categories");
       }
     };
     fetchSubCategories();
   }, [api, selectedCategory]);
 
-  // Fetch specifications when category changes
+  // fetch specifications when category changes. specifications are in category model.
   useEffect(() => {
     if (!selectedCategory) return;
-
     const fetchSpecifications = async () => {
       try {
         const response = await api.get(
           `${
-            import.meta.env.VITE_SERVER_BASE_URL
+            import.meta.env.VITE_SERVER_LOCAL_URL
           }/categories/${selectedCategory}`
         );
-        setSpecifications(response.data?.data?.specifications || []);
+        console.log(response, "from add product");
+        setSpecGroups(response.data?.data?.specifications || []);
       } catch (error) {
-        console.error(error, "Error fetching specifications");
+        console.error(error, "Error Fetching Specifications");
       }
     };
     fetchSpecifications();
   }, [api, selectedCategory]);
 
-  // Handle form submission
+  // form submission
   const handleSubmit = async (productData: TAddProduct) => {
+    console.log(productData.specifications, "from add product");
     setIsSubmitting(true);
     try {
       const formData = new FormData();
 
-      // Append non-file data
+      // transforming specifications so that it match with back end structure.
+      const transformedSpecs = specGroups.map((group) => {
+        const groupSpecs = Object.entries(
+          productData.specifications?.[group.groupName] || {}
+        ).map(([key, value]) => ({
+          name: key,
+          value,
+        }));
+
+        return {
+          groupName: group.groupName,
+          fields: groupSpecs,
+        };
+      });
+
+      console.log(transformedSpecs, "spec after transformation");
+
+      // append non file data
       formData.append(
         "data",
         JSON.stringify({
@@ -95,32 +123,30 @@ const AddProduct = () => {
             brand: productData.brand,
             isFeatured: productData.isFeatured,
             isDeleted: productData.isDeleted,
-            specifications: productData.specifications,
+            specifications: transformedSpecs,
           },
         })
       );
 
-      // Append multiple files
+      // append images (multiple)
       const imagesArray = Array.isArray(productData.images)
         ? productData.images
         : Array.from(productData.images || []);
 
-      // Append images correctly
       imagesArray.forEach((file) => {
         formData.append("images", file);
       });
 
-      // Submit the form data
       const response = await api.post(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/products/create-product`,
+        `${import.meta.env.VITE_SERVER_LOCAL_URL}/products/create-product`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-
       console.log(response);
-      toast.success("Product Created Successfully!", {
+
+      toast.success("Product Created Successfully", {
         duration: 3000,
         position: "top-right",
       });
@@ -128,17 +154,13 @@ const AddProduct = () => {
     } catch (error: any) {
       console.error(error);
       toast.error(
-        error?.response?.data?.message || "Failed to create product",
-        {
-          duration: 3000,
-          position: "top-right",
-        }
+        error?.response?.data?.message || "Failed To Create Product",
+        { duration: 3000, position: "top-right" }
       );
     } finally {
       setIsSubmitting(false);
     }
   };
-
   return (
     <FormWrapper
       schema={createProductValidationSchema}
@@ -166,7 +188,7 @@ const AddProduct = () => {
       {(form) => {
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5 shadow-lg p-4">
-            {/* Category Selection */}
+            {/* category selection */}
             <InputField
               control={form.control}
               name="category"
@@ -177,16 +199,16 @@ const AddProduct = () => {
                 value: cat._id,
               }))}
               onChange={(value: string) => {
-                form.setValue("category", value); // Update the form value
-                setSelectedCategory(value); // Update the state
+                form.setValue("category", value);
+                setSelectedCategory(value);
               }}
             />
 
-            {/* Subcategory (Brand) Selection */}
+            {/* sub category (brand) selection */}
             <InputField
               control={form.control}
               name="subCategory"
-              label="Brand (Subcategory)"
+              label="Brand (Sub Category)"
               type="select"
               options={subCategories.map(
                 (sub: { brandName: string; _id: string }) => ({
@@ -196,81 +218,79 @@ const AddProduct = () => {
               )}
             />
 
-            {/* Dynamic Specifications */}
-            {Array.isArray(specifications) &&
-              specifications.map(
-                (spec: {
-                  _id: string;
-                  name: string;
-                  required: boolean;
-                  type: "text" | "number" | "boolean";
-                }) => (
-                  <InputField
-                    key={spec._id}
-                    control={form.control}
-                    name={`specifications.${spec.name}`}
-                    label={spec.name}
-                    type={spec.type === "boolean" ? "checkbox" : spec.type}
-                    placeholder={
-                      spec.type === "boolean" ? undefined : `Enter ${spec.name}`
-                    }
-                    required={spec.required}
-                  />
-                )
-              )}
+            {/* grouped specifications */}
+            {specGroups.map((group) => (
+              <div
+                key={group.groupName}
+                className="col-span-full border p-4 rounded-lg"
+              >
+                <h3 className="font-medium text-lg mb-4">{group.groupName}</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {group.fields.map((field) => (
+                    <InputField
+                      key={field._id}
+                      control={form.control}
+                      name={`specifications.${group.groupName}.${field.name}`}
+                      label={field.name}
+                      type={
+                        field.type === "boolean"
+                          ? "checkbox"
+                          : field.type === "number"
+                          ? "number"
+                          : "text"
+                      }
+                      placeholder={
+                        field.type === "boolean"
+                          ? undefined
+                          : `Enter ${field.name}`
+                      }
+                      required={field.required}
+                    />
+                  ))}
+                </div>
+              </div>
+            ))}
 
-            {/* Model Name */}
+            {/* other form fields */}
             <InputField
               control={form.control}
               name="modelName"
               label="Model Name"
-              placeholder="Enter model name"
+              placeholder="Enter Model Name"
             />
-            {/* Brand Name */}
             <InputField
               control={form.control}
               name="brandName"
               label="Brand Name"
-              placeholder="Enter brand name"
+              placeholder="Enter Brand Name"
             />
-
-            {/* Description */}
             <InputField
               control={form.control}
               name="description"
               label="Description"
-              type="textarea"
-              placeholder="Enter description"
+              placeholder="Enter A Description About This Product"
             />
-
-            {/* Price */}
             <InputField
               control={form.control}
               name="price"
               label="Price"
               type="number"
-              placeholder="Enter price"
+              placeholder="Enter Price"
             />
-
-            {/* Discount */}
             <InputField
               control={form.control}
               name="discount"
               label="Discount"
               type="number"
-              placeholder="Enter discount amount (5, 10, 20, etc.)"
+              placeholder="Enter Discount Amount (5, 10, 15, 20, etc.)"
             />
-
-            {/* Stock */}
             <InputField
               control={form.control}
               name="stock"
               label="Stock"
               type="number"
-              placeholder="Enter stock"
+              placeholder="Enter Stock"
             />
-
-            {/* Availability Status */}
             <InputField
               control={form.control}
               name="availabilityStatus"
@@ -281,33 +301,27 @@ const AddProduct = () => {
                 value: status,
               }))}
             />
-
-            {/* Images */}
             <InputField
               control={form.control}
               name="images"
-              label="Images"
+              label="Images (Multiple)"
               type="file"
               multipleFiles={true}
               onChange={(files: File[]) => {
-                form.setValue("images", files); // Directly set the files array
+                form.setValue("images", files);
               }}
             />
-
-            {/* Tags */}
             <InputField
               control={form.control}
               name="tags"
               label="Tags"
               type="text"
-              placeholder="Enter tags (comma-separated)"
+              placeholder="Enter Tags (Comma-Separated)"
               onChange={(e) => {
                 const value = e.target.value;
-                form.setValue("tags", value); // Store as comma-separated string
+                form.setValue("tags", value);
               }}
             />
-
-            {/* Is Featured */}
             <InputField
               control={form.control}
               name="isFeatured"

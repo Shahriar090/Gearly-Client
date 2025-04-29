@@ -22,19 +22,22 @@ export type TReview = {
   updatedAt: string;
 };
 
-export type TSpecifications = {
-  _id: string;
+export type TSpecificationsField = {
   name: string;
-  value: string | number | boolean;
+  value: "string" | "number" | "boolean";
 };
 
+export type TSpecificationsGroup = {
+  groupName: string;
+  fields: TSpecificationsField[];
+};
 export type TCategory = {
   _id: string;
   name: string;
   description: string;
   imageUrl: string;
   status: string;
-  specifications: TSpecifications[];
+  specifications: TSpecificationsGroup[];
 
   slug: string;
 };
@@ -46,6 +49,7 @@ export type TSubCategory = {
   description: string;
   imageUrl: string;
   category: string; // category id reference
+  isDeleted: boolean;
   slug: string;
 };
 
@@ -56,7 +60,7 @@ export type TProduct = {
   description: string;
   price: number;
   discount: number;
-  specifications: Record<string, string | number | boolean>; // flexible shape
+  specifications: TSpecificationsGroup[];
   tags: string[];
   availabilityStatus: string;
   stock: number;
