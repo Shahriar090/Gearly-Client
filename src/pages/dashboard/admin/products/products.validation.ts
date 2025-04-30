@@ -32,9 +32,17 @@ export const createProductValidationSchema = z.object({
   subCategory: z.string().optional(),
   brand: z.string().trim().optional(),
   images: z.array(z.instanceof(File)).optional(),
-  specifications: z
-    .record(z.record(z.union([z.string(), z.number(), z.boolean()])))
-    .optional(),
+  specifications: z.array(
+    z.object({
+      groupName: z.string().optional(),
+      fields: z.array(
+        z.object({
+          name: z.string().optional(),
+          value: z.union([z.string(), z.number(), z.boolean()]),
+        })
+      ),
+    })
+  ),
 
   isFeatured: z.boolean().default(false).optional(),
   isDeleted: z.boolean().default(false).optional(),

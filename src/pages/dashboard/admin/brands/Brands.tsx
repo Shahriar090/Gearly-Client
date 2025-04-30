@@ -40,7 +40,7 @@ const Brands = () => {
   useEffect(() => {
     const fetchBrands = async () => {
       const response = await api.get(
-        `${import.meta.env.VITE_SERVER_LOCAL_URL}/sub-categories`
+        `${import.meta.env.VITE_SERVER_BASE_URL}/sub-categories`
       );
       console.log(response.data?.data?.result);
       setBrands(response.data?.data?.result);
@@ -54,7 +54,7 @@ const Brands = () => {
       setLoading(true);
 
       const response = await api.delete(
-        `${import.meta.env.VITE_SERVER_LOCAL_URL}/sub-categories/${id}`
+        `${import.meta.env.VITE_SERVER_BASE_URL}/sub-categories/${id}`
       );
 
       if (response.status === 200) {

@@ -24,7 +24,7 @@ const CategoriesList = () => {
     const fetchCategories = async () => {
       try {
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_LOCAL_URL}/categories`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/categories`
         );
         setCategories(response.data?.data);
       } catch (error) {
@@ -46,7 +46,7 @@ const CategoriesList = () => {
     setDeletingId(categoryId);
     try {
       await api.delete(
-        `${import.meta.env.VITE_SERVER_LOCAL_URL}/categories/${categoryId}`
+        `${import.meta.env.VITE_SERVER_BASE_URL}/categories/${categoryId}`
       );
       setCategories(
         categories.filter((category) => category._id !== categoryId)

@@ -14,7 +14,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(true);
     try {
       const response = await api.get(
-        `${import.meta.env.VITE_SERVER_LOCAL_URL}/cart/get-cart`
+        `${import.meta.env.VITE_SERVER_BASE_URL}/cart/get-cart`
       );
       setCart(response.data?.data);
     } catch (error) {
@@ -32,7 +32,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const addToCart = async (productId: string, quantity: number = 1) => {
     try {
       const response = await api.post(
-        `${import.meta.env.VITE_SERVER_LOCAL_URL}/cart/add-to-cart`,
+        `${import.meta.env.VITE_SERVER_BASE_URL}/cart/add-to-cart`,
         {
           cart: {
             items: [{ product: productId, quantity: quantity }],
@@ -53,7 +53,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const removeFromCart = async (productId: string) => {
     try {
       const response = await api.delete(
-        `${import.meta.env.VITE_SERVER_LOCAL_URL}/cart/remove-item/${productId}`
+        `${import.meta.env.VITE_SERVER_BASE_URL}/cart/remove-item/${productId}`
       );
       console.log(response);
       setCart(response.data?.data);
@@ -69,9 +69,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const updateCartQuantity = async (productId: string, quantity: number) => {
     try {
       const response = await api.patch(
-        `${
-          import.meta.env.VITE_SERVER_LOCAL_URL
-        }/cart/update-item/${productId}`,
+        `${import.meta.env.VITE_SERVER_BASE_URL}/cart/update-item/${productId}`,
         { quantity }
       );
       setCart(response.data?.data);
@@ -87,7 +85,7 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const clearCart = async () => {
     try {
       await api.delete(
-        `${import.meta.env.VITE_SERVER_LOCAL_URL}/cart/clear-cart`
+        `${import.meta.env.VITE_SERVER_BASE_URL}/cart/clear-cart`
       );
       setCart(null);
     } catch (error) {

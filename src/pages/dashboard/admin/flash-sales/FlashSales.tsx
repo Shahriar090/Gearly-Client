@@ -31,7 +31,7 @@ const FlashSales = () => {
         setLoading((prev) => ({ ...prev, products: true }));
 
         const response = await api.get<{ data: { products: TProduct[] } }>(
-          `${import.meta.env.VITE_SERVER_LOCAL_URL}/products`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/products`
         );
         setProducts(response.data?.data?.products || []);
       } catch (error) {
@@ -50,7 +50,7 @@ const FlashSales = () => {
       setLoading((prev) => ({ ...prev, flashSales: true }));
 
       const response = await api.get<{ data: TFlashSaleItem[] }>(
-        `${import.meta.env.VITE_SERVER_LOCAL_URL}/flash-sales`
+        `${import.meta.env.VITE_SERVER_BASE_URL}/flash-sales`
       );
       setFlashSales(response.data?.data || []);
     } catch (error) {
@@ -75,7 +75,7 @@ const FlashSales = () => {
 
       await api.post(
         `${
-          import.meta.env.VITE_SERVER_LOCAL_URL
+          import.meta.env.VITE_SERVER_BASE_URL
         }/flash-sales/create-flash-sales`,
         newSale
       );
@@ -98,7 +98,7 @@ const FlashSales = () => {
       setLoading((prev) => ({ ...prev, flashSales: true }));
 
       await api.delete(
-        `${import.meta.env.VITE_SERVER_LOCAL_URL}/flash-sales/delete/${id}`
+        `${import.meta.env.VITE_SERVER_BASE_URL}/flash-sales/delete/${id}`
       );
 
       // refresh the list after deletion

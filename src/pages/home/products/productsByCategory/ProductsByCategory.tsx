@@ -39,7 +39,7 @@ const ProductsByCategory = () => {
         setLoading(true);
         setError(null);
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_LOCAL_URL}/products/category/${slug}`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/products/category/${slug}`
         );
         setProducts(response.data?.data);
       } catch (error) {
@@ -62,7 +62,7 @@ const ProductsByCategory = () => {
         setLoading(true);
         setError(null);
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_LOCAL_URL}/sub-categories`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/sub-categories`
         );
         console.log(response.data?.data.result);
         setBrands(response.data?.data);

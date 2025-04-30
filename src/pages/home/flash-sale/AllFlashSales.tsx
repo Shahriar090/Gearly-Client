@@ -40,7 +40,7 @@ const AllFlashSales = () => {
       try {
         setLoading(true);
         const response = await api.get<{ data: TFlashSaleItem[] }>(
-          `${import.meta.env.VITE_SERVER_LOCAL_URL}/flash-sales`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/flash-sales`
         );
         setFlashSales(response.data?.data || []);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

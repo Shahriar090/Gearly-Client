@@ -40,7 +40,7 @@ const Products = () => {
       try {
         setLoading(true);
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_LOCAL_URL}/products`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/products`
         );
         setProducts(response.data?.data?.products);
         console.log(response.data?.data?.products);
@@ -90,7 +90,7 @@ const Products = () => {
     try {
       const response = await api.delete(
         `${
-          import.meta.env.VITE_SERVER_LOCAL_URL
+          import.meta.env.VITE_SERVER_BASE_URL
         }/products/delete-product/${productId}`
       );
       if (response.status === 200) {

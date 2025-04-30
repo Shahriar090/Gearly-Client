@@ -19,7 +19,7 @@ const TopCategories = () => {
 
       try {
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_LOCAL_URL}/categories`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/categories`
         );
         setCategories(response.data?.data);
       } catch (error) {

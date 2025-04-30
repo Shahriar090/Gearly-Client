@@ -23,16 +23,17 @@ const AddProduct = () => {
       }>;
     }>
   >([]);
+
   const [subCategories, setSubCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const { api } = useAxios();
-
+  console.log(specGroups, "spec groups");
   // fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
       try {
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_LOCAL_URL}/categories`
+          `${import.meta.env.VITE_SERVER_BASE_URL}/categories`
         );
         setCategories(response.data?.data || []);
       } catch (error) {
@@ -51,7 +52,7 @@ const AddProduct = () => {
       try {
         const response = await api.get(
           `${
-            import.meta.env.VITE_SERVER_LOCAL_URL
+            import.meta.env.VITE_SERVER_BASE_URL
           }/sub-categories/sub-category-by-category?category=${selectedCategory}`
         );
         setSubCategories(response.data?.data || []);
@@ -69,10 +70,10 @@ const AddProduct = () => {
       try {
         const response = await api.get(
           `${
-            import.meta.env.VITE_SERVER_LOCAL_URL
+            import.meta.env.VITE_SERVER_BASE_URL
           }/categories/${selectedCategory}`
         );
-        console.log(response, "from add product");
+        console.log(response.data?.data?.specifications, "from add product");
         setSpecGroups(response.data?.data?.specifications || []);
       } catch (error) {
         console.error(error, "Error Fetching Specifications");
@@ -83,27 +84,20 @@ const AddProduct = () => {
 
   // form submission
   const handleSubmit = async (productData: TAddProduct) => {
-    console.log(productData.specifications, "from add product");
+    console.log("Form data before submission:", productData.specifications); // Add this
+
     setIsSubmitting(true);
     try {
+      const mergedSpecifications = specGroups.map((group, groupIndex) => ({
+        groupName: group.groupName,
+        fields: group.fields.map((field, fieldIndex) => ({
+          ...field,
+          value:
+            productData.specifications?.[groupIndex]?.fields?.[fieldIndex]
+              ?.value || "",
+        })),
+      }));
       const formData = new FormData();
-
-      // transforming specifications so that it match with back end structure.
-      const transformedSpecs = specGroups.map((group) => {
-        const groupSpecs = Object.entries(
-          productData.specifications?.[group.groupName] || {}
-        ).map(([key, value]) => ({
-          name: key,
-          value,
-        }));
-
-        return {
-          groupName: group.groupName,
-          fields: groupSpecs,
-        };
-      });
-
-      console.log(transformedSpecs, "spec after transformation");
 
       // append non file data
       formData.append(
@@ -123,7 +117,7 @@ const AddProduct = () => {
             brand: productData.brand,
             isFeatured: productData.isFeatured,
             isDeleted: productData.isDeleted,
-            specifications: transformedSpecs,
+            specifications: mergedSpecifications,
           },
         })
       );
@@ -138,7 +132,7 @@ const AddProduct = () => {
       });
 
       const response = await api.post(
-        `${import.meta.env.VITE_SERVER_LOCAL_URL}/products/create-product`,
+        `${import.meta.env.VITE_SERVER_BASE_URL}/products/create-product`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
@@ -179,13 +173,21 @@ const AddProduct = () => {
         images: [],
         isFeatured: false,
         isDeleted: false,
-        specifications: {},
+        specifications: specGroups.map((group) => ({
+          groupName: group.groupName,
+          fields: group.fields.map((field) => ({
+            name: field.name, // Using field.name
+            type: field.type, // Using field.type
+            value: "", // Default empty value for fields
+          })),
+        })),
       }}
       onSubmit={handleSubmit}
       submitButtonLabel={isSubmitting ? "Please Wait..." : "Add Product"}
       submitButtonIsDisabled={isSubmitting}
     >
       {(form) => {
+        console.error("Validation errors:", form.formState.errors);
         return (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-5 shadow-lg p-4">
             {/* category selection */}
@@ -219,18 +221,18 @@ const AddProduct = () => {
             />
 
             {/* grouped specifications */}
-            {specGroups.map((group) => (
+            {specGroups.map((group, groupIndex) => (
               <div
                 key={group.groupName}
                 className="col-span-full border p-4 rounded-lg"
               >
                 <h3 className="font-medium text-lg mb-4">{group.groupName}</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {group.fields.map((field) => (
+                  {group.fields.map((field, fieldIndex) => (
                     <InputField
                       key={field._id}
                       control={form.control}
-                      name={`specifications.${group.groupName}.${field.name}`}
+                      name={`specifications.${groupIndex}.fields.${fieldIndex}.value`}
                       label={field.name}
                       type={
                         field.type === "boolean"
