@@ -4,6 +4,8 @@ import { TProduct } from "../products.types";
 import useAxios from "@/hooks/useAxios";
 import ProductsByCategoryList from "./ProductsByCategoryList";
 import ProductCategoryHeader from "./ProductCategoryHeader";
+import PriceRange from "./productsByCategorySidebar/PriceRange";
+import { debounce } from "lodash";
 
 // steps:
 // 1 - Fetch products by category using slug (smart-phones, laptops)
@@ -26,10 +28,49 @@ const ProductsByCategory = () => {
     | "price-high-to-low"
     | "default";
 
+  const minPriceFromQuery = Number(queryParams.get("minPrice") || 0);
+  const maxPriceFromQuery = Number(queryParams.get("maxPrice") || 3000000);
+
   const [limit, setLimit] = useState<number>(limitFromQuery);
   const [sort, setSort] = useState<
     "price-low-to-high" | "price-high-to-low" | "default"
   >(sortFromQuery);
+  const [minPrice, setMinPrice] = useState<number>(minPriceFromQuery);
+  const [maxPrice, setMaxPrice] = useState<number>(maxPriceFromQuery);
+
+  // Temporary states to improve UX and prevent re-rendering on every keystroke in price range inputs.
+  const [tempMinPrice, setTempMinPrice] = useState<number>(minPriceFromQuery);
+  const [tempMaxPrice, setTempMaxPrice] = useState<number>(maxPriceFromQuery);
+
+  // Debounces price filter input to avoid API calls on every keystroke.
+  useEffect(() => {
+    const debounceApplyPrice = debounce(() => {
+      // prevent min > max
+      if (tempMinPrice >= tempMaxPrice) return;
+
+      setMinPrice(tempMinPrice);
+      setMaxPrice(tempMaxPrice);
+
+      const newQueryParams = new URLSearchParams(location.search);
+      newQueryParams.set("minPrice", tempMinPrice.toString());
+      newQueryParams.set("maxPrice", tempMaxPrice.toString());
+      navigate(`${location.pathname}?${newQueryParams.toString()}`, {
+        replace: true,
+      });
+    }, 3000);
+    debounceApplyPrice();
+
+    // cleanup
+    return () => debounceApplyPrice.cancel();
+  }, [
+    location.search,
+    location.pathname,
+    navigate,
+    tempMaxPrice,
+    tempMinPrice,
+  ]);
+
+  // fetch products by category
 
   useEffect(() => {
     const fetchProductsByCategory = async () => {
@@ -37,6 +78,7 @@ const ProductsByCategory = () => {
       setError(null);
       try {
         // aligning with back end logic.Because it is expecting price and -price for ascending and descending
+
         const sortQuery =
           sort === "price-low-to-high"
             ? "price"
@@ -47,6 +89,8 @@ const ProductsByCategory = () => {
           limit,
           sort: sortQuery,
           category: slug,
+          "price[gte]": minPrice,
+          "price[lte]": maxPrice,
         };
         const response = await api.get(
           `${import.meta.env.VITE_SERVER_LOCAL_URL}/products/category/${slug}`,
@@ -56,8 +100,11 @@ const ProductsByCategory = () => {
         console.log(response);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
-        setError(error);
-        console.error("Error Fetching Products By Category");
+        setError(
+          (error && error.message) ||
+            "Error Fetching Products.! Please Try Again"
+        );
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -66,8 +113,9 @@ const ProductsByCategory = () => {
       return;
     }
     fetchProductsByCategory();
-  }, [api, slug, limit, sort]);
+  }, [api, slug, limit, sort, maxPrice, minPrice]);
 
+  // limit change handler
   const handleLimitChange = (newLimit: number) => {
     setLimit(newLimit);
     const newQueryParams = new URLSearchParams(location.search);
@@ -75,6 +123,7 @@ const ProductsByCategory = () => {
     navigate(`${location.pathname}?${newQueryParams.toString()}`);
   };
 
+  // sorting handler
   const handleSortChange = (
     newSort: "price-low-to-high" | "price-high-to-low" | "default"
   ) => {
@@ -88,14 +137,28 @@ const ProductsByCategory = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="main-container">
-      <ProductCategoryHeader
-        products={products}
-        onLimitChange={handleLimitChange}
-        onSortChange={handleSortChange}
-        currentSort={sort}
-      />
-      <ProductsByCategoryList products={products} />
+    <div className="main-container flex items-start gap-4">
+      <div className="sidebar flex-1">
+        <PriceRange
+          minPrice={tempMinPrice}
+          maxPrice={tempMaxPrice}
+          setMinPrice={setTempMinPrice}
+          setMaxPrice={setTempMaxPrice}
+        />
+      </div>
+      <div className="products flex-[4]">
+        <ProductCategoryHeader
+          products={products}
+          onLimitChange={handleLimitChange}
+          onSortChange={handleSortChange}
+          currentSort={sort}
+        />
+        {!loading && products.length === 0 ? (
+          <p>No Products Found.! Please Search For Other Products</p>
+        ) : (
+          <ProductsByCategoryList products={products} />
+        )}
+      </div>
     </div>
   );
 };
