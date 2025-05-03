@@ -93,7 +93,7 @@ const ProductsByCategory = () => {
           "price[lte]": maxPrice,
         };
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_LOCAL_URL}/products/category/${slug}`,
+          `${import.meta.env.VITE_SERVER_BASE_URL}/products/category/${slug}`,
           { params }
         );
         setProducts(response.data?.data);
