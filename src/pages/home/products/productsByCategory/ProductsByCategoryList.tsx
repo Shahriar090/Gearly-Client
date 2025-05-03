@@ -1,14 +1,11 @@
 import { Card } from "@/components/ui/card";
-import { TProductsByCategory } from "./productsByCategory.types";
+
 import { Eye, Heart } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router";
+import { TProduct } from "../products.types";
 
-const ProductsByCategoryList = ({
-  products,
-}: {
-  products: TProductsByCategory[];
-}) => {
+const ProductsByCategoryList = ({ products }: { products: TProduct[] }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
       {products.map((product) => (

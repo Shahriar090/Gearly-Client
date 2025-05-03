@@ -1,142 +1,101 @@
-import { useParams } from "react-router";
-import ProductCategoryHeader from "./ProductCategoryHeader";
-import PriceRange from "./productsByCategorySidebar/PriceRange";
-import Availability from "./productsByCategorySidebar/Availability";
-import Brands from "./productsByCategorySidebar/Brands";
 import { useEffect, useState } from "react";
+import { useLocation, useNavigate, useParams } from "react-router";
+import { TProduct } from "../products.types";
 import useAxios from "@/hooks/useAxios";
-import { TProductsByCategory } from "./productsByCategory.types";
 import ProductsByCategoryList from "./ProductsByCategoryList";
-import { TSubCategory } from "../products.types";
+import ProductCategoryHeader from "./ProductCategoryHeader";
+
+// steps:
+// 1 - Fetch products by category using slug (smart-phones, laptops)
+// 2 - Fetch brands by its category (samsung, apple => smart-phones)
+// 3 - Implement multi level filtering logic with sorting, limiting etc.
 
 const ProductsByCategory = () => {
-  const [loading, setLoading] = useState(false);
-  const [products, setProducts] = useState<TProductsByCategory[] | []>([]);
-  const [filteredProducts, setFilteredProducts] = useState<
-    TProductsByCategory[]
-  >([]);
+  const [products, setProducts] = useState<TProduct[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const { api } = useAxios();
   const { slug } = useParams();
+  const { api } = useAxios();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // states for controlling how may products to show by user choice and sort products based on price
-  const [limit, setLimit] = useState<number>(20);
-  const [sort, setSort] = useState<"low-to-high" | "high-to-low" | "default">(
-    "default"
-  );
+  const queryParams = new URLSearchParams(location.search);
+  const limitFromQuery = Number(queryParams.get("limit") || 20);
+  const sortFromQuery = (queryParams.get("sort") || "default") as
+    | "price-low-to-high"
+    | "price-high-to-low"
+    | "default";
 
-  // states for set price using price range component
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(3000000);
-  // states for set brands
-  const [brands, setBrands] = useState<TSubCategory[] | []>([]);
-  const [selectedBrand, setSelectedBrand] = useState<string>("");
+  const [limit, setLimit] = useState<number>(limitFromQuery);
+  const [sort, setSort] = useState<
+    "price-low-to-high" | "price-high-to-low" | "default"
+  >(sortFromQuery);
 
-  // fetch products
   useEffect(() => {
     const fetchProductsByCategory = async () => {
+      setLoading(true);
+      setError(null);
       try {
-        setLoading(true);
-        setError(null);
+        // aligning with back end logic.Because it is expecting price and -price for ascending and descending
+        const sortQuery =
+          sort === "price-low-to-high"
+            ? "price"
+            : sort === "price-high-to-low"
+            ? "-price"
+            : "createdAt";
+        const params = {
+          limit,
+          sort: sortQuery,
+          category: slug,
+        };
         const response = await api.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/products/category/${slug}`
+          `${import.meta.env.VITE_SERVER_LOCAL_URL}/products/category/${slug}`,
+          { params }
         );
         setProducts(response.data?.data);
-      } catch (error) {
-        setError("Error Fetching Products");
-        console.error(error);
+        console.log(response);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        setError(error);
+        console.error("Error Fetching Products By Category");
       } finally {
         setLoading(false);
       }
     };
-
-    if (slug) {
-      fetchProductsByCategory();
+    if (!slug) {
+      return;
     }
-  }, [api, slug]);
+    fetchProductsByCategory();
+  }, [api, slug, limit, sort]);
 
-  // fetch brands
-  useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        const response = await api.get(
-          `${import.meta.env.VITE_SERVER_BASE_URL}/sub-categories`
-        );
-        console.log(response.data?.data.result);
-        setBrands(response.data?.data);
-      } catch (error) {
-        setError("Error Fetching Brands");
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBrands();
-  }, [api]);
+  const handleLimitChange = (newLimit: number) => {
+    setLimit(newLimit);
+    const newQueryParams = new URLSearchParams(location.search);
+    newQueryParams.set("limit", newLimit.toString());
+    navigate(`${location.pathname}?${newQueryParams.toString()}`);
+  };
 
-  // whenever products, limit and sort change, updated filtered products
-  useEffect(() => {
-    let updatedProducts = [...products];
-
-    // filter based on min and max price
-    updatedProducts = updatedProducts.filter(
-      (product) => product.price >= minPrice && product.price <= maxPrice
-    );
-
-    // filter products based on selected brand
-    if (selectedBrand) {
-      updatedProducts = updatedProducts.filter((product) => {
-        console.log(product, "selected");
-        return product.brand === selectedBrand;
-      });
-    }
-    if (sort === "low-to-high") {
-      // sort
-      updatedProducts.sort((a, b) => a.price - b.price);
-    } else if (sort === "high-to-low") {
-      updatedProducts.sort((a, b) => b.price - a.price);
-    }
-
-    // limiting
-    updatedProducts = updatedProducts.slice(0, limit);
-    setFilteredProducts(updatedProducts);
-  }, [limit, products, sort, maxPrice, minPrice, selectedBrand]);
+  const handleSortChange = (
+    newSort: "price-low-to-high" | "price-high-to-low" | "default"
+  ) => {
+    setSort(newSort);
+    const newQueryParams = new URLSearchParams(location.search);
+    newQueryParams.set("sort", newSort);
+    navigate(`${location.pathname}?${newQueryParams.toString()}`);
+  };
 
   if (loading) return <p>Loading...</p>;
-
   if (error) return <p>{error}</p>;
 
-  if (products.length === 0) return <p>No Products Found In This Category</p>;
-
   return (
-    <div className="flex items-start gap-4">
-      {/* sidebar items */}
-      <div className="flex-1 space-y-4">
-        <PriceRange
-          minPrice={minPrice}
-          maxPrice={maxPrice}
-          setMinPrice={setMinPrice}
-          setMaxPrice={setMaxPrice}
-        />
-        <Availability />
-        <Brands
-          brands={brands}
-          selectedBrand={selectedBrand}
-          setSelectedBrand={setSelectedBrand}
-        />
-      </div>
-
-      {/* contents */}
-      <div className="flex-[4]">
-        <ProductCategoryHeader
-          products={products}
-          onLimitChange={setLimit}
-          onSortChange={setSort}
-        />
-        <ProductsByCategoryList products={filteredProducts} />
-      </div>
+    <div className="main-container">
+      <ProductCategoryHeader
+        products={products}
+        onLimitChange={handleLimitChange}
+        onSortChange={handleSortChange}
+        currentSort={sort}
+      />
+      <ProductsByCategoryList products={products} />
     </div>
   );
 };

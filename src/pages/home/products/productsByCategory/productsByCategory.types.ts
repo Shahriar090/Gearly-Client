@@ -44,3 +44,32 @@ export type TPriceRange = {
   setMinPrice: (value: number) => void;
   setMaxPrice: (value: number) => void;
 };
+
+// Brands types
+export type TBrandItem = {
+  _id: string;
+  brandName: string;
+  category: string;
+  categoryName: string;
+  createdAt: string;
+  description: string;
+  imageUrl: string;
+  isDeleted: boolean;
+  slug: string;
+};
+
+export type TBrandResponse = {
+  meta: {
+    limit: number;
+    page: number;
+    total: number;
+    totalPage: number;
+  };
+  result: TBrandItem[];
+};
+
+export type TBrandProps = {
+  brands: TBrandResponse;
+  selectedBrand: string;
+  setSelectedBrand: (value: string) => void;
+};

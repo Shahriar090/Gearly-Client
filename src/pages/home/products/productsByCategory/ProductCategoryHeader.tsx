@@ -5,16 +5,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TProductsByCategory } from "./productsByCategory.types";
+
+import { TProduct } from "../products.types";
 
 const ProductCategoryHeader = ({
   products,
   onLimitChange,
   onSortChange,
+  currentSort,
 }: {
-  products: TProductsByCategory[];
+  products: TProduct[];
   onLimitChange: (limit: number) => void;
-  onSortChange: (sort: "low-to-high" | "high-to-low" | "default") => void;
+  onSortChange: (
+    sort: "price-low-to-high" | "price-high-to-low" | "default"
+  ) => void;
+  currentSort: "price-low-to-high" | "price-high-to-low" | "default";
 }) => {
   const categoryName =
     products.length > 0 ? products[0].category.name : "Products";
@@ -27,11 +32,15 @@ const ProductCategoryHeader = ({
 
   const priceSortOptions = [
     {
-      value: "low-to-high",
+      value: "default",
+      label: "Default",
+    },
+    {
+      value: "price-low-to-high",
       label: "Price (Low To High)",
     },
     {
-      value: "high-to-low",
+      value: "price-high-to-low",
       label: "Price(High To Low)",
     },
   ];
@@ -56,8 +65,9 @@ const ProductCategoryHeader = ({
         </Select>
         {/* price sorting */}
         <Select
+          value={currentSort}
           onValueChange={(value) =>
-            onSortChange(value as "low-to-high" | "high-to-low")
+            onSortChange(value as "price-low-to-high" | "price-high-to-low")
           }
         >
           <SelectTrigger className="w-[100px]">
