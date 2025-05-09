@@ -17,6 +17,14 @@ const specificationGroupSchema = z.object({
     .min(1, "At least one specification field is required"),
 });
 
+// fields for filtering
+const filteringFieldsSchema = z.object({
+  groupName: z.string().min(1, "Group name is required for filtering group"),
+  value: z.array(
+    z.string().min(1, "You must add at least one value for filtering")
+  ),
+});
+
 // Define the main schema for creating a category
 const createCategoryValidationSchema = z.object({
   name: z.string().min(1, "Category name is required"),
@@ -28,6 +36,7 @@ const createCategoryValidationSchema = z.object({
     })
     .optional(),
   specifications: z.array(specificationGroupSchema).optional(),
+  filteringFields: z.array(filteringFieldsSchema).optional(),
 });
 
 export type TAddCategory = z.infer<typeof createCategoryValidationSchema>;

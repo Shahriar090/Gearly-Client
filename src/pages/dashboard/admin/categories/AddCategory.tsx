@@ -41,6 +41,12 @@ const AddCategory = () => {
         fields: [{ name: "", type: "string" as const, required: false }],
       },
     ],
+    filteringFields: [
+      {
+        groupName: "Add Group Name",
+        value: [],
+      },
+    ],
   };
 
   // submit handler
@@ -56,6 +62,7 @@ const AddCategory = () => {
             name: data.name,
             description: data.description,
             specifications: data.specifications,
+            filteringFields: data.filteringFields,
           },
         })
       );
@@ -97,9 +104,13 @@ const AddCategory = () => {
       submitButtonIsDisabled={isSubmitting}
     >
       {(form) => {
-        // get curren specifications from form
+        // get current specifications from form
         const specifications =
           form.watch("specifications") || defaultValues.specifications;
+
+        // get current filtering fields from form
+        const filteringFields =
+          form.watch("filteringFields") || defaultValues.filteringFields;
 
         // Since the form instance is only available inside the render function of FormWrapper, we define these handler functions here to access and update form values directly.
         const handleAddSpecifications = (groupIndex: number) => {
@@ -136,6 +147,55 @@ const AddCategory = () => {
           form.setValue("specifications", updatedSpecifications);
         };
 
+        // filtering fields handler logic
+        const handleAddFilteringFieldGroup = () => {
+          form.setValue("filteringFields", [
+            ...filteringFields,
+            {
+              groupName: "New Group",
+              value: [""],
+            },
+          ]);
+        };
+
+        // group name change handler
+        const handleFilteringGroupNamChange = (
+          groupIndex: number,
+          value: string
+        ) => {
+          const updated = [...filteringFields];
+          updated[groupIndex].groupName = value;
+          form.setValue("filteringFields", updated);
+        };
+
+        // add value handler
+        const handleAddFilterValue = (groupIndex: number) => {
+          const updated = [...filteringFields];
+          updated[groupIndex].value.push("");
+          form.setValue("filteringFields", updated);
+        };
+
+        // remove value handler
+        const handleRemoveFilterValue = (
+          groupIndex: number,
+          valueIndex: number
+        ) => {
+          const updated = [...filteringFields];
+          updated[groupIndex].value.splice(valueIndex, 1);
+          form.setValue("filteringFields", updated);
+        };
+
+        // value change handler
+        const handleFilterValueChange = (
+          groupIndex: number,
+          valueIndex: number,
+          newValue: string
+        ) => {
+          const updated = [...filteringFields];
+          // value = [a,b,c] (itself an array)
+          updated[groupIndex].value[valueIndex] = newValue;
+          form.setValue("filteringFields", updated);
+        };
         return (
           <div className="space-y-6">
             {/* image upload section */}
@@ -290,6 +350,78 @@ const AddCategory = () => {
                   Add New Group
                 </Button>
               </div>
+            </div>
+
+            {/* fields for filtering */}
+            <div className="shadow-md border p-4 rounded-lg">
+              <h3 className="text-lg font-medium mb-4">
+                Add Filtering Fields For This Category
+              </h3>
+              {filteringFields.map((group, groupIndex) => (
+                <div key={groupIndex} className="border p-4 rounded mb-4">
+                  <div className="mb-2">
+                    <Label>Group Name</Label>
+                    <Input
+                      type="text"
+                      value={group.groupName}
+                      onChange={(e) =>
+                        handleFilteringGroupNamChange(
+                          groupIndex,
+                          e.target.value
+                        )
+                      }
+                    />
+                  </div>
+
+                  {/* values */}
+                  {group.value.map((val, valIndex) => (
+                    <div
+                      key={valIndex}
+                      className="flex gap-2 mb-2 items-center"
+                    >
+                      <Input
+                        value={val}
+                        onChange={(e) =>
+                          handleFilterValueChange(
+                            groupIndex,
+                            valIndex,
+                            e.target.value
+                          )
+                        }
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="icon"
+                        onClick={() =>
+                          handleRemoveFilterValue(groupIndex, valIndex)
+                        }
+                      >
+                        <Trash className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  ))}
+                  <Button
+                    onClick={() => handleAddFilterValue(groupIndex)}
+                    type="button"
+                    size="sm"
+                    className="mt-2"
+                  >
+                    <Plus className="h-4 w-4 mr-2" />
+                    Add Value
+                  </Button>
+                </div>
+              ))}
+
+              <Button
+                onClick={handleAddFilteringFieldGroup}
+                type="button"
+                variant="outline"
+              >
+                {" "}
+                <Plus className="h-4 w-4 mr-2" />
+                Add New Filtering Group
+              </Button>
             </div>
           </div>
         );

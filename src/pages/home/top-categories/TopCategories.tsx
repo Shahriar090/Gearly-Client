@@ -21,6 +21,7 @@ const TopCategories = () => {
         const response = await api.get(
           `${import.meta.env.VITE_SERVER_BASE_URL}/categories`
         );
+
         setCategories(response.data?.data);
       } catch (error) {
         setError("Error Fetching Categories");
@@ -72,12 +73,12 @@ const TopCategories = () => {
               <Card
                 key={category._id}
                 onClick={() => navigate(`/category/${category.slug}`)}
-                className="text-center shadow-none cursor-pointer py-4 gap-4"
+                className="text-center shadow-none cursor-pointer py-4 gap-4 max-w-[250px] rounded-xs"
               >
                 <img
                   src={category.imageUrl}
                   alt={category.name}
-                  className="w-32 h-32 object-cover rounded-sm mx-auto"
+                  className="w-24 h-24 object-cover rounded-sm mx-auto"
                 />
                 <h3 className="text-sm font-medium text-[var(--color-black)]">
                   {category.name}

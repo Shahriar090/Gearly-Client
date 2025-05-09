@@ -38,7 +38,7 @@ export const createProductValidationSchema = z.object({
       fields: z.array(
         z.object({
           name: z.string().optional(),
-          value: z.union([z.string(), z.number(), z.boolean()]),
+          value: z.union([z.string(), z.number(), z.boolean()]).optional(),
         })
       ),
     })

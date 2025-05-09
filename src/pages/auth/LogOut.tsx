@@ -1,14 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
+import { useCart } from "@/hooks/useCart";
 import { useNavigate } from "react-router";
 
 const LogOut = () => {
   const { setAuthData } = useAuth();
+  const { clearCart } = useCart();
   const navigate = useNavigate();
 
   const handleLogOut = () => {
     setAuthData({ user: null, accessToken: null, refreshToken: null });
     localStorage.removeItem("auth");
+    clearCart();
     navigate("/login");
   };
   return (

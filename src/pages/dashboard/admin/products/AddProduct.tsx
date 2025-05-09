@@ -27,7 +27,9 @@ const AddProduct = () => {
   const [subCategories, setSubCategories] = useState([]);
   const [categories, setCategories] = useState([]);
   const { api } = useAxios();
+  console.log(selectedCategory, "selected category");
   console.log(specGroups, "spec groups");
+  console.log(categories, "categories");
   // fetch categories
   useEffect(() => {
     const fetchCategories = async () => {
@@ -44,7 +46,6 @@ const AddProduct = () => {
   }, [api]);
 
   // fetch sub categories (brands) when category changes
-
   useEffect(() => {
     if (!selectedCategory) return;
 
@@ -73,7 +74,7 @@ const AddProduct = () => {
             import.meta.env.VITE_SERVER_BASE_URL
           }/categories/${selectedCategory}`
         );
-        console.log(response.data?.data?.specifications, "from add product");
+
         setSpecGroups(response.data?.data?.specifications || []);
       } catch (error) {
         console.error(error, "Error Fetching Specifications");
@@ -84,8 +85,7 @@ const AddProduct = () => {
 
   // form submission
   const handleSubmit = async (productData: TAddProduct) => {
-    console.log("Form data before submission:", productData.specifications); // Add this
-
+    console.log(productData, "product data....");
     setIsSubmitting(true);
     try {
       const mergedSpecifications = specGroups.map((group, groupIndex) => ({
@@ -131,14 +131,13 @@ const AddProduct = () => {
         formData.append("images", file);
       });
 
-      const response = await api.post(
+      await api.post(
         `${import.meta.env.VITE_SERVER_BASE_URL}/products/create-product`,
         formData,
         {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      console.log(response);
 
       toast.success("Product Created Successfully", {
         duration: 3000,
@@ -196,10 +195,12 @@ const AddProduct = () => {
               name="category"
               label="Category Name"
               type="select"
-              options={categories.map((cat: { name: string; _id: string }) => ({
-                label: cat.name,
-                value: cat._id,
-              }))}
+              options={categories.map(
+                (cat: { name: string; slug: string }) => ({
+                  label: cat.name,
+                  value: cat.slug,
+                })
+              )}
               onChange={(value: string) => {
                 form.setValue("category", value);
                 setSelectedCategory(value);

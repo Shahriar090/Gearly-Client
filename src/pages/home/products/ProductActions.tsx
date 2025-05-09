@@ -12,6 +12,7 @@ const ProductActions = ({ product }: { product: TProduct }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const { auth } = useAuth();
   const { loading, updateCartQuantity, cart, addToCart } = useCart();
+  console.log(cart?.items, "from action.......");
 
   //  find this product in the cart
   const cartItem = useMemo(() => {

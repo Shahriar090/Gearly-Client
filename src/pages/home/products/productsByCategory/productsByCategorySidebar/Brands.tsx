@@ -6,14 +6,10 @@ import {
 } from "@/components/ui/select";
 import { SelectValue } from "@radix-ui/react-select";
 
-const Brands = ({ brands, selectedBrand, setSelectedBrand }) => {
-  console.log(brands, "from product by category");
+const Brands = ({ brands, selectedBrand, onBrandChange }) => {
   return (
     <div className="shadow bg-[var(--color-white)]">
-      <Select
-        value={selectedBrand}
-        onValueChange={(value) => setSelectedBrand(value)}
-      >
+      <Select value={selectedBrand} onValueChange={onBrandChange}>
         <SelectTrigger className="text-lg font-medium data-[placeholder]:text-[var(--color-gray)] p-3">
           <SelectValue placeholder="Brands" />
         </SelectTrigger>

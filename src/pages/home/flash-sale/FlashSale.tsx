@@ -52,7 +52,7 @@ const FlashSale = () => {
 
           {/* timer */}
           <div className="">
-            <Timer endTime="2025-05-08T23:59:59" />
+            <Timer endTime="2025-05-07T22:25:59" />
           </div>
 
           <div className="">
@@ -79,7 +79,7 @@ const FlashSale = () => {
               <Link to={`product/${item.product._id}`}>
                 <Card
                   key={item._id}
-                  className="relative p-4 cursor-pointer shadow-none md:border-none md:hover:shadow-md transition-all duration-500"
+                  className="relative p-4 cursor-pointer md:border-none md:hover:shadow-md transition-all duration-500 rounded-xs"
                 >
                   <Badge className="absolute top-2 right-2 bg-[var(--color-blue)] text-[var(--color-text)]">
                     -{item.discount}%
@@ -88,7 +88,7 @@ const FlashSale = () => {
                   <img
                     src={item.product.images?.[0]}
                     alt={item.product.modelName}
-                    className="w-full h-32 mx-auto"
+                    className="w-full h-40 mx-auto object-cover"
                   />
 
                   <div className="flex flex-col items-start gap-1">

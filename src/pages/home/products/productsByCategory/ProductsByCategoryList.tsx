@@ -34,7 +34,7 @@ const ProductsByCategoryList = ({ products }: { products: TProduct[] }) => {
             <img
               src={product.images[0]}
               alt={product.modelName}
-              className="w-full h-32 mb-3"
+              className="w-full h-44"
             />
 
             {/* Spacer */}

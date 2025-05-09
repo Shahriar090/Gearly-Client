@@ -6,14 +6,12 @@ import ProductsByCategoryList from "./ProductsByCategoryList";
 import ProductCategoryHeader from "./ProductCategoryHeader";
 import PriceRange from "./productsByCategorySidebar/PriceRange";
 import { debounce } from "lodash";
-
-// steps:
-// 1 - Fetch products by category using slug (smart-phones, laptops)
-// 2 - Fetch brands by its category (samsung, apple => smart-phones)
-// 3 - Implement multi level filtering logic with sorting, limiting etc.
+import Brands from "./productsByCategorySidebar/Brands";
+import DynamicFiltering from "./productsByCategorySidebar/DynamicFiltering";
 
 const ProductsByCategory = () => {
   const [products, setProducts] = useState<TProduct[]>([]);
+  const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const { slug } = useParams();
@@ -30,6 +28,7 @@ const ProductsByCategory = () => {
 
   const minPriceFromQuery = Number(queryParams.get("minPrice") || 0);
   const maxPriceFromQuery = Number(queryParams.get("maxPrice") || 3000000);
+  const brandFromQuery = queryParams.get("brandName") || "";
 
   const [limit, setLimit] = useState<number>(limitFromQuery);
   const [sort, setSort] = useState<
@@ -37,6 +36,7 @@ const ProductsByCategory = () => {
   >(sortFromQuery);
   const [minPrice, setMinPrice] = useState<number>(minPriceFromQuery);
   const [maxPrice, setMaxPrice] = useState<number>(maxPriceFromQuery);
+  const [selectedBrand, setSelectedBrand] = useState<string>(brandFromQuery);
 
   // Temporary states to improve UX and prevent re-rendering on every keystroke in price range inputs.
   const [tempMinPrice, setTempMinPrice] = useState<number>(minPriceFromQuery);
@@ -92,12 +92,15 @@ const ProductsByCategory = () => {
           "price[gte]": minPrice,
           "price[lte]": maxPrice,
         };
+        if (selectedBrand) {
+          params.brandName = selectedBrand;
+        }
         const response = await api.get(
           `${import.meta.env.VITE_SERVER_BASE_URL}/products/category/${slug}`,
           { params }
         );
         setProducts(response.data?.data);
-        console.log(response);
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         setError(
@@ -113,7 +116,21 @@ const ProductsByCategory = () => {
       return;
     }
     fetchProductsByCategory();
-  }, [api, slug, limit, sort, maxPrice, minPrice]);
+  }, [api, slug, limit, sort, maxPrice, minPrice, selectedBrand]);
+
+  // fetch sub categories (brands) by category
+  useEffect(() => {
+    const fetchBrands = async () => {
+      const response = await api.get(
+        `${
+          import.meta.env.VITE_SERVER_BASE_URL
+        }/sub-categories/sub-category-by-category?category=${slug}`
+      );
+      console.log(response, "brands by category");
+      setBrands(response.data?.data);
+    };
+    fetchBrands();
+  }, [api, slug]);
 
   // limit change handler
   const handleLimitChange = (newLimit: number) => {
@@ -133,11 +150,27 @@ const ProductsByCategory = () => {
     navigate(`${location.pathname}?${newQueryParams.toString()}`);
   };
 
+  // brand change handler
+  const handleBrandChange = (brand: string) => {
+    setSelectedBrand(brand);
+    const newQueryParams = new URLSearchParams(location.search);
+    newQueryParams.set("brandName", brand);
+    navigate(`${location.pathname}?${newQueryParams.toString()}`);
+  };
+
   if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (error)
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <p className="capitalize text-xl font-medium text-[var(--color-black)]">
+          No products available in this category.!
+        </p>
+      </div>
+    );
 
   return (
     <div className="main-container flex items-start gap-4">
+      {/* sidebar */}
       <div className="sidebar flex-1">
         <PriceRange
           minPrice={tempMinPrice}
@@ -145,6 +178,12 @@ const ProductsByCategory = () => {
           setMinPrice={setTempMinPrice}
           setMaxPrice={setTempMaxPrice}
         />
+        <Brands
+          brands={brands}
+          selectedBrand={selectedBrand}
+          onBrandChange={handleBrandChange}
+        />
+        {products && <DynamicFiltering products={products} />}
       </div>
       <div className="products flex-[4]">
         <ProductCategoryHeader
