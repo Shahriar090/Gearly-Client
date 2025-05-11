@@ -169,36 +169,38 @@ const ProductsByCategory = () => {
     );
 
   return (
-    <div className="main-container flex items-start gap-4">
-      {/* sidebar */}
-      <div className="sidebar flex-1">
-        <PriceRange
-          minPrice={tempMinPrice}
-          maxPrice={tempMaxPrice}
-          setMinPrice={setTempMinPrice}
-          setMaxPrice={setTempMaxPrice}
-        />
-        <Brands
-          brands={brands}
-          selectedBrand={selectedBrand}
-          onBrandChange={handleBrandChange}
-        />
-        {products && <DynamicFiltering products={products} />}
+    <section className="bg-[var(--color-bg-gray)] pt-5">
+      <div className="main-container flex items-start gap-4 max-w-screen-xl mx-auto">
+        {/* sidebar */}
+        <div className="sidebar flex-1 space-y-1 hidden md:block">
+          <PriceRange
+            minPrice={tempMinPrice}
+            maxPrice={tempMaxPrice}
+            setMinPrice={setTempMinPrice}
+            setMaxPrice={setTempMaxPrice}
+          />
+          <Brands
+            brands={brands}
+            selectedBrand={selectedBrand}
+            onBrandChange={handleBrandChange}
+          />
+          {products && <DynamicFiltering products={products} />}
+        </div>
+        <div className="products flex-[4]">
+          <ProductCategoryHeader
+            products={products}
+            onLimitChange={handleLimitChange}
+            onSortChange={handleSortChange}
+            currentSort={sort}
+          />
+          {!loading && products.length === 0 ? (
+            <p>No Products Found.! Please Search For Other Products</p>
+          ) : (
+            <ProductsByCategoryList products={products} />
+          )}
+        </div>
       </div>
-      <div className="products flex-[4]">
-        <ProductCategoryHeader
-          products={products}
-          onLimitChange={handleLimitChange}
-          onSortChange={handleSortChange}
-          currentSort={sort}
-        />
-        {!loading && products.length === 0 ? (
-          <p>No Products Found.! Please Search For Other Products</p>
-        ) : (
-          <ProductsByCategoryList products={products} />
-        )}
-      </div>
-    </div>
+    </section>
   );
 };
 

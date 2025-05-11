@@ -132,6 +132,18 @@ body {
   --color-heading-text-bg: #ddedec;
 }
 
+/* scrollbar hide */
+
+/* for chrome, safari and opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* for firefox, edge etc. */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

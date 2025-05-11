@@ -45,7 +45,7 @@ const ProductCategoryHeader = ({
     },
   ];
   return (
-    <div className="flex justify-between items-center bg-[var(--color-white)] shadow p-2">
+    <div className="flex justify-between items-center bg-[var(--color-white)] shadow px-6 py-2">
       <h1 className="text-xl font-medium text-[var(--color-black)]">
         {categoryName}
       </h1>
