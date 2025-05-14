@@ -11,7 +11,7 @@ const useBrandsByCategory = (slug?: string) => {
 
       const { data } = await api.get(
         `${
-          import.meta.env.VITE_SERVER_LOCAL_URL
+          import.meta.env.VITE_SERVER_BASE_URL
         }/sub-categories/sub-category-by-category?category=${slug}`
       );
       setBrands(data?.data || []);

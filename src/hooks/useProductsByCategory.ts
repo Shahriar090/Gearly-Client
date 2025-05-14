@@ -102,7 +102,7 @@ const useProductsByCategory = ({
         }
 
         const { data } = await api.get(
-          `${import.meta.env.VITE_SERVER_LOCAL_URL}/products/category/${slug}`,
+          `${import.meta.env.VITE_SERVER_BASE_URL}/products/category/${slug}`,
           { params }
         );
         setProducts(data?.data || []);
