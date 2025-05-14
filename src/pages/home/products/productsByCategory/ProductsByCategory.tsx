@@ -95,6 +95,13 @@ const ProductsByCategory = () => {
             onLimitChange={handleLimitChange}
             onSortChange={handleSortChange}
             currentSort={sort}
+            tempMinPrice={tempMinPrice}
+            tempMaxPrice={tempMaxPrice}
+            setTempMinPrice={setTempMinPrice}
+            setTempMaxPrice={setTempMaxPrice}
+            selectedBrand={selectedBrand}
+            handleBrandChange={handleBrandChange}
+            brands={brands}
           />
 
           <Separator className="my-4" />

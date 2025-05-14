@@ -17,6 +17,9 @@ type TUseProductsProps = {
   navigate: NavigateFunction;
 };
 
+// Using an object instead of positional parameters to make the function call more readable,
+// avoid order-related bugs, and easily support optional or future parameters.
+
 const useProductsByCategory = ({
   slug,
   limitFromQuery,
