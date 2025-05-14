@@ -27,6 +27,10 @@ export type TSpecificationsField = {
   value: "string" | "number" | "boolean";
 };
 
+export type TFilteringFields = {
+  groupName: string;
+  value: string[];
+};
 export type TSpecificationsGroup = {
   groupName: string;
   fields: TSpecificationsField[];
@@ -38,6 +42,7 @@ export type TCategory = {
   imageUrl: string;
   status: string;
   specifications: TSpecificationsGroup[];
+  filteringFields: TFilteringFields[];
 
   slug: string;
 };

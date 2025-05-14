@@ -1,4 +1,6 @@
-const DynamicFiltering = ({ products }) => {
+import { TProduct } from "../../products.types";
+
+const DynamicFiltering = ({ products }: { products: TProduct[] }) => {
   const filteringFields = products?.[0]?.category?.filteringFields;
   if (!filteringFields || filteringFields.length === 0) {
     return null;
