@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { useEffect, useState } from "react";
-import { TTopCategories } from "./topCategories.types";
 import useAxios from "@/hooks/useAxios";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import { TTopCategories } from "./topCategories.types";
 
 const TopCategories = () => {
   const [loading, setLoading] = useState(false);
@@ -68,7 +68,7 @@ const TopCategories = () => {
 
         {/* top categories */}
         <div className="categories grid grid-cols-2 md:grid-cols-6 gap-2 mt-4 p-4">
-          {categories.map((category) => {
+          {categories?.map((category) => {
             return (
               <Card
                 key={category._id}
