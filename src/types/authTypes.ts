@@ -12,5 +12,16 @@ export type TAuthData = {
 
 export type TAuthContext = {
   auth: TAuthData;
-  setAuthData: (authData: TAuthData) => void;
+  // setAuthData: (authData: TAuthData) => void;
+  setAuthData: (value: TAuthData | ((prev: TAuthData) => TAuthData)) => void;
+};
+
+
+export type RefreshResponseBody = {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: {
+    accessToken: string;
+  };
 };
