@@ -1,26 +1,41 @@
 import {
   CircleHelp,
+  Coins,
   CreditCard,
+  Dices,
   Heart,
   House,
   LogIn,
   Package,
+  ScanLine,
   Scroll,
   Settings,
   ShoppingCart,
   SmartphoneNfc,
   Truck,
+  UserPen,
   UserRound,
   UsersRound,
+  UsersRoundIcon,
+  Zap,
 } from "lucide-react";
 
 // seller sidebar items (nav items)
 export const sellerSidebarItems = [
-  { label: "Overview", to: "/seller/dashboard", icon: <House /> },
-  { label: "Products", to: "/seller/products", icon: <Package /> },
-  { label: "Orders", to: "/seller/orders", icon: <ShoppingCart /> },
-  { label: "Payments", to: "/seller/payments", icon: <CreditCard /> },
-  { label: "Settings", to: "/seller/settings", icon: <Settings /> },
+  { label: "Dashboard", to: "/admin/dashboard", icon: <House /> },
+  { label: "Analytics", to: "/admin/analytics", icon: <Package /> },
+  { label: "Total Orders", to: "/admin/total-orders", icon: <ShoppingCart /> },
+  { label: "Categories", to: "/admin/categories", icon: <CreditCard /> },
+  { label: "Brands", to: "/admin/brands", icon: <Dices /> },
+  { label: "Products", to: "/admin/products", icon: <ScanLine /> },
+  { label: "Flash Sales", to: "/admin/flash-sales", icon: <Zap /> },
+  { label: "Total Sales", to: "/admin/total-sales", icon: <Coins /> },
+  {
+    label: "Total Customers",
+    to: "/admin/total-customers",
+    icon: <UsersRoundIcon />,
+  },
+  { label: "Admin Profile", to: "/admin/admin-profile", icon: <UserPen /> },
 ];
 
 // customer sidebar items (nav items)
