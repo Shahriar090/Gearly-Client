@@ -1,34 +1,38 @@
 import { AuthContext } from "@/contexts";
 import { TAuthContext, TAuthData } from "@/types/authTypes";
-import { ReactNode, useCallback, useMemo, useState } from "react";
+import { ReactNode, useCallback, useEffect, useMemo, useState } from "react";
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  // The callback function passed to useState is called "Lazy Initializer". It only runs once during the initial render and then never again.It avoids running unnecessary code on every render.
   const [auth, setAuth] = useState<TAuthData>(() => {
-    const storedAuthData = localStorage.getItem("auth");
-    return storedAuthData
-      ? JSON.parse(storedAuthData)
-      : { user: null, accessToken: null, refreshToken: null };
+    try {
+      const storedAuthData = localStorage.getItem("auth");
+
+      if (!storedAuthData || storedAuthData === "undefined") {
+        throw new Error("No Audh Data Found.!");
+      }
+
+      return JSON.parse(storedAuthData);
+    } catch (error) {
+      console.error("Retrieving Auth Data From Local Storage Failed!", error);
+      return { user: null, accessToken: null, refreshToken: null };
+    }
   });
 
-  // const setAuthData = (authData: TAuthData) => {
-  //   setAuth(authData);
-  //   localStorage.setItem("auth", JSON.stringify(authData));
-  // };
+  const setAuthData = useCallback(
+    (value: TAuthData | ((prev: TAuthData) => TAuthData)) => {
+      setAuth(value);
+    },
+    []
+  );
 
-  // const value: TAuthContext = { auth, setAuthData };
+  useEffect(() => {
+    if (auth.accessToken) {
+      localStorage.setItem("auth", JSON.stringify(auth));
+    } else {
+      localStorage.removeItem("auth");
+    }
+  }, [auth]);
 
-  // NOTE: The setAuthData function was re-created on every render since it was just a regular function.
-  // This caused an INFINITE LOOP in the `useAuthInitializer` hook because setAuthData was used as a dependency in useEffect.
-  // To fix this, I use `useCallback` to memoize the function and `useMemo` to memoize the context value.
-
-  // useCallback ensures that this function is not recreated on every render.
-  const setAuthData = useCallback((authData: TAuthData) => {
-    setAuth(authData);
-    localStorage.setItem("auth", JSON.stringify(authData));
-  }, []);
-
-  // without useMemo every rerender creates a new object, which could cause unnecessary rerenders in components that consumes the context.
   const value: TAuthContext = useMemo(
     () => ({
       auth,

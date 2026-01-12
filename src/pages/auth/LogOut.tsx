@@ -10,7 +10,6 @@ const LogOut = () => {
 
   const handleLogOut = () => {
     setAuthData({ user: null, accessToken: null, refreshToken: null });
-    localStorage.removeItem("auth");
     clearCart();
     navigate("/login");
   };
