@@ -1,11 +1,11 @@
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import Timer from "./Timer";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
-import { TFlashSaleItem } from "@/pages/dashboard/admin/flash-sales/flashSales.types";
+import { Card } from "@/components/ui/card";
 import useAxios from "@/hooks/useAxios";
+import { TFlashSaleItem } from "@/pages/dashboard/admin/flash-sales/flashSales.types";
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
+import Timer from "./Timer";
 
 const FlashSale = () => {
   const [flashSales, setFlashSales] = useState<TFlashSaleItem[]>([]);
@@ -52,7 +52,7 @@ const FlashSale = () => {
 
           {/* timer */}
           <div className="">
-            <Timer endTime="2025-05-07T22:25:59" />
+            <Timer endTime="2026-01-20T23:59:59" />
           </div>
 
           <div className="">
