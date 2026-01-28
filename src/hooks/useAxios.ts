@@ -1,18 +1,22 @@
 import { api } from "@/api";
+import { RefreshResponseBody } from "@/types/authTypes";
+import axios, { AxiosResponse } from "axios";
 import { useEffect } from "react";
 import { useAuth } from "./useAuth";
-import axios from "axios";
+
+let isRefreshing = false;
+let activeRefreshRequest: Promise<AxiosResponse<RefreshResponseBody>> | null =
+  null;
 
 const useAxios = () => {
   const { auth, setAuthData } = useAuth();
+
   useEffect(() => {
     // add a request interceptor
     const requestIntercept = api.interceptors.request.use(
       (config) => {
-        const accessToken = auth.accessToken;
-
-        if (accessToken) {
-          config.headers.Authorization = accessToken;
+        if (!config.headers.Authorization && auth.accessToken) {
+          config.headers.Authorization = auth.accessToken;
         }
 
         return config;
@@ -24,30 +28,45 @@ const useAxios = () => {
       (response) => response,
       async (error) => {
         const originalRequest = error.config;
-
         if (error.response.status === 401 && !originalRequest._retry) {
           console.log("Your token has expired");
           originalRequest._retry = true;
 
+          // IF A REFRESH TOKEN PROCESS ALREADY IN PROGRESS, WAIT FOR THAT PROMISE INSTEAD OF STARTING A NEW ONE.
+          if (!isRefreshing) {
+            isRefreshing = true;
+
+            activeRefreshRequest = axios
+              .post(
+                `${import.meta.env.VITE_SERVER_BASE_URL}/auth/refresh-token`,
+                {},
+                { withCredentials: true }
+              )
+              .finally(() => {
+                isRefreshing = false;
+                activeRefreshRequest = null;
+              });
+          }
           try {
             // refresh token is being sent to the backend from the cookies.
-            const response = await axios.post(
-              `${import.meta.env.VITE_SERVER_BASE_URL}/auth/refresh-token`,
-              {},
-              { withCredentials: true }
-            );
+            // const response = await axios.post(`${import.meta.env.VITE_SERVER_BASE_URL}/auth/refresh-token`,{},{withCredentials:true});
+            const response = await activeRefreshRequest;
             console.log("trying to get new access token");
+            const newAccessToken = response?.data?.data?.accessToken;
+            console.log("Access Token Refreshed Successfully");
 
-            const { accessToken } = response.data.data;
-            console.log("Yeeeeeees, new access token paiya gechi mama");
-            setAuthData({ ...auth, accessToken: accessToken });
+            if (!newAccessToken) {
+              throw new Error("Refresh token response missing access token");
+            }
+            // setAuthData({ ...auth, accessToken: newAccessToken as string });
+            setAuthData((prev) => ({ ...prev, accessToken: newAccessToken }));
 
-            originalRequest.headers.Authorization = accessToken;
+            originalRequest.headers.Authorization = newAccessToken;
 
-            return axios(originalRequest);
+            return api(originalRequest);
           } catch (error) {
-            console.error(error);
-            throw error;
+            setAuthData({ user: null, accessToken: null, refreshToken: null });
+            return Promise.reject(error);
           }
         }
         return Promise.reject(error);
@@ -58,7 +77,7 @@ const useAxios = () => {
       api.interceptors.request.eject(requestIntercept);
       api.interceptors.response.eject(responseIntercept);
     };
-  }, [auth.accessToken, auth, setAuthData]);
+  }, [auth.accessToken, setAuthData]);
   return { api };
 };
 

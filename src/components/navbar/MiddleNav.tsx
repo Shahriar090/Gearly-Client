@@ -1,10 +1,11 @@
-import { FiPhoneCall } from "react-icons/fi";
-import { CiMenuKebab } from "react-icons/ci";
-import { ShoppingBag } from "lucide-react";
-import { Link } from "react-router";
 import { useCart } from "@/hooks/useCart";
-import { Input } from "../ui/input";
+import { ShoppingBag } from "lucide-react";
+import { CiMenuKebab } from "react-icons/ci";
+import { FiPhoneCall } from "react-icons/fi";
+import { Link } from "react-router";
 import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { SidebarTrigger } from "../ui/sidebar";
 
 type TDrawerProps = {
   setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,12 +19,15 @@ const MiddleNav = ({ setIsDrawerOpen }: TDrawerProps) => {
       {" "}
       <div className="w-full h-16 flex justify-between items-center px-4 md:px-14 bg-[var(--color-black)]">
         <div className="logo">
-          <h1 className="text-3xl md:text-4xl font-semibold text-[var(--color-text)]">
-            <span className="text-[var(--color-yellow)] inline-block -rotate-15">
-              G
-            </span>
-            early
-          </h1>
+          <div className="flex items-center gap-3">
+            <SidebarTrigger className="text-white" />
+            <h1 className="text-3xl md:text-4xl font-semibold text-[var(--color-text)]">
+              <span className="text-[var(--color-yellow)] inline-block -rotate-15">
+                G
+              </span>
+              early
+            </h1>
+          </div>
         </div>
 
         <div className="flex items-start gap-2">

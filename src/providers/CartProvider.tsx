@@ -12,16 +12,16 @@ const CartProvider = ({ children }: { children: React.ReactNode }) => {
   //   fetch cart
   const fetchCart = async () => {
     setLoading(true);
-    try {
-      const response = await api.get(
-        `${import.meta.env.VITE_SERVER_BASE_URL}/cart/get-cart`
-      );
-      setCart(response.data?.data);
-    } catch (error) {
-      setError(error instanceof Error ? error.message : "Failed To Fetch Cart");
-    } finally {
-      setLoading(false);
-    }
+    // try {
+    //   const response = await api.get(
+    //     `${import.meta.env.VITE_SERVER_BASE_URL}/cart/get-cart`
+    //   );
+    //   setCart(response.data?.data);
+    // } catch (error) {
+    //   setError(error instanceof Error ? error.message : "Failed To Fetch Cart");
+    // } finally {
+    //   setLoading(false);
+    // }
   };
 
   useEffect(() => {
