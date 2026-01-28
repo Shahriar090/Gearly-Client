@@ -1,4 +1,15 @@
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import {
   Select,
   SelectContent,
@@ -9,20 +20,9 @@ import {
 import useAxios from "@/hooks/useAxios";
 import { TFlashSaleItem } from "@/pages/dashboard/admin/flash-sales/flashSales.types";
 import { useEffect, useState } from "react";
+import { Link } from "react-router";
 import { toast } from "sonner";
 import Timer from "./Timer";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Link } from "react-router";
-import { Badge } from "@/components/ui/badge";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination";
 
 const AllFlashSales = () => {
   const [flashSales, setFlashSales] = useState<TFlashSaleItem[]>([]);
@@ -137,7 +137,7 @@ const AllFlashSales = () => {
           <h1 className="text-[var(--color-black)] font-semibold text-lg">
             Offer Ends In
           </h1>
-          <Timer endTime="2025-05-08T23:59:59" />
+          <Timer endTime="2026-01-20T23:59:59" />
         </div>
 
         {/* products */}
