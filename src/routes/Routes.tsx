@@ -1,37 +1,37 @@
 import { createBrowserRouter, RouteObject } from "react-router";
 import PublicLayout from "../layouts/PublicLayout";
-import Home from "../pages/home/Home";
 import Login from "../pages/auth/Login";
 import Register from "../pages/auth/Register";
+import Home from "../pages/home/Home";
 
-import ProtectedRoutes from "./ProtectedRoutes";
 import AdminLayout from "@/layouts/AdminLayout";
 import UserLayout from "@/layouts/UserLayout";
-import UserProfile from "@/pages/dashboard/user/UserProfile";
-import UserDashboard from "@/pages/dashboard/user/UserDashboard";
-import WishList from "@/pages/dashboard/user/WishList";
-import Cart from "@/pages/dashboard/user/cart/Cart";
 import AdminDashboard from "@/pages/dashboard/admin/AdminDashboard";
 import Analytics from "@/pages/dashboard/admin/Analytics";
-import Orders from "@/pages/dashboard/user/Orders";
-import TotalOrders from "@/pages/dashboard/admin/TotalOrders";
-import Products from "@/pages/dashboard/admin/products/Products";
-import Sales from "@/pages/dashboard/admin/Sales";
 import Customers from "@/pages/dashboard/admin/Customers";
-import AddProduct from "@/pages/dashboard/admin/products/AddProduct";
-import Categories from "@/pages/dashboard/admin/categories/Categories";
-import AddCategory from "@/pages/dashboard/admin/categories/AddCategory";
-import Brands from "@/pages/dashboard/admin/brands/Brands";
-import AddBrand from "@/pages/dashboard/admin/brands/AddBrand";
+import Sales from "@/pages/dashboard/admin/Sales";
+import TotalOrders from "@/pages/dashboard/admin/TotalOrders";
 import AdminProfile from "@/pages/dashboard/admin/admin-profile/AdminProfile";
+import AddBrand from "@/pages/dashboard/admin/brands/AddBrand";
+import Brands from "@/pages/dashboard/admin/brands/Brands";
+import Categories from "@/pages/dashboard/admin/categories/Categories";
+import AddCategoryPage from "@/pages/dashboard/admin/category_latest/AddCategoryPage";
 import FlashSales from "@/pages/dashboard/admin/flash-sales/FlashSales";
+import AddProduct from "@/pages/dashboard/admin/products/AddProduct";
+import Products from "@/pages/dashboard/admin/products/Products";
+import Orders from "@/pages/dashboard/user/Orders";
+import UserDashboard from "@/pages/dashboard/user/UserDashboard";
+import UserProfile from "@/pages/dashboard/user/UserProfile";
+import WishList from "@/pages/dashboard/user/WishList";
+import Cart from "@/pages/dashboard/user/cart/Cart";
+import Checkout from "@/pages/dashboard/user/checkout/Checkout";
+import PaymentFailed from "@/pages/dashboard/user/checkout/PaymentFailed";
+import PaymentSuccess from "@/pages/dashboard/user/checkout/PaymentSuccess";
+import AllFlashSales from "@/pages/home/flash-sale/AllFlashSales";
 import AllProducts from "@/pages/home/products/AllProducts";
 import ProductDetails from "@/pages/home/products/ProductDetails";
-import AllFlashSales from "@/pages/home/flash-sale/AllFlashSales";
-import Checkout from "@/pages/dashboard/user/checkout/Checkout";
-import PaymentSuccess from "@/pages/dashboard/user/checkout/PaymentSuccess";
-import PaymentFailed from "@/pages/dashboard/user/checkout/PaymentFailed";
 import ProductsByCategory from "@/pages/home/products/productsByCategory/ProductsByCategory";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 const routes: RouteObject[] = [
   {
@@ -94,7 +94,7 @@ const routes: RouteObject[] = [
       },
       {
         path: "add-category",
-        element: <AddCategory />,
+        element: <AddCategoryPage/>,
       },
       {
         path: "brands",
