@@ -1,4 +1,5 @@
 import {
+  BookTemplateIcon,
   CircleHelp,
   Coins,
   CreditCard,
@@ -36,6 +37,11 @@ export const sellerSidebarItems = [
     icon: <UsersRoundIcon />,
   },
   { label: "Admin Profile", to: "/admin/admin-profile", icon: <UserPen /> },
+  {
+    label: "Attribute Template",
+    to: "/admin/attribute-template",
+    icon: <BookTemplateIcon />,
+  },
 ];
 
 // customer sidebar items (nav items)
