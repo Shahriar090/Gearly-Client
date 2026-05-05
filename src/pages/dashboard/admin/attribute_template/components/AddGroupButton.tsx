@@ -14,7 +14,9 @@ const AddGroupButton = () => {
     <button
       onClick={handleAdd}
       className="border border-dashed p-4 w-full text-center"
-    ></button>
+    >
+      + Add Group
+    </button>
   );
 };
 
