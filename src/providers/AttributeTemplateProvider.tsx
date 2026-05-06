@@ -120,6 +120,14 @@ export const AttributeTemplateProvider = ({
     setState(initialState);
   };
 
+  // attribute template meta infos: categoryId, template name
+  const setTemplateMeta = (data: { name?: string; categoryId?: string }) => {
+    setState((prev) => ({
+      ...prev,
+      ...data,
+    }));
+  };
+
   const value = {
     state,
     addGroup,
@@ -129,6 +137,7 @@ export const AttributeTemplateProvider = ({
     updateAttribute,
     deleteAttribute,
     resetTemplate,
+    setTemplateMeta,
   };
 
   return (
