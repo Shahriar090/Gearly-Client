@@ -20,4 +20,6 @@ export type AttributeTemplateContextType = {
   deleteAttribute: (groupId: string, attributeId: string) => void;
 
   resetTemplate: () => void;
+
+  setTemplateMeta: (data: { name?: string; categoryId?: string }) => void;
 };
