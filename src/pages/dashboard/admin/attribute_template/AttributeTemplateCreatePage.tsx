@@ -1,9 +1,12 @@
 import { useAttributeTemplate } from "@/hooks/useAttributeTemplate";
 import { useState } from "react";
+import AttributeTemplateModal from "./components/AttributeTemplateModal";
 import GroupSection from "./components/GroupSection";
 import TemplateHeader from "./components/TemplateHeader";
 
 const AttributeTemplateCreatePage = () => {
+  const { state } = useAttributeTemplate();
+
   // modal related state
   const [selectedGroupId, setSelectedGroupId] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -17,7 +20,6 @@ const AttributeTemplateCreatePage = () => {
     setSelectedGroupId(null);
     setIsModalOpen(false);
   };
-  const { state } = useAttributeTemplate();
   return (
     <div className="p-6 space-y-6">
       {/* Header */}
@@ -25,6 +27,13 @@ const AttributeTemplateCreatePage = () => {
 
       {/* Groups */}
       <GroupSection groups={state.groups} onAddAttribute={openAttributeModal} />
+
+      {/* modal */}
+      <AttributeTemplateModal
+        open={isModalOpen}
+        onClose={closeModal}
+        groupId={selectedGroupId}
+      />
     </div>
   );
 };
