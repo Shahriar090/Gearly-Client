@@ -12,6 +12,7 @@ import Customers from "@/pages/dashboard/admin/Customers";
 import Sales from "@/pages/dashboard/admin/Sales";
 import TotalOrders from "@/pages/dashboard/admin/TotalOrders";
 import AdminProfile from "@/pages/dashboard/admin/admin-profile/AdminProfile";
+import CreateTemplatePage from "@/pages/dashboard/admin/attribute_template/CreateTemplatePage";
 import AddBrand from "@/pages/dashboard/admin/brands/AddBrand";
 import Brands from "@/pages/dashboard/admin/brands/Brands";
 import Categories from "@/pages/dashboard/admin/categories/Categories";
@@ -94,7 +95,7 @@ const routes: RouteObject[] = [
       },
       {
         path: "add-category",
-        element: <AddCategoryPage/>,
+        element: <AddCategoryPage />,
       },
       {
         path: "brands",
@@ -127,6 +128,10 @@ const routes: RouteObject[] = [
       {
         path: "admin-profile",
         element: <AdminProfile />,
+      },
+      {
+        path: "attribute-template",
+        element: <CreateTemplatePage />,
       },
     ],
   },
